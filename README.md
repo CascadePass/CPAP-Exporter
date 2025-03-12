@@ -1,6 +1,6 @@
 # CPAP-Exporter
 
-CPAP-Exporter is a user-friendly tool for exporting logs from CPAP or BiPAP machines into CSV files. This allows users to analyze their therapy data using tools like Excel or other data visualization software.
+CPAP-Exporter is a user-friendly tool for exporting logs from CPAP or BiPAP machines into CSV files. This allows users to analyze their therapy data using tools like Excel or other data analysis and visualization software.
 
 ## Features
 
@@ -38,7 +38,3 @@ Please ensure your contributions align with the project's goals and standards.
 ## License
 
 This project is licensed under the MIT License. See the [LICENSE](LICENSE) file for more details.
-
----
-
-Feel free to tweak this as you see fit. Once your first release is ready, I can help refine the installation section or any other part. Let me know if you'd like any adjustments! 🚀
