@@ -24,7 +24,7 @@ namespace CascadePass.CPAPExporter
         /// </summary>
         public NavigationViewModel()
         {
-            this.PageViewModelProvider = new PageViewModelProvider();
+            this.pageViewModelProvider = new PageViewModelProvider();
             this.ExportParameters = new();
         }
 
