@@ -1,0 +1,71 @@
+﻿<UserControl x:Class="CascadePass.CPAPExporter.NavigationBar"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:local="clr-namespace:CascadePass.CPAPExporter"
+             mc:Ignorable="d" 
+             d:DesignHeight="450" d:DesignWidth="800">
+
+    <UserControl.DataContext>
+        <local:NavigationViewModel />
+    </UserControl.DataContext>
+
+    <StackPanel>
+        <Button
+            Style="{Binding WelcomeButtonStyle}" Command="{Binding ShowWelcomeScreenCommand}"
+            ToolTip="{x:Static local:Resources.Nav_Open_TT}">
+            <StackPanel Orientation="Horizontal">
+                <Image Source="pack://application:,,,/Images/catpap2.png" Style="{StaticResource NavigationButtonImage}" />
+
+                <TextBlock Text="{x:Static local:Resources.Nav_Open_TT}" Visibility="{Binding ShowNavigationButtonLabels, Converter={StaticResource BoolToVisibilityConverter}}" />
+            </StackPanel>
+        </Button>
+
+        <Button
+            Style="{Binding OpenButtonStyle}" Command="{Binding OpenFilesCommand}" ToolTip="{x:Static local:Resources.Nav_Open_TT}">
+            <StackPanel Orientation="Horizontal">
+                <Image Source="pack://application:,,,/Images/FolderOpenBlue.png" Style="{StaticResource NavigationButtonImage}" />
+                <TextBlock Text="{x:Static local:Resources.Nav_Open_TT}" Visibility="{Binding ShowNavigationButtonLabels, Converter={StaticResource BoolToVisibilityConverter}}" />
+            </StackPanel>
+        </Button>
+
+        <Button
+            Style="{Binding SelectNightButtonStyle}" Command="{Binding SelectNightsCommand}" ToolTip="{x:Static local:Resources.Nav_SelectDays_TT}">
+            <StackPanel Orientation="Horizontal">
+                <Image Source="pack://application:,,,/Images/MonthCalendar.png" Style="{StaticResource NavigationButtonImage}" />
+                <TextBlock Text="{x:Static local:Resources.Nav_SelectDays_TT}" Visibility="{Binding ShowNavigationButtonLabels, Converter={StaticResource BoolToVisibilityConverter}}" />
+            </StackPanel>
+        </Button>
+
+        <Button
+            Style="{Binding SelectSignalsButtonStyle}" Command="{Binding SelectSignalsCommand}" ToolTip="{x:Static local:Resources.Nav_SelectSignals_TT}">
+            <StackPanel Orientation="Horizontal">
+                <Image Source="pack://application:,,,/Images/DerivedColumn.png" Style="{StaticResource NavigationButtonImage}" />
+                <TextBlock Text="{x:Static local:Resources.Nav_SelectSignals_TT}" Visibility="{Binding ShowNavigationButtonLabels, Converter={StaticResource BoolToVisibilityConverter}}" />
+            </StackPanel>
+        </Button>
+
+        <Button
+            Style="{Binding SettingsButtonStyle}" Command="{Binding ShowExportSettingsCommand}" ToolTip="{x:Static local:Resources.Nav_Settings_TT}">
+            <StackPanel Orientation="Horizontal">
+                <Image Source="pack://application:,,,/Images/Settings.png" Style="{StaticResource NavigationButtonImage}" />
+                <TextBlock Text="{x:Static local:Resources.Nav_Settings_TT}" Visibility="{Binding ShowNavigationButtonLabels, Converter={StaticResource BoolToVisibilityConverter}}" />
+            </StackPanel>
+        </Button>
+
+        <Button
+            Style="{Binding ExportButtonStyle}" Command="{Binding ExportCommand}" ToolTip="{x:Static local:Resources.Nav_Export_TT}">
+            <StackPanel Orientation="Horizontal">
+                <Image Source="pack://application:,,,/Images/Save.png" Style="{StaticResource NavigationButtonImage}" />
+                <TextBlock Text="{x:Static local:Resources.Nav_Export_TT}" Visibility="{Binding ShowNavigationButtonLabels, Converter={StaticResource BoolToVisibilityConverter}}" />
+            </StackPanel>
+        </Button>
+
+        <!--<Separator Margin="8" />
+
+        <Button Style="{StaticResource NavigationButtonStyle}" ToolTip="{x:Static local:Resources.Nav_Help_TT}">
+            <Image Source="pack://application:,,,/Images/HelpTableOfContents.png" Style="{StaticResource NavigationButtonImage}" />
+        </Button>-->
+    </StackPanel>
+</UserControl>

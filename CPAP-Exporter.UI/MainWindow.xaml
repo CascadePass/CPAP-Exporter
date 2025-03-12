@@ -1,0 +1,32 @@
+﻿<Window x:Class="CascadePass.CPAPExporter.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:CascadePass.CPAPExporter"
+        mc:Ignorable="d"
+        Icon="pack://application:,,,/Images/mask.png"
+        Title="{x:Static local:Resources.Window_Title}">
+
+    <DockPanel>
+        <local:StatusStrip
+            DockPanel.Dock="Bottom"
+            x:Name="StatusStrip"
+            DataContext="{Binding ElementName=PageViewer, Path=DataContext.CurrentView.DataContext}"
+            />
+        
+        <local:NavigationBar
+            DockPanel.Dock="Left"
+            x:Name="NavBar"
+            />
+        
+        <!--<local:BannerStrip
+            DockPanel.Dock="Top"
+            x:Name="BannerStrip"
+            DataContext="{Binding ElementName=NavBar, Path=DataContext.CurrentView.DataContext}"
+            Visibility="{Binding IsBusy, Converter={StaticResource BoolToVisibilityConverter}}"
+            />-->
+
+        <local:PageView x:Name="PageViewer" />
+    </DockPanel>
+</Window>
