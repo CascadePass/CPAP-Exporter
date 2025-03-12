@@ -54,10 +54,6 @@ jobs:
     - name: Restore dependencies
       run: dotnet restore
 
-    # Build the solution
-    - name: Build solution for release
-      run: dotnet publish --configuration Release --output ./output
-
     # Save build artifacts
     - name: Upload build artifacts
       uses: actions/upload-artifact@v3
