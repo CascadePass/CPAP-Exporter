@@ -1,0 +1,66 @@
+name: CI/CD Workflow
+
+on:
+  push:
+    branches:
+      - main
+  pull_request:
+    branches:
+      - main
+
+jobs:
+  build-and-test:
+    runs-on: windows-latest
+
+    steps:
+    # Checkout the repository
+    - name: Check out code
+      uses: actions/checkout@v3
+
+    # Set up .NET environment
+    - name: Set up .NET
+      uses: actions/setup-dotnet@v3
+      with:
+        dotnet-version: '9.0.x'
+
+    # Restore dependencies
+    - name: Restore dependencies
+      run: dotnet restore
+
+    # Build the solution
+    - name: Build the solution
+      run: dotnet build --configuration Release --no-restore
+
+    # Run unit tests
+    - name: Run unit tests
+      run: dotnet test --no-build --verbosity normal
+
+  artifact-build:
+    needs: build-and-test
+    runs-on: windows-latest
+
+    steps:
+    # Checkout the repository
+    - name: Check out code
+      uses: actions/checkout@v3
+
+    # Set up .NET environment
+    - name: Set up .NET
+      uses: actions/setup-dotnet@v3
+      with:
+        dotnet-version: '9.0.x'
+
+    # Restore dependencies
+    - name: Restore dependencies
+      run: dotnet restore
+
+    # Build the solution
+    - name: Build solution for release
+      run: dotnet publish --configuration Release --output ./output
+
+    # Save build artifacts
+    - name: Upload build artifacts
+      uses: actions/upload-artifact@v3
+      with:
+        name: BuildArtifacts
+        path: ./output
