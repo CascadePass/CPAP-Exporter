@@ -117,9 +117,9 @@ namespace CascadePass.CPAPExporter
         public IPageViewModelProvider PageViewModelProvider
         {
             get => this.pageViewModelProvider;
-#if DEBUG
+//#if DEBUG
             set => this.SetPropertyValue(ref this.pageViewModelProvider, value, nameof(this.PageViewModelProvider));
-#endif
+//#endif
         }
 
         #region Button Styles
