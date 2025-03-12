@@ -1,0 +1,15 @@
+﻿<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+                    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+                    xmlns:sys="clr-namespace:System;assembly=mscorlib">
+
+    <!-- Font Sizes -->
+    <sys:Double x:Key="FontSize.Tiny">9</sys:Double>
+    <sys:Double x:Key="FontSize.Small">10</sys:Double>
+    <sys:Double x:Key="FontSize.Medium">12</sys:Double>
+    <sys:Double x:Key="FontSize.Large">16</sys:Double>
+    <sys:Double x:Key="FontSize.ExtraLarge">18</sys:Double>
+    <sys:Double x:Key="FontSize.SubHeader">20</sys:Double>
+    <sys:Double x:Key="FontSize.Header">24</sys:Double>
+    <sys:Double x:Key="FontSize.Title">32</sys:Double>
+
+</ResourceDictionary>
