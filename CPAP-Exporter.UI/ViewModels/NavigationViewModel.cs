@@ -219,7 +219,7 @@ namespace CascadePass.CPAPExporter
 
         public void ShowExportSettings()
         {
-            this.CurrentView = new OptionsView() { DataContext = new ExportOptionsViewModel() { ExportParameters = this.ExportParameters } };
+            this.CurrentView = new OptionsView() { DataContext = new ExportOptionsPageViewModel(this.ExportParameters) };
             this.CurrentStep = NavigationStep.Settings;
         }
 

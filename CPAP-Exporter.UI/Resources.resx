@@ -193,7 +193,7 @@
     <value>Options</value>
   </data>
   <data name="PageDesc_Options" xml:space="preserve">
-    <value>Export settings.</value>
+    <value>Choose the details for your export.</value>
   </data>
   <data name="Mode" xml:space="preserve">
     <value>Mode</value>
@@ -209,5 +209,44 @@
   </data>
   <data name="bytes" xml:space="preserve">
     <value>bytes</value>
+  </data>
+  <data name="NightsFoundIn" xml:space="preserve">
+    <value>nights found in</value>
+  </data>
+  <data name="CSV" xml:space="preserve">
+    <value>CSV</value>
+  </data>
+  <data name="Label_FileHandlingRule" xml:space="preserve">
+    <value>File handling</value>
+  </data>
+  <data name="IncludeRowNumber" xml:space="preserve">
+    <value>Include Row Number (counter)</value>
+  </data>
+  <data name="IncludeColumnHeaders" xml:space="preserve">
+    <value>Include Column Headers Row</value>
+  </data>
+  <data name="IncludeSessionNumber" xml:space="preserve">
+    <value>Include Session Number</value>
+  </data>
+  <data name="IncludePythonBoilerplate" xml:space="preserve">
+    <value>Generate a Python file to load your CSV</value>
+  </data>
+  <data name="IncludeTimestamp" xml:space="preserve">
+    <value>Include Timestamp</value>
+  </data>
+  <data name="Label_ColumnOptions" xml:space="preserve">
+    <value>Column Options</value>
+  </data>
+  <data name="Label_OneFilePerNight" xml:space="preserve">
+    <value>One File per Night</value>
+  </data>
+  <data name="Label_CombinedIntoSingleFile" xml:space="preserve">
+    <value>Combined, all nights in one file</value>
+  </data>
+  <data name="Label_FileNames" xml:space="preserve">
+    <value>File names</value>
+  </data>
+  <data name="Delimiter" xml:space="preserve">
+    <value>Delimiter</value>
   </data>
 </root>

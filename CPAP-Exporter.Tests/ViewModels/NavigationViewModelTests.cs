@@ -132,7 +132,7 @@ namespace CascadePass.CPAPExporter.UI.Tests
             NavigationViewModel navigationViewModel = new()
             {
                 CurrentStep = NavigationStep.Settings,
-                PageViewModelProvider = new MockViewProvider(new ExportOptionsViewModel() { ValidationProvider = new MockValidator(false) })
+                PageViewModelProvider = new MockViewProvider(new ExportOptionsPageViewModel() { ValidationProvider = new MockValidator(false) })
             };
 
             Assert.AreEqual(NORMAL_STYLE, navigationViewModel.GetButtonStyleName(NavigationStep.Welcome));
@@ -149,7 +149,7 @@ namespace CascadePass.CPAPExporter.UI.Tests
             NavigationViewModel navigationViewModel = new()
             {
                 CurrentStep = NavigationStep.Settings,
-                PageViewModelProvider = new MockViewProvider(new ExportOptionsViewModel() { ValidationProvider = new MockValidator(true) })
+                PageViewModelProvider = new MockViewProvider(new ExportOptionsPageViewModel() { ValidationProvider = new MockValidator(true) })
             };
 
             Assert.AreEqual(NORMAL_STYLE, navigationViewModel.GetButtonStyleName(NavigationStep.Welcome));

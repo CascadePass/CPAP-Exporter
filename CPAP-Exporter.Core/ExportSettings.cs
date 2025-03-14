@@ -4,14 +4,19 @@
     {
         public ExportSettings()
         {
+            this.IsActive = true;
+
             this.OutputFileHandling = OutputFileRule.OneFilePerNight;
 
             this.IncludeRowNumber = true;
             this.IncludeSessionNumber = true;
             this.IncludeTimestamp = true;
+            this.IncludeEvents = true;
 
             this.IncludePythonBoilerplate = false;
         }
+
+        public bool IsActive { get; set; }
 
         public OutputFileRule OutputFileHandling { get; set; }
 
@@ -42,6 +47,8 @@
         /// in, plus 2 seconds per ordinal within the Samples collection.
         /// </remarks>
         public bool IncludeTimestamp { get; set; }
+
+        public bool IncludeEvents { get; set; }
 
         public bool IncludePythonBoilerplate { get; set; }
     }
