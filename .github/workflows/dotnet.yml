@@ -16,7 +16,7 @@ jobs:
 
     steps:
     - name: List SDK Directory
-      run: dir "C:\Program Files\dotnet\sdk\9.0.201\Microsoft\DesktopBridge"
+      run: dir "C:\Program Files\dotnet\sdk"
 
     - uses: actions/checkout@v4
     - name: Setup .NET
