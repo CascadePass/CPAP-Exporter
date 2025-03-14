@@ -54,7 +54,7 @@ namespace CascadePass.CPAPExporter
         }
 
 
-        private void FileViewModel_PropertyChanged(object? sender, PropertyChangedEventArgs e)
+        private void FileViewModel_PropertyChanged(object sender, PropertyChangedEventArgs e)
         {
             this.OnPropertyChanged(nameof(this.Files));
         }

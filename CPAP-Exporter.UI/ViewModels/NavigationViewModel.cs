@@ -291,7 +291,7 @@ namespace CascadePass.CPAPExporter
             viewModel.PropertyChanged -= ViewModel_PropertyChanged;
         }
 
-        private void ViewModel_PropertyChanged(object? sender, System.ComponentModel.PropertyChangedEventArgs e)
+        private void ViewModel_PropertyChanged(object sender, System.ComponentModel.PropertyChangedEventArgs e)
         {
             this.OnPropertyChanged(nameof(this.CurrentView));
         }
