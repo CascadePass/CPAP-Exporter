@@ -1,10 +1,12 @@
-﻿using System.Collections.ObjectModel;
+﻿using CascadePass.CPAPExporter.Core;
+using System.Collections.ObjectModel;
 using System.Windows.Data;
 
 namespace CascadePass.CPAPExporter
 {
     public class ExportParameters : Observable
     {
+        private ObservableCollection<ExportSettings> settings;
         private ObservableCollection<DailyReportViewModel> reports;
         private ObservableCollection<SignalViewModel> signals;
         private List<string> signalNames;
@@ -14,6 +16,7 @@ namespace CascadePass.CPAPExporter
         {
             this.Reports = [];
             this.Signals = [];
+            this.Settings = [];
 
             BindingOperations.EnableCollectionSynchronization(this.Reports, new object());
             BindingOperations.EnableCollectionSynchronization(this.Signals, new object());
@@ -37,6 +40,12 @@ namespace CascadePass.CPAPExporter
                     this.signalNames = null;
                 }
             }
+        }
+
+        public ObservableCollection<ExportSettings> Settings
+        {
+            get => this.settings;
+            set => this.SetPropertyValue(ref this.settings, value, nameof(this.Settings));
         }
 
         #endregion

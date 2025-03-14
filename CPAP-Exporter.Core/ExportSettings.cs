@@ -14,6 +14,8 @@
             this.IncludeEvents = true;
 
             this.IncludePythonBoilerplate = false;
+
+            this.Filenames = [];
         }
 
         public bool IsActive { get; set; }
@@ -51,5 +53,7 @@
         public bool IncludeEvents { get; set; }
 
         public bool IncludePythonBoilerplate { get; set; }
+
+        public List<string> Filenames { get; set; }
     }
 }

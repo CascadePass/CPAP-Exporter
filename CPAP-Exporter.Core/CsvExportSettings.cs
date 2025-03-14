@@ -6,6 +6,7 @@
         {
             this.IncludeColumnHeaders = true;
             this.Delimiter = ",";
+            this.EventFilenames = [];
         }
 
         /// <summary>
@@ -20,5 +21,7 @@
         /// Gets or sets the delimiter to use in the CSV output.
         /// </summary>
         public string Delimiter { get; set; }
+
+        public List<string> EventFilenames { get; set; }
     }
 }

@@ -11,6 +11,7 @@ namespace CascadePass.CPAPExporter
         {
             this.ExportParameters = exportParameters;
             this.csvExportOptions = new(this.ExportParameters);
+            this.ExportParameters.Settings.Add(this.csvExportOptions.Settings);
 
             this.ExportParameters.Reports.CollectionChanged += this.Reports_CollectionChanged;
             this.csvExportOptions.PropertyChanged += this.CsvOptions_PropertyChanged;
