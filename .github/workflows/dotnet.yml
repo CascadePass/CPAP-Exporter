@@ -15,6 +15,9 @@ jobs:
     runs-on: windows-latest
 
     steps:
+    - name: List SDK Directory
+      run: dir "C:\Program Files\dotnet\sdk\9.0.201\Microsoft\DesktopBridge"
+
     - uses: actions/checkout@v4
     - name: Setup .NET
       uses: actions/setup-dotnet@v4
