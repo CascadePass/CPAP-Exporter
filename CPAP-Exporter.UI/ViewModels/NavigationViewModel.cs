@@ -1,6 +1,7 @@
 ﻿using CascadePass.CPAPExporter.Core;
 using System.IO;
 using System.Windows;
+using static System.Runtime.InteropServices.JavaScript.JSType;
 
 namespace CascadePass.CPAPExporter
 {
@@ -225,40 +226,52 @@ namespace CascadePass.CPAPExporter
 
         public void Export()
         {
-            var dialog = new Microsoft.Win32.SaveFileDialog() { FileName = "CPAP Export.csv", DefaultExt = "csv", AddExtension = true, };
+            var dialog = new Microsoft.Win32.OpenFolderDialog();
+            string folder = null;
 
-            if (dialog.ShowDialog() == true)
+            if (dialog.ShowDialog() != true)
             {
-                CsvExporter exporter = new(
-                    [.. this.exportParameters.Reports.Where(r => r.IsSelected).Select(r => r.DailyReport)],
-                    this.exportParameters.SignalNames
+                return;
+            }
+
+            folder = dialog.FolderName;
+
+            SavedFilesView savedView = new();
+            var savedVM = (SavedFilesViewModel)savedView.DataContext;
+
+
+
+            CsvExportSettings csvSettings = (CsvExportSettings)this.ExportParameters.Settings.FirstOrDefault(s => s is CsvExportSettings);
+            CsvExporter exporter = new(
+                [.. this.exportParameters.Reports.Where(r => r.IsSelected).Select(r => r.DailyReport)],
+                this.exportParameters.SignalNames
                 );
 
-                string filename = this.exportParameters.DestinationPath = dialog.FileName;
+            if (csvSettings.OutputFileHandling == OutputFileRule.CombinedIntoSingleFile)
+            {
+                exporter.ExportToFile(Path.Combine(folder, csvSettings.Filenames.First()));
+                exporter.ExportFlaggedEventsToFile(Path.Combine(folder, csvSettings.EventFilenames.First()));
 
-                string filePart = Path.GetFileNameWithoutExtension(filename);
-                string eventsFilename = Path.Combine(Path.GetDirectoryName(filename), $"{filePart} (events).csv");
-
-                exporter.ExportToFile(filename);
-                exporter.ExportFlaggedEventsToFile(eventsFilename);
-
-                this.CurrentStep = NavigationStep.Export;
-                this.CurrentView = new SavedFilesView();
-
-                var savedVM = (SavedFilesViewModel)this.CurrentView.DataContext;
-
-                string minDate = this.exportParameters.Reports.Where(r => r.IsSelected).Min(r => r.DailyReport.ReportDate).ToString("yyyy-MM-dd");
-                string maxDate = this.exportParameters.Reports.Where(r => r.IsSelected).Max(r => r.DailyReport.ReportDate).ToString("yyyy-MM-dd");
-
-                string date = minDate;
-                if (minDate != maxDate)
-                {
-                    date = $"{minDate} to {maxDate}";
-                }
-
-                savedVM.AddFile(filename, $"CSV with signal data from {date}");
-                savedVM.AddFile(eventsFilename, $"Events CSV from {date}");
+                savedVM.AddFile(Path.Combine(folder, csvSettings.Filenames.First()), $"CSV with signal data");
+                savedVM.AddFile(Path.Combine(folder, csvSettings.EventFilenames.First()), $"Events CSV");
             }
+            else
+            {
+                exporter.DailyReports.Clear();
+                for(int i = 0; i < this.exportParameters.Reports.Where(r => r.IsSelected).Count(); i++) {
+                    exporter.DailyReports.Add(this.exportParameters.Reports.Where(r => r.IsSelected).ElementAt(i).DailyReport);
+
+                    exporter.ExportToFile(Path.Combine(folder, csvSettings.Filenames[i]));
+                    exporter.ExportFlaggedEventsToFile(Path.Combine(folder, csvSettings.EventFilenames[i]));
+
+                    savedVM.AddFile(Path.Combine(folder, csvSettings.Filenames[i]), $"CSV with signal data");
+                    savedVM.AddFile(Path.Combine(folder, csvSettings.EventFilenames[i]), $"Events CSV");
+                }
+            }
+
+
+            this.CurrentStep = NavigationStep.Export;
+            this.CurrentView = savedView;
         }
 
         #region Helper methods

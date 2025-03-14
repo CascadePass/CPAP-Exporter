@@ -149,6 +149,21 @@ namespace CascadePass.CPAPExporter
 
         public override ExportSettings CreateSettings() => new CsvExportSettings();
 
-        #endregion
+        public override void WriteSettings()
+        {
+            this.Settings.Filenames.Clear();
+
+            foreach (var filename in this.ExportFilenames)
+            {
+                this.Settings.Filenames.Add(filename.RawFilename);
+
+                if (this.Settings.IncludeEvents)
+                {
+                    this.Settings.EventFilenames.Add(filename.EventsFilename);
+                }
+            }
+        }
     }
+
+    #endregion
 }

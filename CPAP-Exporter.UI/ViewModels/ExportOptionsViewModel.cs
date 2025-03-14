@@ -1,5 +1,6 @@
 ﻿using CascadePass.CPAPExporter.Core;
 using System.Collections.ObjectModel;
+using System.Collections.Specialized;
 
 namespace CascadePass.CPAPExporter
 {
@@ -13,6 +14,8 @@ namespace CascadePass.CPAPExporter
         {
             this.settings = this.CreateSettings();
             this.exportFilenames = [];
+
+            this.exportFilenames.CollectionChanged += this.ExportFilenames_CollectionChanged;
         }
 
         public ExportParameters ExportParameters
@@ -64,6 +67,21 @@ namespace CascadePass.CPAPExporter
 
                 this.exportFilenames.Add(filenames);
             }
+        }
+
+        public virtual void WriteSettings()
+        {
+            this.settings.Filenames.Clear();
+
+            foreach (var filename in this.exportFilenames)
+            {
+                this.settings.Filenames.Add(filename.RawFilename);
+            }
+        }
+
+        private void ExportFilenames_CollectionChanged(object sender, NotifyCollectionChangedEventArgs e)
+        {
+            this.WriteSettings();
         }
     }
 }

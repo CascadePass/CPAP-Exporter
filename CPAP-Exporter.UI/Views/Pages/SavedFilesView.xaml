@@ -10,7 +10,7 @@
         <local:SavedFilesViewModel />
     </UserControl.DataContext>
 
-    <StackPanel Margin="25,0,25,0">
+    <ScrollViewer HorizontalScrollBarVisibility="Hidden" VerticalScrollBarVisibility="Auto" Margin="25,0,25,0">
         <ItemsControl ItemsSource="{Binding Files}" Margin="25">
             <ItemsControl.ItemTemplate>
                 <DataTemplate>
@@ -50,5 +50,5 @@
                 </DataTemplate>
             </ItemsControl.ItemTemplate>
         </ItemsControl>
-    </StackPanel>
+    </ScrollViewer>
 </UserControl>
