@@ -14,14 +14,14 @@ namespace CascadePass.CPAPExporter.UI.Tests
         [TestMethod]
         public void HasCorrectTitle()
         {
-            var vm = new ExportOptionsPageViewModel();
+            var vm = new ExportOptionsPageViewModel(new());
             Assert.AreEqual(Resources.PageTitle_Options, vm.Title);
         }
 
         [TestMethod]
         public void HasCorrectDescription()
         {
-            var vm = new ExportOptionsPageViewModel();
+            var vm = new ExportOptionsPageViewModel(new());
             Assert.AreEqual(Resources.PageDesc_Options, vm.PageDescription);
         }
 
