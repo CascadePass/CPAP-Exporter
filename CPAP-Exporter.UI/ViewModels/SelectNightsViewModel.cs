@@ -179,7 +179,7 @@ namespace CascadePass.CPAPExporter
         }
 
 
-        private void ReportViewModel_PropertyChanged(object? sender, PropertyChangedEventArgs e)
+        private void ReportViewModel_PropertyChanged(object sender, PropertyChangedEventArgs e)
         {
             this.OnPropertyChanged(nameof(this.Reports));
         }

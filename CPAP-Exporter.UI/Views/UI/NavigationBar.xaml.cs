@@ -1,10 +1,8 @@
 ﻿using System.ComponentModel;
 using System.Windows.Controls;
 using System.Windows;
-using System.Windows.Controls.Primitives;
 using System.Windows.Data;
 using System.Windows.Media;
-using System.Windows.Threading;
 
 namespace CascadePass.CPAPExporter
 {
@@ -20,7 +18,7 @@ namespace CascadePass.CPAPExporter
             }
         }
 
-        private void Observable_PropertyChanged(object? sender, PropertyChangedEventArgs e)
+        private void Observable_PropertyChanged(object sender, PropertyChangedEventArgs e)
         {
             NavigationBar.UpdateButtonStyles(this);
         }

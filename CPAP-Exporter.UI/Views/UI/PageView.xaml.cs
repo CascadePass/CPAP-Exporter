@@ -27,7 +27,7 @@ namespace CascadePass.CPAPExporter
             }
         }
 
-        private void NavigationViewModel_PropertyChanged(object? sender, PropertyChangedEventArgs e)
+        private void NavigationViewModel_PropertyChanged(object sender, PropertyChangedEventArgs e)
         {
             Dispatcher.Invoke(() =>
             {
@@ -95,7 +95,7 @@ namespace CascadePass.CPAPExporter
             }
         }
 
-        private void PageViewModel_PropertyChanged(object? sender, PropertyChangedEventArgs e)
+        private void PageViewModel_PropertyChanged(object sender, PropertyChangedEventArgs e)
         {
             if (e.PropertyName == nameof(PageViewModel.IsBusy))
             {

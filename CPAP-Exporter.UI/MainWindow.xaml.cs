@@ -21,7 +21,7 @@ namespace CascadePass.CPAPExporter
             navigationViewModel.PropertyChanged += NavigationViewModel_PropertyChanged;
         }
 
-        private void NavigationViewModel_PropertyChanged(object? sender, PropertyChangedEventArgs e)
+        private void NavigationViewModel_PropertyChanged(object sender, PropertyChangedEventArgs e)
         {
             //if (string.Equals(e.PropertyName, nameof(NavigationViewModel.CurrentView)))
             {
