@@ -12,6 +12,7 @@
 
             <BooleanToVisibilityConverter x:Key="BoolToVisibilityConverter" />
             <local:StringToVisibilityConverter x:Key="StringToVisibilityConverter" />
+            <local:EnumToBooleanConverter x:Key="EnumToBooleanConverter" />
         </ResourceDictionary>
     </Application.Resources>
 </Application>

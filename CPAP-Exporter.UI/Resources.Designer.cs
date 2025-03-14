@@ -88,6 +88,15 @@ namespace CascadePass.CPAPExporter {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to CSV.
+        /// </summary>
+        public static string CSV {
+            get {
+                return ResourceManager.GetString("CSV", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Date.
         /// </summary>
         public static string Date {
@@ -106,11 +115,110 @@ namespace CascadePass.CPAPExporter {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Delimiter.
+        /// </summary>
+        public static string Delimiter {
+            get {
+                return ResourceManager.GetString("Delimiter", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Events.
         /// </summary>
         public static string Events {
             get {
                 return ResourceManager.GetString("Events", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Include Column Headers Row.
+        /// </summary>
+        public static string IncludeColumnHeaders {
+            get {
+                return ResourceManager.GetString("IncludeColumnHeaders", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Generate a Python file to load your CSV.
+        /// </summary>
+        public static string IncludePythonBoilerplate {
+            get {
+                return ResourceManager.GetString("IncludePythonBoilerplate", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Include Row Number (counter).
+        /// </summary>
+        public static string IncludeRowNumber {
+            get {
+                return ResourceManager.GetString("IncludeRowNumber", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Include Session Number.
+        /// </summary>
+        public static string IncludeSessionNumber {
+            get {
+                return ResourceManager.GetString("IncludeSessionNumber", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Include Timestamp.
+        /// </summary>
+        public static string IncludeTimestamp {
+            get {
+                return ResourceManager.GetString("IncludeTimestamp", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Column Options.
+        /// </summary>
+        public static string Label_ColumnOptions {
+            get {
+                return ResourceManager.GetString("Label_ColumnOptions", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Combined, all nights in one file.
+        /// </summary>
+        public static string Label_CombinedIntoSingleFile {
+            get {
+                return ResourceManager.GetString("Label_CombinedIntoSingleFile", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to File handling.
+        /// </summary>
+        public static string Label_FileHandlingRule {
+            get {
+                return ResourceManager.GetString("Label_FileHandlingRule", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to File names.
+        /// </summary>
+        public static string Label_FileNames {
+            get {
+                return ResourceManager.GetString("Label_FileNames", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to One File per Night.
+        /// </summary>
+        public static string Label_OneFilePerNight {
+            get {
+                return ResourceManager.GetString("Label_OneFilePerNight", resourceCulture);
             }
         }
         
@@ -205,7 +313,16 @@ namespace CascadePass.CPAPExporter {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Export settings..
+        ///   Looks up a localized string similar to nights found in.
+        /// </summary>
+        public static string NightsFoundIn {
+            get {
+                return ResourceManager.GetString("NightsFoundIn", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Choose the details for your export..
         /// </summary>
         public static string PageDesc_Options {
             get {

@@ -12,7 +12,7 @@
         <StackPanel>
             <TextBlock Margin="0,0,0,10">
                 <Run Text="{Binding Reports.Count, Mode=OneWay}" FontWeight="Bold" />
-                <Run Text="nights found in" />
+                <Run Text="{x:Static local:Resources.NightsFoundIn}" />
                 <Hyperlink Command="{Binding OpenSourceFolderCommand}">
                     <Run Text="{Binding ExportParameters.SourcePath, Mode=OneWay}" />
                 </Hyperlink>
