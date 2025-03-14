@@ -23,6 +23,6 @@ jobs:
     - name: Restore dependencies
       run: dotnet restore
     - name: Build
-      run: dotnet build --no-restore
+      run: dotnet build -p:WapProjPath="C:\Program Files\dotnet\sdk\9.0.201"
     - name: Test
       run: dotnet test --no-build --verbosity normal
