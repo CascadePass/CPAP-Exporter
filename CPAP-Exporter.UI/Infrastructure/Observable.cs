@@ -10,7 +10,7 @@ namespace CascadePass.CPAPExporter
         /// <summary>
         /// Event raised when the value of a property changes.
         /// </summary>
-        public event PropertyChangedEventHandler? PropertyChanged;
+        public event PropertyChangedEventHandler PropertyChanged;
 
         protected bool SetPropertyValue<T>(ref T field, T value, string propertyName)
         {
@@ -20,7 +20,7 @@ namespace CascadePass.CPAPExporter
             }
 
             field = value;
-            OnPropertyChanged(propertyName);
+            this.OnPropertyChanged(propertyName);
             return true;
         }
 
@@ -32,7 +32,7 @@ namespace CascadePass.CPAPExporter
 
                 foreach (string propertyName in propertyNames)
                 {
-                    OnPropertyChanged(propertyName);
+                    this.OnPropertyChanged(propertyName);
                 }
 
                 return true;
