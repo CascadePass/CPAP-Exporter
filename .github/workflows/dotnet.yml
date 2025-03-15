@@ -24,7 +24,13 @@ jobs:
       run: dotnet restore
     - name: Print environment variables
       run: env
+    # Restore the application
+    - name:  Restore the Wpf application to populate the obj folder
+      run: **msbuild $env:Solution_Path /t:Restore /p:Configuration=$env:Configuration /p:RuntimeIdentifier=$env:RuntimeIdentifier**
+      env:
+        Configuration: Debug
+        RuntimeIdentifier: win-${{ matrix.targetplatform }}
     - name: Build
-      run: dotnet build -p:WapProjPath=$env:AppxPackageDir
+      run: dotnet build
     - name: Test
       run: dotnet test --no-build --verbosity normal
