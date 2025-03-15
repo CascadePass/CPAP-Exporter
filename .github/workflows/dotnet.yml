@@ -22,6 +22,8 @@ jobs:
         dotnet-version: 9.0.x
     - name: Restore dependencies
       run: dotnet restore
+    - name: Print environment variables
+      run: env
     - name: Build
       run: dotnet build -p:WapProjPath=$env:AppxPackageDir
     - name: Test
