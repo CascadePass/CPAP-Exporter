@@ -48,7 +48,6 @@
   <PropertyGroup>
     <WapProjPath Condition="'$(WapProjPath)'==''">$(MSBuildExtensionsPath)\Microsoft\DesktopBridge\</WapProjPath>
   </PropertyGroup>
-  <Import Project="$(WapProjPath)\Microsoft.DesktopBridge.props" />
   <PropertyGroup>
     <ProjectGuid>fecb0077-5dfc-41ef-9322-98148aacb1d5</ProjectGuid>
     <TargetPlatformVersion>10.0.26100.0</TargetPlatformVersion>
