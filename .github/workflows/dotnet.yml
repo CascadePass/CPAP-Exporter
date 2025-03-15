@@ -24,6 +24,8 @@ jobs:
       run: dotnet restore
     - name: Print environment variables
       run: env
+    - name: Check installed SDKs
+      run: dotnet --list-sdks
     - name: Build
       run: dotnet build /p:Configuration=Debug;
     - name: Test
