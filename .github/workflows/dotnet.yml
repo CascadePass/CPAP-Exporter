@@ -25,6 +25,6 @@ jobs:
     - name: Print environment variables
       run: env
     - name: Build
-      run: dotnet build /p:Configuration=Debug;AppxBundle=Never;Platform=x64;UapAppxPackageBuildMode=SideloadOnly;RuntimeIdentifier="win-x64"
+      run: dotnet build /p:Configuration=Debug;Platform=x64;UapAppxPackageBuildMode=SideloadOnly;RuntimeIdentifier="win-x64"
     - name: Test
       run: dotnet test --no-build --verbosity normal
