@@ -25,6 +25,6 @@ jobs:
     - name: Print environment variables
       run: env
     - name: Build
-      run: dotnet build /p:Configuration=Debug;RuntimeIdentifier="win-x64"
+      run: dotnet build /p:Configuration=Debug;
     - name: Test
       run: dotnet test --no-build --verbosity normal
