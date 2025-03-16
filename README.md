@@ -1,40 +1,58 @@
-# CPAP-Exporter
+# CPAP Exporter
 
-CPAP-Exporter is a user-friendly tool for exporting logs from CPAP or BiPAP machines into CSV files. This allows users to analyze their therapy data using tools like Excel or other data analysis and visualization software.
+CPAP Exporter is a flexible, open-source tool that helps users extract and analyze data from CPAP or BiPAP machines. It reads the files saved on the device's SD card and exports the data into **CSV files**, with planned support for **XML**, **JSON**, and other formats in the future.
+
+The application features an **intuitive user interface** that guides users through selecting:
+- Which signals to export (e.g., flow rate, leak rate, pressure, etc.).
+- Specific nights to pull data from.
+- Output preferences (e.g., single file or multiple files).
+
+This level of customization makes it easier for users to analyze their data in tools like Excel or share it with medical professionals. While there are other tools for CPAP data export, none match CPAP Exporter’s flexibility and ease of use.
 
 ## Features
+- Extracts CPAP/BiPAP data and exports it as CSV files.
+- Planned support for XML, JSON, and more.
+- Intuitive user interface for selecting data and structuring exports.
+- Open source, free to use, with no ads or data collection.
 
-- Export therapy data from CPAP/BiPAP machines to CSV.
-- Guided wizard for selecting:
-  - Dates or nights to export.
-  - Specific data signals (e.g., flow rate, leak rate, etc.).
-- Ideal for personal data analysis or sharing insights with medical professionals.
+## Getting Started
+### Prerequisites
+- [Visual Studio](https://visualstudio.microsoft.com/) (to load the `.sln` file and run the application).
 
-## Installation
+### Installation
+1. Clone the repository:
+   ```bash
+   git clone https://github.com/your-username/CPAP-Exporter.git
+2. Open the .sln file in Visual Studio.
 
-⚠️ *Note: Installation instructions will be updated once the first release is available.*  
-Plans for the initial release include:
-- A standalone installer for easy setup.
-- Pre-packaged build artifacts for users who prefer to run the application without installation.
+3. Build and run the project.
 
-## Usage
+> Note: An installer is not yet available, but this is planned for future releases.
 
-1. Launch CPAP-Exporter.
-2. Follow the wizard to select the nights and data signals you want to export.
-3. Save the exported data as a CSV file.
-4. Open the file in Excel or any compatible software for analysis.
+### Usage
+1. Insert your CPAP or BiPAP machine's SD card into your computer.
 
-## Contributing
+2. Launch CPAP Exporter.
 
-Contributions are welcome! To contribute:
+3. Follow the guided steps to:
+
+4. Select desired signals (e.g., flow rate, leak rate, pressure, etc.).
+
+5. Choose specific nights for data export.
+
+6. Configure output file settings.
+
+7. Export the data and analyze it in your favorite tools (e.g., Excel).
+
+### Contributing
+Contributions are welcome! Follow the standard Git workflow:
+
 1. Fork the repository.
-2. Create a feature branch (`git checkout -b feature-name`).
-3. Commit your changes (`git commit -m 'Add feature'`).
-4. Push to your branch (`git push origin feature-name`).
-5. Open a Pull Request.
 
-Please ensure your contributions align with the project's goals and standards.
+2. Create a new branch for your feature or bug fix.
 
-## License
+3. Submit a pull request when you're ready for review.
+Please ensure your contributions align with the project’s goals and include proper documentation.
 
-This project is licensed under the MIT License. See the [LICENSE](LICENSE) file for more details.
+License
+This project is licensed under the MIT License. See the LICENSE file for details.
