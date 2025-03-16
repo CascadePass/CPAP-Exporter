@@ -2,10 +2,14 @@
 {
     public class PageViewModel : ViewModel, IValidatable
     {
+        #region Fields
+
         private bool isBusy, isBannerVisible;
         private string title, pageDescription, statusText;
         private ExportParameters exportParameters;
         private IValidatable validationProvider;
+
+        #endregion
 
         #region Constructor
 

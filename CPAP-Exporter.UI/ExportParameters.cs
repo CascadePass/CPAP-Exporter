@@ -6,30 +6,61 @@ namespace CascadePass.CPAPExporter
 {
     public class ExportParameters : Observable
     {
+        #region Fields
+
         private ObservableCollection<ExportSettings> settings;
         private ObservableCollection<DailyReportViewModel> reports;
         private ObservableCollection<SignalViewModel> signals;
         private List<string> signalNames;
         private string sourcePath, destinationPath;
 
+        #endregion
+
+        #region Constructor
+
         public ExportParameters()
         {
+            // Create collection instances
+            
             this.Reports = [];
             this.Signals = [];
             this.Settings = [];
 
+            // Tell WPF to manage concurrency for these collections.  This
+            // avoids the need for manual thread synchronization.  It's not
+            // as efficient, but this application won't put enough data into
+            // these collections for it to matter.
+
             BindingOperations.EnableCollectionSynchronization(this.Reports, new object());
             BindingOperations.EnableCollectionSynchronization(this.Signals, new object());
+            BindingOperations.EnableCollectionSynchronization(this.Settings, new object());
         }
+
+        #endregion
+
+        #region Properties
 
         #region UI Facing
 
+        /// <summary>
+        /// Gets or sets the <see cref="DailyReport"/> objects to export, wrapped
+        /// in <see cref="DailyReportViewModel"/> objects with an <see cref="DailyReportViewModel.IsSelected"/>
+        /// property to identify which nights to export."/>
+        /// </summary>
         public ObservableCollection<DailyReportViewModel> Reports
         {
             get => this.reports;
             set => this.SetPropertyValue(ref this.reports, value, nameof(this.Reports));
         }
 
+        /// <summary>
+        /// Gets or sets the <see cref="Signal"/> objects to export, wrapped
+        /// in <see cref="SignalViewModel"/> objects with <see cref="SignalViewModel.IsSelected"/>
+        /// properties identifying which to export."/>
+        /// </summary>
+        /// <remarks>
+        /// Columns in the CSV output will be ordered according to the order of this property.
+        /// </remarks>
         public ObservableCollection<SignalViewModel> Signals
         {
             get => this.signals;
@@ -42,6 +73,13 @@ namespace CascadePass.CPAPExporter
             }
         }
 
+        /// <summary>
+        /// Gets or sets the list of settings for the exports.
+        /// </summary>
+        /// <remarks>
+        /// The user will be able to export to CSV and Xml formats,
+        /// each having its own settings.
+        /// </remarks>
         public ObservableCollection<ExportSettings> Settings
         {
             get => this.settings;
@@ -50,6 +88,9 @@ namespace CascadePass.CPAPExporter
 
         #endregion
 
+        /// <summary>
+        /// Gets the names of the selected signals as strings.
+        /// </summary>
         public List<string> SignalNames => this.signalNames ??= [.. this.Signals.Where(s => s.IsSelected).Select(s => s.SignalInfo.Name)];
 
         public string SourcePath
@@ -63,5 +104,7 @@ namespace CascadePass.CPAPExporter
             get => this.destinationPath;
             set => this.SetPropertyValue(ref this.destinationPath, value, nameof(this.DestinationPath));
         }
+
+        #endregion
     }
 }
