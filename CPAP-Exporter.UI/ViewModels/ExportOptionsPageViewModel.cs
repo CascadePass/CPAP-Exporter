@@ -7,6 +7,8 @@ namespace CascadePass.CPAPExporter
     {
         private CsvExportOptionsViewModel csvExportOptions;
 
+        #region Constructor
+
         public ExportOptionsPageViewModel(ExportParameters exportParameters) : base(Resources.PageTitle_Options, Resources.PageDesc_Options)
         {
             this.ExportParameters = exportParameters;
@@ -19,12 +21,23 @@ namespace CascadePass.CPAPExporter
             this.csvExportOptions.CreateFilenames();
         }
 
+        #endregion
+
+        #region Properties
+
+        /// <summary>
+        /// Gets or sets a <see cref="ViewModel"/> with options for
+        /// writing CSV files.
+        /// </summary>
         public CsvExportOptionsViewModel CsvExportOptions
         {
             get => this.csvExportOptions;
             set => this.SetPropertyValue(ref this.csvExportOptions, value, nameof(this.CsvExportOptions));
         }
 
+        #endregion
+
+        #region Methods
 
         public void CreateFilenames()
         {
@@ -35,6 +48,8 @@ namespace CascadePass.CPAPExporter
         {
             return this.CsvExportOptions.IsActive;
         }
+
+        #region Event Handlers
 
         protected override void OnPropertyChanged(string propertyName)
         {
@@ -62,5 +77,9 @@ namespace CascadePass.CPAPExporter
 
             this.OnPropertyChanged(nameof(this.IsValid));
         }
+
+        #endregion
+
+        #endregion
     }
 }
