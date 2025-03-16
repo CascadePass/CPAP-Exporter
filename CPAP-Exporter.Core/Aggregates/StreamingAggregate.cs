@@ -1,10 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace CascadePass.CPAPExporter.Core.Aggregates
+﻿namespace CascadePass.CPAPExporter.Core.Aggregates
 {
     public abstract class StreamingAggregate<T>
     {
