@@ -6,21 +6,39 @@ namespace CascadePass.CPAPExporter
 {
     public class ExportParameters : Observable
     {
+        #region Fields
+
         private ObservableCollection<ExportSettings> settings;
         private ObservableCollection<DailyReportViewModel> reports;
         private ObservableCollection<SignalViewModel> signals;
         private List<string> signalNames;
         private string sourcePath, destinationPath;
 
+        #endregion
+
+        #region Constructor
+
         public ExportParameters()
         {
+            // Create collection instances
+            
             this.Reports = [];
             this.Signals = [];
             this.Settings = [];
 
+            // Tell WPF to manage concurrency for these collections.  This
+            // avoids the need for manual thread synchronization.  It's not
+            // as efficient, but this application won't put enough data into
+            // these collections for it to matter.
+
             BindingOperations.EnableCollectionSynchronization(this.Reports, new object());
             BindingOperations.EnableCollectionSynchronization(this.Signals, new object());
+            BindingOperations.EnableCollectionSynchronization(this.Settings, new object());
         }
+
+        #endregion
+
+        #region Properties
 
         #region UI Facing
 
@@ -86,5 +104,7 @@ namespace CascadePass.CPAPExporter
             get => this.destinationPath;
             set => this.SetPropertyValue(ref this.destinationPath, value, nameof(this.DestinationPath));
         }
+
+        #endregion
     }
 }
