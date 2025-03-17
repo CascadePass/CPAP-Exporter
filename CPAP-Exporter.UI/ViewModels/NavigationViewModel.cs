@@ -1,7 +1,6 @@
 ﻿using CascadePass.CPAPExporter.Core;
 using System.IO;
 using System.Windows;
-using static System.Runtime.InteropServices.JavaScript.JSType;
 
 namespace CascadePass.CPAPExporter
 {

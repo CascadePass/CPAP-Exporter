@@ -127,7 +127,7 @@ namespace CascadePass.CPAPExporter
             #endregion
 
             this.IsBusy = true;
-            this.StatusText = $"Reading folder {folder}";
+            ApplicationComponentProvider.Status.StatusText = $"Reading folder {folder}";
 
             // This is where the files are loaded from disc
             var reports = loader.LoadFromFolder(folder, null, null, new() { FlagFlowLimits = false });
@@ -137,7 +137,7 @@ namespace CascadePass.CPAPExporter
             {
                 foreach (var report in reports)
                 {
-                    this.StatusText = $"Adding {report.ReportDate}";
+                    ApplicationComponentProvider.Status.StatusText = $"Adding {report.ReportDate}";
 
                     DailyReportViewModel reportViewModel = new(report, false);
                     this.Reports.Add(reportViewModel);
@@ -150,7 +150,7 @@ namespace CascadePass.CPAPExporter
             this.IsAllSelected = this.ExportParameters.Reports.All(r => r.IsSelected);
 
             this.IsBusy = false;
-            this.StatusText = $"Loaded {reports.Count} reports from {folder}";
+            ApplicationComponentProvider.Status.StatusText = $"Loaded {reports.Count} reports from {folder}";
             this.ExportParameters.SourcePath = folder;
         }
 
@@ -169,12 +169,12 @@ namespace CascadePass.CPAPExporter
 
         public void Work()
         {
-            this.StatusText = "Working...";
+            ApplicationComponentProvider.Status.StatusText = "Working...";
 
             Task.Run(() =>
             {
                 this.LoadFromFolder(this.ExportParameters.SourcePath, true);
-                this.StatusText = "Done!";
+                ApplicationComponentProvider.Status.StatusText = "Done!";
             });
         }
 

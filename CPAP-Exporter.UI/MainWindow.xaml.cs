@@ -16,7 +16,7 @@ namespace CascadePass.CPAPExporter
             var navigationViewModel = this.NavBar.DataContext as NavigationViewModel;
             
             this.PageViewer.DataContext = navigationViewModel;
-            this.StatusStrip.DataContext = new StatusBarViewModel() { MainWindow = this };
+            this.StatusStrip.DataContext = new StatusBarViewModel() { MainWindow = this, NavigationViewModel = navigationViewModel };
             
             navigationViewModel.PropertyChanged += NavigationViewModel_PropertyChanged;
         }
