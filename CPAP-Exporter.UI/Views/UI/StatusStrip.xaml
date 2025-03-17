@@ -7,9 +7,9 @@
              mc:Ignorable="d" 
              d:DesignHeight="450" d:DesignWidth="800">
 
-    <StatusBar>
+    <StatusBar x:Name="StatusBar">
         <StatusBarItem>
-            <TextBlock Text="{Binding StatusText}" />
+            <TextBlock Text="{Binding StatusText, Mode=OneWay}" />
         </StatusBarItem>
 
         <StatusBarItem HorizontalAlignment="Right">

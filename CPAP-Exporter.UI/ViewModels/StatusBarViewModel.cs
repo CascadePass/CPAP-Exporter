@@ -1,9 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Diagnostics;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using System.Diagnostics;
 
 namespace CascadePass.CPAPExporter
 {
@@ -25,14 +20,17 @@ namespace CascadePass.CPAPExporter
             this.Version = this.GetType().Assembly.GetName().Version;
 
             this.pageViewModelProvider = new PageViewModelProvider();
+
+            if (ApplicationComponentProvider.Status is Observable observable)
+            {
+                observable.PropertyChanged += Observable_PropertyChanged;
+            }
         }
 
         public StatusBarViewModel(MainWindow mainWindow, NavigationViewModel navigationViewModel) : this()
         {
             this.MainWindow = mainWindow;
             this.NavigationViewModel = navigationViewModel;
-
-            this.NavigationViewModel.PropertyChanged += NavigationViewModel_PropertyChanged;
         }
 
         #endregion
@@ -47,7 +45,7 @@ namespace CascadePass.CPAPExporter
 
         public PageViewModel CurrentViewModel => this.MainWindow?.PageViewer.DataContext is PageViewModel ? this.PageViewModelProvider.GetViewModel(this.MainWindow?.PageViewer) : null;
 
-        public string StatusText => this.CurrentViewModel?.StatusText;
+        public string StatusText => ApplicationComponentProvider.Status.StatusText;
 
         public double FontSize
         {
@@ -92,13 +90,9 @@ namespace CascadePass.CPAPExporter
             }
         }
 
-        private void NavigationViewModel_PropertyChanged(object sender, System.ComponentModel.PropertyChangedEventArgs e)
+        private void Observable_PropertyChanged(object sender, System.ComponentModel.PropertyChangedEventArgs e)
         {
-            if(e.PropertyName == nameof(NavigationViewModel.CurrentView))
-            {
-                this.OnPropertyChanged(nameof(this.CurrentViewModel));
-                this.OnPropertyChanged(nameof(this.StatusText));
-            }
+            this.OnPropertyChanged(nameof(this.StatusText));
         }
     }
 }

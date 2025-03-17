@@ -115,17 +115,9 @@ namespace CascadePass.CPAPExporter
                         this.ExportDetails.NormalResolutionSampleNames.Add(signal.SignalInfo.Name);
                     }
                 }
-
-                //foreach (var signal in this.ExportDetails.HighResolutionSampleNames)
-                //{
-                //    this.ExportParameters.Signals.Add(new SignalViewModel() { Name = signal });
-                //}
-
-                //foreach (var signal in this.ExportDetails.NormalResolutionSampleNames)
-                //{
-                //    this.ExportParameters.Signals.Add(new SignalViewModel() { Name = signal });
-                //}
             }
+
+            ApplicationComponentProvider.Status.StatusText = $"{this.ExportParameters.Signals.Count} signals available";
         }
 
         protected override void OnPropertyChanged(string propertyName)

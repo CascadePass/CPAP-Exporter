@@ -5,7 +5,7 @@
         #region Fields
 
         private bool isBusy, isBannerVisible;
-        private string title, pageDescription, statusText;
+        private string title, pageDescription;
         private ExportParameters exportParameters;
         private IValidatable validationProvider;
 
@@ -54,12 +54,6 @@
         }
 
         public bool IsValid => this.ValidationProvider.Validate();
-
-        public string StatusText
-        {
-            get => this.statusText;
-            set => this.SetPropertyValue(ref this.statusText, value, nameof(this.StatusText));
-        }
 
         public string Title
         {
