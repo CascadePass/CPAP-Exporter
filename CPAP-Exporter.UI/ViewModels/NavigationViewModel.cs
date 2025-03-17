@@ -178,6 +178,8 @@ namespace CascadePass.CPAPExporter
 
                 if (!string.IsNullOrWhiteSpace(folder) && Directory.Exists(folder))
                 {
+                    ApplicationComponentProvider.Status.StatusText = $"Loading {folder}";
+
                     this.exportParameters.SourcePath = folder;
                     var view = new SelectNightsView { DataContext = new SelectNightsViewModel(this.ExportParameters) };
 
@@ -207,6 +209,8 @@ namespace CascadePass.CPAPExporter
 
                 this.CurrentView = view;
             }
+
+            ApplicationComponentProvider.Status.StatusText = $"{((SelectNightsViewModel)this.CurrentView.DataContext).Reports.Count} nights available to export";
         }
 
         public void ShowSignals()
@@ -215,12 +219,16 @@ namespace CascadePass.CPAPExporter
 
             this.CurrentView = new SelectSignalsView { DataContext = viewModel };
             this.CurrentStep = NavigationStep.SelectSignals;
+
+            ApplicationComponentProvider.Status.StatusText = $"{viewModel.Signals.Count} signals available";
         }
 
         public void ShowExportSettings()
         {
             this.CurrentView = new OptionsView() { DataContext = new ExportOptionsPageViewModel(this.ExportParameters) };
             this.CurrentStep = NavigationStep.Settings;
+
+            ApplicationComponentProvider.Status.StatusText = $"Ready to export";
         }
 
         public void Export()
@@ -271,6 +279,8 @@ namespace CascadePass.CPAPExporter
 
             this.CurrentStep = NavigationStep.Export;
             this.CurrentView = savedView;
+
+            ApplicationComponentProvider.Status.StatusText = $"{savedVM.Files.Count} files written";
         }
 
         #region Helper methods
