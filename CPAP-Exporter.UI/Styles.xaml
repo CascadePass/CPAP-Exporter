@@ -30,6 +30,22 @@
         <Setter Property="TextWrapping" Value="Wrap" />
     </Style>
 
+    <Style x:Key="WrittenFileDisplay" TargetType="Border">
+        <Setter Property="BorderBrush" Value="LightGray" />
+        <Setter Property="BorderThickness" Value="0.25" />
+        <Setter Property="CornerRadius" Value="4" />
+        <Setter Property="Margin" Value="10,5,10,5" />
+        <Setter Property="Padding" Value="8" />
+        <Setter Property="BorderBrush" Value="LightGray" />
+
+        <Style.Triggers>
+            <DataTrigger Binding="{Binding IsDeleted}" Value="True">
+                <Setter Property="BorderBrush" Value="DarkGray" />
+                <Setter Property="Background" Value="LightGray" />
+            </DataTrigger>
+        </Style.Triggers>
+    </Style>
+
     
     <Style x:Key="FileButtonImage" TargetType="Image">
         <Setter Property="Width" Value="16" />

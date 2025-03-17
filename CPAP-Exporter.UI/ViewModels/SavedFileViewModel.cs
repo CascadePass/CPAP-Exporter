@@ -1,13 +1,15 @@
-﻿using System.Diagnostics;
-using System.IO;
+﻿using System.IO;
 using System.Windows.Input;
 
 namespace CascadePass.CPAPExporter
 {
     public class SavedFileViewModel : ViewModel
     {
+        private bool isDeleted;
         private string name, desc;
         private DelegateCommand browseCommand, deleteCommand, launchCommand;
+
+        public event EventHandler<EventArgs> FileDeleted;
 
         public SavedFileViewModel(string filename, string description)
         {
@@ -37,6 +39,12 @@ namespace CascadePass.CPAPExporter
             set => this.SetPropertyValue(ref this.desc, value, nameof(this.Description));
         }
 
+        public bool IsDeleted
+        {
+            get => this.isDeleted;
+            set => this.SetPropertyValue(ref this.isDeleted, value, nameof(this.IsDeleted));
+        }
+
         public FileInfo FileInfo { get; set; }
 
         public ICommand BrowseCommand => this.browseCommand ??= new(this.BrowseToFile);
@@ -45,17 +53,48 @@ namespace CascadePass.CPAPExporter
 
         public void BrowseToFile()
         {
+            if(this.isDeleted && this.FileInfo.Exists)
+            {
+                return;
+            }
+
             WindowsExplorerUtility.BrowseToFile(this.Filename);
         }
 
         public void DeleteFile()
         {
-            this.FileInfo.Delete();
+            if (this.isDeleted && this.FileInfo.Exists)
+            {
+                return;
+            }
+
+            try
+            {
+                this.FileInfo.Delete();
+                this.IsDeleted = true;
+                this.OnFileDeleted(this, EventArgs.Empty);
+
+                ApplicationComponentProvider.Status.StatusText = $"{this.Filename} was deleted";
+            }
+            catch (Exception ex)
+            {
+                ApplicationComponentProvider.Status.StatusText = ex.Message;
+            }
         }
 
         public void LaunchFile()
         {
+            if (this.isDeleted && this.FileInfo.Exists)
+            {
+                return;
+            }
+
             WindowsExplorerUtility.LaunchFile(this.Filename);
+        }
+
+        protected void OnFileDeleted(object sender, EventArgs e)
+        {
+            this.FileDeleted?.Invoke(this, e);
         }
     }
 }

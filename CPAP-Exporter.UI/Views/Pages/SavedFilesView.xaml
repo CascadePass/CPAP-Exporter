@@ -11,10 +11,10 @@
     </UserControl.DataContext>
 
     <ScrollViewer HorizontalScrollBarVisibility="Hidden" VerticalScrollBarVisibility="Auto" Margin="25,0,25,0">
-        <ItemsControl ItemsSource="{Binding Files}" Margin="25">
+        <ItemsControl x:Name="FilesList" ItemsSource="{Binding Files}" Margin="25">
             <ItemsControl.ItemTemplate>
                 <DataTemplate>
-                    <Border BorderBrush="LightGray" BorderThickness="0.25" CornerRadius="4" Margin="10,5,10,5" Padding="8">
+                    <Border Style="{DynamicResource WrittenFileDisplay}">
                         <StackPanel>
                             <TextBlock Text="{Binding Filename}" FontWeight="Bold" FontSize="{DynamicResource FontSize.Large}" />
                             <TextBlock Text="{Binding Description}" FontStyle="Italic" FontSize="{DynamicResource FontSize.Medium}" />
@@ -24,21 +24,21 @@
                             </TextBlock>
 
                             <StackPanel Orientation="Horizontal">
-                                <Button Command="{Binding BrowseCommand}" Style="{StaticResource FileButtonStyle}">
+                                <Button Command="{Binding BrowseCommand}" Style="{StaticResource FileButtonStyle}" IsEnabled="{Binding IsDeleted, Converter={StaticResource InverseBool}}">
                                     <StackPanel Orientation="Horizontal">
                                         <Image Source="/Images/SamplesFolder.png" Style="{DynamicResource FileButtonImage}" />
                                         <TextBlock Text="{x:Static local:Resources.Browse}" VerticalAlignment="Center" />
                                     </StackPanel>
                                 </Button>
 
-                                <Button Command="{Binding DeleteCommand}" Style="{StaticResource FileButtonStyle}">
+                                <Button Command="{Binding DeleteCommand}" Style="{StaticResource FileButtonStyle}" IsEnabled="{Binding IsDeleted, Converter={StaticResource InverseBool}}">
                                     <StackPanel Orientation="Horizontal">
                                         <Image Source="/Images/Delete.png" Style="{DynamicResource FileButtonImage}" />
                                         <TextBlock Text="{x:Static local:Resources.Delete}" VerticalAlignment="Center" />
                                     </StackPanel>
                                 </Button>
 
-                                <Button Command="{Binding LaunchCommand}" Style="{StaticResource FileButtonStyle}">
+                                <Button Command="{Binding LaunchCommand}" Style="{StaticResource FileButtonStyle}" IsEnabled="{Binding IsDeleted, Converter={StaticResource InverseBool}}">
                                     <StackPanel Orientation="Horizontal">
                                         <Image Source="/Images/RunTestDialog.png" Style="{DynamicResource FileButtonImage}" />
                                         <TextBlock Text="{x:Static local:Resources.Launch}" VerticalAlignment="Center" />

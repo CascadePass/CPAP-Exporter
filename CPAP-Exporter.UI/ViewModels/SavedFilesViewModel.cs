@@ -10,16 +10,28 @@ namespace CascadePass.CPAPExporter
     {
         private DelegateCommand browseFolderCommand;
 
+        #region Constructor
+
         public SavedFilesViewModel() : base(Resources.PageTitle_SavedFiles, Resources.PageDesc_SavedFiles)
         {
             this.Files = [];
         }
 
+        #endregion
+
+        #region Properties
+
         public ObservableCollection<SavedFileViewModel> Files { get; set; }
 
         public ICommand BrowseFolderCommand => this.browseFolderCommand ??= new DelegateCommand(this.BrowseFolder);
 
-        public void AddFile(string filename, string fileDescription)
+        #endregion
+
+        #region Methods
+
+        #region Button click implementations
+
+        public SavedFileViewModel AddFile(string filename, string fileDescription)
         {
             if(File.Exists(filename))
             {
@@ -27,7 +39,12 @@ namespace CascadePass.CPAPExporter
                 this.Files.Add(fileViewModel);
 
                 fileViewModel.PropertyChanged += this.FileViewModel_PropertyChanged;
+                fileViewModel.FileDeleted += this.FileViewModel_FileDeleted;
+
+                return fileViewModel;
             }
+
+            return null;
         }
 
         public void BrowseFolder()
@@ -53,10 +70,28 @@ namespace CascadePass.CPAPExporter
             Process.Start("explorer.exe", arguments);
         }
 
+        #endregion
+
+        #region Event Handlers
 
         private void FileViewModel_PropertyChanged(object sender, PropertyChangedEventArgs e)
         {
             this.OnPropertyChanged(nameof(this.Files));
         }
+
+        private void FileViewModel_FileDeleted(object sender, EventArgs e)
+        {
+            if (sender is SavedFileViewModel fileViewModel)
+            {
+                this.Files.Remove(fileViewModel);
+
+                fileViewModel.PropertyChanged -= this.FileViewModel_PropertyChanged;
+                fileViewModel.FileDeleted -= this.FileViewModel_FileDeleted;
+            }
+        }
+
+        #endregion
+
+        #endregion
     }
 }
