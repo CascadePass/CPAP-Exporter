@@ -29,5 +29,16 @@ namespace CascadePass.CPAPExporter.UI.Tests
             StatusBarViewModel statusBarViewModel = new();
             statusBarViewModel.FontSize = 12;
         }
+
+        [TestMethod]
+        public void Version_IsValid()
+        {
+            object version = new StatusBarViewModel().Version;
+
+            Console.WriteLine($"new StatusBarViewModel().Version == {version}");
+
+            Assert.IsNotNull(version);
+            Assert.IsInstanceOfType<Version>(version);
+        }
     }
 }
