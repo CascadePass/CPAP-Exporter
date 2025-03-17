@@ -3,6 +3,7 @@ using System.Collections.ObjectModel;
 using System.ComponentModel;
 using System.Diagnostics;
 using System.IO;
+using System.Windows.Controls;
 using System.Windows.Input;
 using System.Windows.Threading;
 
@@ -37,6 +38,10 @@ namespace CascadePass.CPAPExporter
             if (!string.IsNullOrWhiteSpace(this.ExportParameters?.SourcePath) && this.ExportParameters.Reports.Count == 0)
             {
                 this.Work();
+            }
+            else
+            {
+                ApplicationComponentProvider.Status.StatusText = $"{this.ExportParameters.Reports.Count} nights available to export";
             }
         }
 
@@ -174,7 +179,6 @@ namespace CascadePass.CPAPExporter
             Task.Run(() =>
             {
                 this.LoadFromFolder(this.ExportParameters.SourcePath, true);
-                ApplicationComponentProvider.Status.StatusText = "Done!";
             });
         }
 
