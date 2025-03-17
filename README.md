@@ -19,10 +19,10 @@ This level of customization makes it easier for users to analyze their data in t
 ### Prerequisites
 - [Visual Studio](https://visualstudio.microsoft.com/) (to load the `.sln` file and run the application).
 
-### Installation
+### Installation of Code Base
 1. Clone the repository:
    ```bash
-   git clone https://github.com/your-username/CPAP-Exporter.git
+   git clone https://github.com/CascadePass/CPAP-Exporter
 2. Open the .sln file in Visual Studio.
 
 3. Build and run the project.
@@ -54,5 +54,7 @@ Contributions are welcome! Follow the standard Git workflow:
 3. Submit a pull request when you're ready for review.
 Please ensure your contributions align with the project’s goals and include proper documentation.
 
+4. Smaller, easily reviewed pull requests are preferred.
+
 License
-This project is licensed under the MIT License. See the LICENSE file for details.
+This project is licensed under the MIT License. See the [LICENSE file](https://github.com/CascadePass/CPAP-Exporter/blob/main/LICENSE) for details.
