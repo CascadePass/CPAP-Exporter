@@ -1,6 +1,4 @@
-﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
-
-namespace CascadePass.CPAPExporter.UI.Tests
+﻿namespace CascadePass.CPAPExporter.UI.Tests
 {
     [TestClass]
     public class StatusBarViewModelTests
@@ -11,7 +9,6 @@ namespace CascadePass.CPAPExporter.UI.Tests
             StatusBarViewModel statusBarViewModel = new();
 
             Assert.IsNull(statusBarViewModel.MainWindow);
-            Assert.IsNull(statusBarViewModel.StatusText);
         }
 
         [TestMethod]

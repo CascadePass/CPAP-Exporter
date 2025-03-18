@@ -305,12 +305,12 @@ namespace CascadePass.CPAPExporter
             return "NavigationButtonStyle";
         }
 
-        private void Subscribe(ViewModel viewModel)
+        public void Subscribe(ViewModel viewModel)
         {
             viewModel.PropertyChanged += ViewModel_PropertyChanged;
         }
 
-        private void Unsubscribe(ViewModel viewModel)
+        public void Unsubscribe(ViewModel viewModel)
         {
             viewModel.PropertyChanged -= ViewModel_PropertyChanged;
         }
