@@ -1,6 +1,6 @@
 ﻿namespace CascadePass.CPAPExporter
 {
-    public class ExortFilenamesViewModel : ViewModel
+    public class ExportFilenamesViewModel : ViewModel
     {
         private string label, rawFilename, eventsFilename;
 

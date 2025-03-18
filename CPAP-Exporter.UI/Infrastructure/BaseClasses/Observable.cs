@@ -5,7 +5,7 @@ namespace CascadePass.CPAPExporter
     /// <summary>
     /// Base class for objects implementing <see cref="INotifyPropertyChanged"/>.
     /// </summary>
-    public class Observable
+    public abstract class Observable
     {
         /// <summary>
         /// Event raised when the value of a property changes.

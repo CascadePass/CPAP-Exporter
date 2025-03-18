@@ -6,7 +6,7 @@ namespace CascadePass.CPAPExporter
 {
     public abstract class ExportOptionsViewModel : ViewModel
     {
-        private ObservableCollection<ExortFilenamesViewModel> exportFilenames;
+        private ObservableCollection<ExportFilenamesViewModel> exportFilenames;
         private ExportParameters exportParameters;
         protected ExportSettings settings;
 
@@ -24,7 +24,7 @@ namespace CascadePass.CPAPExporter
             set => this.SetPropertyValue(ref this.exportParameters, value, nameof(this.ExportParameters));
         }
 
-        public ObservableCollection<ExortFilenamesViewModel> ExportFilenames
+        public ObservableCollection<ExportFilenamesViewModel> ExportFilenames
         {
             get => this.exportFilenames;
             set => this.SetPropertyValue(ref this.exportFilenames, value, nameof(this.ExportFilenames));
@@ -46,7 +46,7 @@ namespace CascadePass.CPAPExporter
             {
                 foreach (var export in this.ExportParameters.Reports.Where(r => r.IsSelected))
                 {
-                    var filenames = new ExortFilenamesViewModel
+                    var filenames = new ExportFilenamesViewModel
                     {
                         Label = export.DailyReport.ReportDate.ToString("yyyy-MM-dd"),
                         RawFilename = $"{export.DailyReport.ReportDate.ToString("yyyy-MM-dd")}.csv",
@@ -58,7 +58,7 @@ namespace CascadePass.CPAPExporter
             }
             else
             {
-                var filenames = new ExortFilenamesViewModel
+                var filenames = new ExportFilenamesViewModel
                 {
                     Label = "Export",
                     RawFilename = $"{this.exportParameters.Reports.First().DailyReport.ReportDate.ToString("yyyy-MM-dd")} - {this.exportParameters.Reports.Last().DailyReport.ReportDate.ToString("yyyy-MM-dd")}.csv",

@@ -65,8 +65,6 @@ namespace CascadePass.CPAPExporter
 
         private static void LogException()
         {
-            // Add your logging implementation here, e.g.:
-            // Console.WriteLine("An error occurred: " + e.Message);
         }
     }
 
