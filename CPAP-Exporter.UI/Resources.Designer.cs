@@ -394,7 +394,7 @@ namespace CascadePass.CPAPExporter {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Select which nights to export.  You can choose whether they all go in one file or not later..
+        ///   Looks up a localized string similar to Select which nights to export data from.  You&apos;ll have more options soon..
         /// </summary>
         public static string PageDesc_SelectNights {
             get {
@@ -403,7 +403,7 @@ namespace CascadePass.CPAPExporter {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Select which signals to include in the export.  For CSV files, 25 Hz signals will be averaged to match the sampling rate of other data channels..
+        ///   Looks up a localized string similar to Select which signals to include in the export.  Don&apos;t worry about how many samples each has, we&apos;ll make it work properly..
         /// </summary>
         public static string PageDesc_SelectSignals {
             get {
