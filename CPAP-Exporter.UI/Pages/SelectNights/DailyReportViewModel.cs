@@ -31,7 +31,7 @@ namespace CascadePass.CPAPExporter
 
         public DailyReport DailyReport {
             get => this.dailyReport;
-            set => this.SetPropertyValue(ref this.dailyReport, value, nameof(this.DailyReport));
+            set => this.SetPropertyValue(ref this.dailyReport, value, [nameof(this.DailyReport), nameof(this.SampleCount)]);
         }
 
         public int SampleCount

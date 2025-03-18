@@ -1,4 +1,5 @@
-﻿using System.Windows;
+﻿using Microsoft.VisualStudio.TestPlatform.MSTest.TestAdapter.ObjectModel;
+using System.ComponentModel;
 
 namespace CascadePass.CPAPExporter.UI.Tests
 {
@@ -24,6 +25,47 @@ namespace CascadePass.CPAPExporter.UI.Tests
 
             Assert.IsNotNull(navigationViewModel.ExportParameters);
         }
+
+        [TestMethod]
+        public void Subscribe_AttachesEventHandler()
+        {
+            var viewModel = new MockPageViewModel();
+            bool eventHandled = false;
+
+            void Handler(object sender, PropertyChangedEventArgs args)
+            {
+                eventHandled = true;
+            }
+
+            var testClass = new NavigationViewModel();
+            viewModel.PropertyChanged += Handler;
+
+            testClass.Subscribe(viewModel);
+            viewModel.Value = Guid.NewGuid().ToString();
+
+            Assert.IsTrue(eventHandled);
+        }
+
+        [TestMethod]
+        public void Unsubscribe_RemovesEventHandler()
+        {
+            var viewModel = new MockPageViewModel();
+            bool eventHandled = false;
+
+            void Handler(object sender, PropertyChangedEventArgs args)
+            {
+                eventHandled = true;
+            }
+
+            var testClass = new NavigationViewModel();
+            testClass.Subscribe(viewModel);
+
+            testClass.Unsubscribe(viewModel);
+            viewModel.Value = Guid.NewGuid().ToString();
+
+            Assert.IsFalse(eventHandled);
+        }
+
 
         #region Button Styles
 
@@ -51,7 +93,7 @@ namespace CascadePass.CPAPExporter.UI.Tests
             NavigationViewModel navigationViewModel = new()
             {
                 CurrentStep = NavigationStep.SelectDays,
-                PageViewModelProvider = new MockViewProvider(new SelectNightsViewModel() { ValidationProvider = new MockValidator(false)})
+                PageViewModelProvider = new MockViewProvider(new SelectNightsViewModel() { ValidationProvider = new MockValidator(false) })
             };
 
             Assert.AreEqual(NORMAL_STYLE, navigationViewModel.GetButtonStyleName(NavigationStep.Welcome));

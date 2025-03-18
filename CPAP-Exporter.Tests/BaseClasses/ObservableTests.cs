@@ -1,10 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace CascadePass.CPAPExporter.UI.Tests
+﻿namespace CascadePass.CPAPExporter.UI.Tests
 {
     [TestClass]
     public class ObservableTests
@@ -12,7 +6,7 @@ namespace CascadePass.CPAPExporter.UI.Tests
         [TestMethod]
         public void Observable_PropertyChanged_RaisedOnPropertyChange()
         {
-            var observable = new ObservableTestClass();
+            var observable = new MockObservable();
             bool eventRaised = false;
             observable.PropertyChanged += (sender, e) =>
             {
@@ -30,7 +24,7 @@ namespace CascadePass.CPAPExporter.UI.Tests
         [TestMethod]
         public void Observable_PropertyChanged_NotRaisedIfValueUnchanged()
         {
-            var observable = new ObservableTestClass();
+            var observable = new MockObservable();
             bool eventRaised = false;
             observable.PropertyChanged += (sender, e) => eventRaised = true;
 
@@ -42,7 +36,7 @@ namespace CascadePass.CPAPExporter.UI.Tests
         [TestMethod]
         public void Observable_PropertyChanged_RaisedForMultipleProperties()
         {
-            var observable = new ObservableTestClass();
+            var observable = new MockObservable();
             var changedProperties = new List<string>();
             observable.PropertyChanged += (sender, e) => changedProperties.Add(e.PropertyName);
 
@@ -55,29 +49,13 @@ namespace CascadePass.CPAPExporter.UI.Tests
         [TestMethod]
         public void Observable_PropertyChanged_HandlerReceivesCorrectPropertyName()
         {
-            var observable = new ObservableTestClass();
+            var observable = new MockObservable();
             string propertyName = null;
             observable.PropertyChanged += (sender, e) => propertyName = e.PropertyName;
 
             observable.PropertyData = "New Value";
 
             Assert.AreEqual(nameof(observable.PropertyData), propertyName);
-        }
-    }
-
-    public class ObservableTestClass : Observable
-    {
-        private string propertyData, secondProperty;
-
-        public string PropertyData {
-            get => this.propertyData;
-            set => this.SetPropertyValue(ref this.propertyData, value, nameof(this.PropertyData));
-        }
-
-        public string SecondProperty
-        {
-            get => this.secondProperty;
-            set => this.SetPropertyValue(ref this.secondProperty, value, nameof(this.SecondProperty));
         }
     }
 }

@@ -13,7 +13,6 @@ namespace CascadePass.CPAPExporter
 
         public SelectSignalsViewModel() : base(Resources.PageTitle_SelectSignals, Resources.PageDesc_SelectSignals)
         {
-            this.MaxSampleLength = 400;
         }
 
         public SelectSignalsViewModel(ExportParameters exportParameters) : this()
@@ -24,8 +23,6 @@ namespace CascadePass.CPAPExporter
         #endregion
 
         #region Properties
-
-        public int MaxSampleLength { get; set; }
 
         public ObservableCollection<DailyReportViewModel> Reports => this.ExportParameters.Reports;
 
@@ -93,6 +90,14 @@ namespace CascadePass.CPAPExporter
 
         private void ConsumeExportParameters()
         {
+            if (this.Signals is null || this.Signals.Count == 0 || this.Reports is null || this.Reports.Count == 0)
+            {
+                this.SignalDescriptions = null;
+                this.ExportDetails = null;
+
+                return;
+            }
+
             this.SignalDescriptions = SignalInfo.ExamineReport(this.ExportParameters.Reports.Select(r => r.DailyReport).Last());
             this.ExportDetails = new ExportDetails([.. this.Reports.Where(r => r.IsSelected).Select(r => r.DailyReport)]);
 
