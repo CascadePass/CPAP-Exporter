@@ -90,7 +90,7 @@ namespace CascadePass.CPAPExporter
 
         private void ConsumeExportParameters()
         {
-            if (this.Signals is null || this.Signals.Count == 0 || this.Reports is null || this.Reports.Count == 0)
+            if (this.Signals is null || this.Reports is null || this.Reports.Count == 0)
             {
                 this.SignalDescriptions = null;
                 this.ExportDetails = null;
