@@ -1,6 +1,6 @@
 ﻿namespace CascadePass.CPAPExporter
 {
-    public class ViewModel : Observable
+    public abstract class ViewModel : Observable
     {
     }
 }
