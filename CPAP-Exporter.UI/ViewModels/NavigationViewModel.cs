@@ -178,7 +178,7 @@ namespace CascadePass.CPAPExporter
 
                 if (!string.IsNullOrWhiteSpace(folder) && Directory.Exists(folder))
                 {
-                    ApplicationComponentProvider.Status.StatusText = $"Loading {folder}";
+                    ApplicationComponentProvider.Status.StatusText = string.Format(Resources.ReadingFolder, folder);
 
                     this.exportParameters.SourcePath = folder;
                     var view = new SelectNightsView { DataContext = new SelectNightsViewModel(this.ExportParameters) };
@@ -210,7 +210,9 @@ namespace CascadePass.CPAPExporter
                 this.CurrentView = view;
             }
 
-            ApplicationComponentProvider.Status.StatusText = $"{((SelectNightsViewModel)this.CurrentView.DataContext).Reports.Count} nights available to export";
+            var vm = (SelectNightsViewModel)this.CurrentView.DataContext;
+
+            ApplicationComponentProvider.Status.StatusText = string.Format(Resources.NightsAvailable, vm.Reports.Count, this.ExportParameters.SourcePath);
         }
 
         public void ShowSignals()
@@ -220,7 +222,7 @@ namespace CascadePass.CPAPExporter
             this.CurrentView = new SelectSignalsView { DataContext = viewModel };
             this.CurrentStep = NavigationStep.SelectSignals;
 
-            ApplicationComponentProvider.Status.StatusText = $"{viewModel.Signals.Count} signals available";
+            ApplicationComponentProvider.Status.StatusText = string.Format(Resources.SignalsAvailable, viewModel.Signals.Count);
         }
 
         public void ShowExportSettings()
@@ -228,7 +230,7 @@ namespace CascadePass.CPAPExporter
             this.CurrentView = new OptionsView() { DataContext = new ExportOptionsPageViewModel(this.ExportParameters) };
             this.CurrentStep = NavigationStep.Settings;
 
-            ApplicationComponentProvider.Status.StatusText = $"Ready to export";
+            ApplicationComponentProvider.Status.StatusText = Resources.ReadyToExport;
         }
 
         public void Export()
@@ -259,8 +261,8 @@ namespace CascadePass.CPAPExporter
                 exporter.ExportToFile(Path.Combine(folder, csvSettings.Filenames.First()));
                 exporter.ExportFlaggedEventsToFile(Path.Combine(folder, csvSettings.EventFilenames.First()));
 
-                savedVM.AddFile(Path.Combine(folder, csvSettings.Filenames.First()), $"CSV with signal data");
-                savedVM.AddFile(Path.Combine(folder, csvSettings.EventFilenames.First()), $"Events CSV");
+                savedVM.AddFile(Path.Combine(folder, csvSettings.Filenames.First()), Resources.FilesLabel_FullExport);
+                savedVM.AddFile(Path.Combine(folder, csvSettings.EventFilenames.First()), Resources.FilesLabel_EventsExport);
             }
             else
             {
@@ -271,8 +273,8 @@ namespace CascadePass.CPAPExporter
                     exporter.ExportToFile(Path.Combine(folder, csvSettings.Filenames[i]));
                     exporter.ExportFlaggedEventsToFile(Path.Combine(folder, csvSettings.EventFilenames[i]));
 
-                    savedVM.AddFile(Path.Combine(folder, csvSettings.Filenames[i]), $"CSV with signal data");
-                    savedVM.AddFile(Path.Combine(folder, csvSettings.EventFilenames[i]), $"Events CSV");
+                    savedVM.AddFile(Path.Combine(folder, csvSettings.Filenames[i]), Resources.FilesLabel_FullExport);
+                    savedVM.AddFile(Path.Combine(folder, csvSettings.EventFilenames[i]), Resources.FilesLabel_EventsExport);
                 }
             }
 
@@ -280,7 +282,7 @@ namespace CascadePass.CPAPExporter
             this.CurrentStep = NavigationStep.Export;
             this.CurrentView = savedView;
 
-            ApplicationComponentProvider.Status.StatusText = $"{savedVM.Files.Count} files written";
+            ApplicationComponentProvider.Status.StatusText = string.Format(Resources.FilesWritten, savedVM.Files.Count);
         }
 
         #region Helper methods

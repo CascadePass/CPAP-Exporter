@@ -344,7 +344,7 @@ namespace CascadePass.CPAPExporter.Core.Tests
 
             File.Delete(filePath);
 
-            Assert.IsTrue(result.Contains("Event Type,StartTime,Duration"));
+            Assert.IsTrue(result.Contains("Event Type,Start Time,Duration"));
             Assert.IsTrue(result.Contains(EventType.ObstructiveApnea.ToString()));
             Assert.IsTrue(result.Contains(EventType.Hypopnea.ToString()));
         }
@@ -366,7 +366,7 @@ namespace CascadePass.CPAPExporter.Core.Tests
 
             var result = exporter.ExportFlaggedEventsToString();
 
-            Assert.IsTrue(result.Contains("Event Type,StartTime,Duration"));
+            Assert.IsTrue(result.Contains("Event Type,Start Time,Duration"));
             Assert.IsTrue(result.Contains(EventType.ObstructiveApnea.ToString()));
             Assert.IsTrue(result.Contains(EventType.Hypopnea.ToString()));
         }
@@ -385,7 +385,7 @@ namespace CascadePass.CPAPExporter.Core.Tests
             var result = exporter.ExportFlaggedEventsToString();
 
             Console.WriteLine(result);
-            Assert.IsTrue(result.Contains("Event Type,StartTime,Duration"));
+            Assert.IsTrue(result.Contains("Event Type,Start Time,Duration"));
 
             foreach(var eventType in Enum.GetValues<EventType>())
             {
@@ -416,7 +416,7 @@ namespace CascadePass.CPAPExporter.Core.Tests
             var result = exporter.ExportFlaggedEventsToString();
 
             Console.WriteLine(result);
-            Assert.IsTrue(result.Contains("Event Type,StartTime,Duration"));
+            Assert.IsTrue(result.Contains("Event Type,Start Time,Duration"));
         }
 
         [TestMethod]

@@ -178,10 +178,10 @@
     <value>Rows</value>
   </data>
   <data name="PageDesc_SelectNights" xml:space="preserve">
-    <value>Select which nights to export.  You can choose whether they all go in one file or not later.</value>
+    <value>Select which nights to export data from.  You'll have more options soon.</value>
   </data>
   <data name="PageDesc_SelectSignals" xml:space="preserve">
-    <value>Select which signals to include in the export.  For CSV files, 25 Hz signals will be averaged to match the sampling rate of other data channels.</value>
+    <value>Select which signals to include in the export.  Don't worry about how many samples each has, we'll make it work properly.</value>
   </data>
   <data name="PageDesc_SavedFiles" xml:space="preserve">
     <value>Here are the files you requested.</value>
@@ -248,5 +248,38 @@
   </data>
   <data name="Delimiter" xml:space="preserve">
     <value>Delimiter</value>
+  </data>
+  <data name="FileWasDeleted" xml:space="preserve">
+    <value>{0} was deleted</value>
+  </data>
+  <data name="ReadingFolder" xml:space="preserve">
+    <value>Reading folder {0}</value>
+  </data>
+  <data name="AddingDate" xml:space="preserve">
+    <value>Adding {0}</value>
+  </data>
+  <data name="NightsAvailable" xml:space="preserve">
+    <value>{0} nights available to export from {1}</value>
+  </data>
+  <data name="SignalsAvailable" xml:space="preserve">
+    <value>{0} signals available to export</value>
+  </data>
+  <data name="Working" xml:space="preserve">
+    <value>Working</value>
+  </data>
+  <data name="ReadyToExport" xml:space="preserve">
+    <value>Ready to Export</value>
+  </data>
+  <data name="FilesLabel_FullExport" xml:space="preserve">
+    <value>Full export with signal data</value>
+  </data>
+  <data name="FilesLabel_EventsExport" xml:space="preserve">
+    <value>Events</value>
+  </data>
+  <data name="FilesWritten" xml:space="preserve">
+    <value>{0} Files written</value>
+  </data>
+  <data name="Validation_MainWindow_Null" xml:space="preserve">
+    <value>MainWindow is not set.</value>
   </data>
 </root>

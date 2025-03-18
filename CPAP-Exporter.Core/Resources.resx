@@ -117,6 +117,24 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
+  <data name="ColumnHeader_Date" xml:space="preserve">
+    <value>Date</value>
+  </data>
+  <data name="ColumnHeader_Duration" xml:space="preserve">
+    <value>Duration</value>
+  </data>
+  <data name="ColumnHeader_EventType" xml:space="preserve">
+    <value>Event Type</value>
+  </data>
+  <data name="ColumnHeader_Row" xml:space="preserve">
+    <value>Row</value>
+  </data>
+  <data name="ColumnHeader_Session" xml:space="preserve">
+    <value>Session</value>
+  </data>
+  <data name="ColumnHeader_StartTime" xml:space="preserve">
+    <value>Start Time</value>
+  </data>
   <data name="CSV" xml:space="preserve">
     <value>CSV</value>
   </data>
@@ -125,5 +143,26 @@
   </data>
   <data name="Events" xml:space="preserve">
     <value>Events</value>
+  </data>
+  <data name="Resources.Validation_SignalNames_Empty" xml:space="preserve">
+    <value>The SignalNamesToExport list cannot be empty.</value>
+  </data>
+  <data name="Validation_DailyReports_Empty" xml:space="preserve">
+    <value>The DailyReports list cannot be empty.</value>
+  </data>
+  <data name="Validation_DailyReports_NoSessions" xml:space="preserve">
+    <value>All DailyReports list must contain at least one session.</value>
+  </data>
+  <data name="Validation_DailyReports_NoSignals" xml:space="preserve">
+    <value>All DailyReports list must contain at least one signal.</value>
+  </data>
+  <data name="Validation_DailyReports_Null" xml:space="preserve">
+    <value>The DailyReports list must be set before exporting.</value>
+  </data>
+  <data name="Validation_SignalNames_Empty" xml:space="preserve">
+    <value>The SignalNamesToExport list must contain at least one signal name.</value>
+  </data>
+  <data name="Validation_SignalNames_Null" xml:space="preserve">
+    <value>The SignalNamesToExport list must be set before exporting.</value>
   </data>
 </root>

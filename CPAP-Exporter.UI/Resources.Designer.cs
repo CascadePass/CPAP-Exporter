@@ -61,6 +61,15 @@ namespace CascadePass.CPAPExporter {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Adding {0}.
+        /// </summary>
+        public static string AddingDate {
+            get {
+                return ResourceManager.GetString("AddingDate", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to AHI.
         /// </summary>
         public static string AHI {
@@ -129,6 +138,42 @@ namespace CascadePass.CPAPExporter {
         public static string Events {
             get {
                 return ResourceManager.GetString("Events", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Events.
+        /// </summary>
+        public static string FilesLabel_EventsExport {
+            get {
+                return ResourceManager.GetString("FilesLabel_EventsExport", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Full export with signal data.
+        /// </summary>
+        public static string FilesLabel_FullExport {
+            get {
+                return ResourceManager.GetString("FilesLabel_FullExport", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to {0} Files written.
+        /// </summary>
+        public static string FilesWritten {
+            get {
+                return ResourceManager.GetString("FilesWritten", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to {0} was deleted.
+        /// </summary>
+        public static string FileWasDeleted {
+            get {
+                return ResourceManager.GetString("FileWasDeleted", resourceCulture);
             }
         }
         
@@ -313,6 +358,15 @@ namespace CascadePass.CPAPExporter {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to {0} nights available to export from {1}.
+        /// </summary>
+        public static string NightsAvailable {
+            get {
+                return ResourceManager.GetString("NightsAvailable", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to nights found in.
         /// </summary>
         public static string NightsFoundIn {
@@ -340,7 +394,7 @@ namespace CascadePass.CPAPExporter {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Select which nights to export.  You can choose whether they all go in one file or not later..
+        ///   Looks up a localized string similar to Select which nights to export data from.  You&apos;ll have more options soon..
         /// </summary>
         public static string PageDesc_SelectNights {
             get {
@@ -349,7 +403,7 @@ namespace CascadePass.CPAPExporter {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Select which signals to include in the export.  For CSV files, 25 Hz signals will be averaged to match the sampling rate of other data channels..
+        ///   Looks up a localized string similar to Select which signals to include in the export.  Don&apos;t worry about how many samples each has, we&apos;ll make it work properly..
         /// </summary>
         public static string PageDesc_SelectSignals {
             get {
@@ -412,6 +466,24 @@ namespace CascadePass.CPAPExporter {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Reading folder {0}.
+        /// </summary>
+        public static string ReadingFolder {
+            get {
+                return ResourceManager.GetString("ReadingFolder", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Ready to Export.
+        /// </summary>
+        public static string ReadyToExport {
+            get {
+                return ResourceManager.GetString("ReadyToExport", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Rows.
         /// </summary>
         public static string Rows {
@@ -426,6 +498,15 @@ namespace CascadePass.CPAPExporter {
         public static string Sessions {
             get {
                 return ResourceManager.GetString("Sessions", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to {0} signals available to export.
+        /// </summary>
+        public static string SignalsAvailable {
+            get {
+                return ResourceManager.GetString("SignalsAvailable", resourceCulture);
             }
         }
         
@@ -448,11 +529,29 @@ namespace CascadePass.CPAPExporter {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to MainWindow is not set..
+        /// </summary>
+        public static string Validation_MainWindow_Null {
+            get {
+                return ResourceManager.GetString("Validation_MainWindow_Null", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to CPAP Exporter.
         /// </summary>
         public static string Window_Title {
             get {
                 return ResourceManager.GetString("Window_Title", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Working.
+        /// </summary>
+        public static string Working {
+            get {
+                return ResourceManager.GetString("Working", resourceCulture);
             }
         }
     }

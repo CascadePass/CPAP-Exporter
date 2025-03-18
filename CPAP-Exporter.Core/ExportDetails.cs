@@ -53,12 +53,12 @@ namespace CascadePass.CPAPExporter.Core
 
             if (dailyReports.Count == 0)
             {
-                throw new ArgumentException("The daily reports list cannot be empty.", nameof(dailyReports));
+                throw new ArgumentException(Resources.Validation_DailyReports_Empty, nameof(dailyReports));
             }
 
             if(dailyReports.Any(report => report.Sessions.Count == 0))
             {
-                throw new ArgumentException("All daily reports must contain at least one session.", nameof(dailyReports));
+                throw new ArgumentException(Resources.Validation_DailyReports_NoSessions, nameof(dailyReports));
             }
         }
 
