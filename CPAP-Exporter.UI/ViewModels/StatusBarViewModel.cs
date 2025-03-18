@@ -58,7 +58,7 @@ namespace CascadePass.CPAPExporter
                 }
                 else
                 {
-                    throw new InvalidOperationException("MainWindow is not set.");
+                    throw new InvalidOperationException(Resources.Validation_MainWindow_Null);
                 }
             }
         }

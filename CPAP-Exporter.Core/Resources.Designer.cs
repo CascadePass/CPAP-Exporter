@@ -61,6 +61,60 @@ namespace CascadePass.CPAPExporter.Core {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Date.
+        /// </summary>
+        internal static string ColumnHeader_Date {
+            get {
+                return ResourceManager.GetString("ColumnHeader_Date", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Duration.
+        /// </summary>
+        internal static string ColumnHeader_Duration {
+            get {
+                return ResourceManager.GetString("ColumnHeader_Duration", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Event Type.
+        /// </summary>
+        internal static string ColumnHeader_EventType {
+            get {
+                return ResourceManager.GetString("ColumnHeader_EventType", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Row.
+        /// </summary>
+        internal static string ColumnHeader_Row {
+            get {
+                return ResourceManager.GetString("ColumnHeader_Row", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Session.
+        /// </summary>
+        internal static string ColumnHeader_Session {
+            get {
+                return ResourceManager.GetString("ColumnHeader_Session", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Start Time.
+        /// </summary>
+        internal static string ColumnHeader_StartTime {
+            get {
+                return ResourceManager.GetString("ColumnHeader_StartTime", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to CSV.
         /// </summary>
         internal static string CSV {
@@ -84,6 +138,69 @@ namespace CascadePass.CPAPExporter.Core {
         internal static string Events {
             get {
                 return ResourceManager.GetString("Events", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to The SignalNamesToExport list cannot be empty..
+        /// </summary>
+        internal static string Resources_Validation_SignalNames_Empty {
+            get {
+                return ResourceManager.GetString("Resources.Validation_SignalNames_Empty", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to The DailyReports list cannot be empty..
+        /// </summary>
+        internal static string Validation_DailyReports_Empty {
+            get {
+                return ResourceManager.GetString("Validation_DailyReports_Empty", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to All DailyReports list must contain at least one session..
+        /// </summary>
+        internal static string Validation_DailyReports_NoSessions {
+            get {
+                return ResourceManager.GetString("Validation_DailyReports_NoSessions", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to All DailyReports list must contain at least one signal..
+        /// </summary>
+        internal static string Validation_DailyReports_NoSignals {
+            get {
+                return ResourceManager.GetString("Validation_DailyReports_NoSignals", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to The DailyReports list must be set before exporting..
+        /// </summary>
+        internal static string Validation_DailyReports_Null {
+            get {
+                return ResourceManager.GetString("Validation_DailyReports_Null", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to The SignalNamesToExport list must contain at least one signal name..
+        /// </summary>
+        internal static string Validation_SignalNames_Empty {
+            get {
+                return ResourceManager.GetString("Validation_SignalNames_Empty", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to The SignalNamesToExport list must be set before exporting..
+        /// </summary>
+        internal static string Validation_SignalNames_Null {
+            get {
+                return ResourceManager.GetString("Validation_SignalNames_Null", resourceCulture);
             }
         }
     }

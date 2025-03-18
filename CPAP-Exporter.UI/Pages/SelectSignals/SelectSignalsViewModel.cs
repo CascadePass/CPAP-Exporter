@@ -117,7 +117,7 @@ namespace CascadePass.CPAPExporter
                 }
             }
 
-            ApplicationComponentProvider.Status.StatusText = $"{this.ExportParameters.Signals.Count} signals available";
+            ApplicationComponentProvider.Status.StatusText = string.Format(Resources.SignalsAvailable, this.ExportParameters.Signals.Count);
         }
 
         protected override void OnPropertyChanged(string propertyName)

@@ -249,4 +249,37 @@
   <data name="Delimiter" xml:space="preserve">
     <value>Delimiter</value>
   </data>
+  <data name="FileWasDeleted" xml:space="preserve">
+    <value>{0} was deleted</value>
+  </data>
+  <data name="ReadingFolder" xml:space="preserve">
+    <value>Reading folder {0}</value>
+  </data>
+  <data name="AddingDate" xml:space="preserve">
+    <value>Adding {0}</value>
+  </data>
+  <data name="NightsAvailable" xml:space="preserve">
+    <value>{0} nights available to export from {1}</value>
+  </data>
+  <data name="SignalsAvailable" xml:space="preserve">
+    <value>{0} signals available to export</value>
+  </data>
+  <data name="Working" xml:space="preserve">
+    <value>Working</value>
+  </data>
+  <data name="ReadyToExport" xml:space="preserve">
+    <value>Ready to Export</value>
+  </data>
+  <data name="FilesLabel_FullExport" xml:space="preserve">
+    <value>Full export with signal data</value>
+  </data>
+  <data name="FilesLabel_EventsExport" xml:space="preserve">
+    <value>Events</value>
+  </data>
+  <data name="FilesWritten" xml:space="preserve">
+    <value>{0} Files written</value>
+  </data>
+  <data name="Validation_MainWindow_Null" xml:space="preserve">
+    <value>MainWindow is not set.</value>
+  </data>
 </root>

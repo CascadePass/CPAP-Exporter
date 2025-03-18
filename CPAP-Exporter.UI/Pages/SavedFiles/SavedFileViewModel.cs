@@ -74,7 +74,7 @@ namespace CascadePass.CPAPExporter
                 this.IsDeleted = true;
                 this.OnFileDeleted(this, EventArgs.Empty);
 
-                ApplicationComponentProvider.Status.StatusText = $"{this.Filename} was deleted";
+                ApplicationComponentProvider.Status.StatusText = string.Format(Resources.FileWasDeleted, this.Filename);
             }
             catch (Exception ex)
             {

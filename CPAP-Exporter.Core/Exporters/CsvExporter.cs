@@ -97,32 +97,32 @@ namespace CascadePass.CPAPExporter.Core
 
             if (this.DailyReports == null)
             {
-                throw new InvalidOperationException("DailyReports must be set before exporting.");
+                throw new InvalidOperationException(Resources.Validation_DailyReports_Null);
             }
 
             if (this.DailyReports.Count == 0)
             {
-                throw new InvalidOperationException("DailyReports must be present before exporting.");
+                throw new InvalidOperationException(Resources.Validation_DailyReports_Empty);
             }
 
             if (this.DailyReports.Any(r => r.Sessions?.Count == 0))
             {
-                throw new InvalidOperationException("DailyReports must have sessions.");
+                throw new InvalidOperationException(Resources.Validation_DailyReports_NoSessions);
             }
 
             if (this.DailyReports.Any(r => r.Sessions.Any(s => s.Signals?.Count == 0)))
             {
-                throw new InvalidOperationException("DailyReports must have signals.");
+                throw new InvalidOperationException(Resources.Validation_DailyReports_NoSignals);
             }
 
             if (this.SignalNamesToExport == null)
             {
-                throw new InvalidOperationException("SignalNamesToExport must be set before exporting.");
+                throw new InvalidOperationException(Resources.Validation_SignalNames_Null);
             }
 
             if (this.SignalNamesToExport.Count == 0)
             {
-                throw new InvalidOperationException("Cannot export no signals.");
+                throw new InvalidOperationException(Resources.Validation_SignalNames_Empty);
             }
 
             #endregion
@@ -252,17 +252,17 @@ namespace CascadePass.CPAPExporter.Core
 
             if (this.ExportSettings.IncludeRowNumber)
             {
-                this.WriteValue(writer, "Row", true);
+                this.WriteValue(writer, Resources.ColumnHeader_Row, true);
             }
 
             if (this.ExportSettings.IncludeSessionNumber)
             {
-                this.WriteValue(writer, "Session", true);
+                this.WriteValue(writer, Resources.ColumnHeader_Session, true);
             }
 
             if (this.ExportSettings.IncludeTimestamp)
             {
-                this.WriteValue(writer, "Date", true);
+                this.WriteValue(writer, Resources.ColumnHeader_Date, true);
             }
 
             #endregion
@@ -413,7 +413,7 @@ namespace CascadePass.CPAPExporter.Core
 
             if (this.ExportSettings.IncludeColumnHeaders)
             {
-                writer.WriteLine("Event Type,StartTime,Duration");
+                writer.WriteLine($"{Resources.ColumnHeader_EventType},{Resources.ColumnHeader_StartTime},{Resources.ColumnHeader_Duration}");
             }
 
             foreach (var report in this.DailyReports)

@@ -41,7 +41,7 @@ namespace CascadePass.CPAPExporter
             }
             else
             {
-                ApplicationComponentProvider.Status.StatusText = $"{this.ExportParameters.Reports.Count} nights available to export";
+                ApplicationComponentProvider.Status.StatusText = string.Format(Resources.NightsAvailable, this.ExportParameters.Reports.Count, this.ExportParameters?.SourcePath);
             }
         }
 
@@ -132,7 +132,7 @@ namespace CascadePass.CPAPExporter
             #endregion
 
             this.IsBusy = true;
-            ApplicationComponentProvider.Status.StatusText = $"Reading folder {folder}";
+            ApplicationComponentProvider.Status.StatusText = string.Format(Resources.ReadingFolder, folder);
 
             // This is where the files are loaded from disc
             var reports = loader.LoadFromFolder(folder, null, null, new() { FlagFlowLimits = false });
@@ -142,7 +142,7 @@ namespace CascadePass.CPAPExporter
             {
                 foreach (var report in reports)
                 {
-                    ApplicationComponentProvider.Status.StatusText = $"Adding {report.ReportDate}";
+                    ApplicationComponentProvider.Status.StatusText = string.Format(Resources.AddingDate, report.ReportDate);
 
                     DailyReportViewModel reportViewModel = new(report, false);
                     this.Reports.Add(reportViewModel);
@@ -155,7 +155,7 @@ namespace CascadePass.CPAPExporter
             this.IsAllSelected = this.ExportParameters.Reports.All(r => r.IsSelected);
 
             this.IsBusy = false;
-            ApplicationComponentProvider.Status.StatusText = $"Loaded {reports.Count} reports from {folder}";
+            ApplicationComponentProvider.Status.StatusText = string.Format(Resources.NightsAvailable, this.ExportParameters.Reports.Count, folder);
             this.ExportParameters.SourcePath = folder;
         }
 
@@ -174,7 +174,7 @@ namespace CascadePass.CPAPExporter
 
         public void Work()
         {
-            ApplicationComponentProvider.Status.StatusText = "Working...";
+            ApplicationComponentProvider.Status.StatusText = Resources.Working;
 
             Task.Run(() =>
             {
