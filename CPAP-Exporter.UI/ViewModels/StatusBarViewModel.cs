@@ -19,7 +19,7 @@ namespace CascadePass.CPAPExporter
         {
             this.Version = this.GetType().Assembly.GetName().Version;
 
-            this.pageViewModelProvider = new PageViewModelProvider();
+            this.pageViewModelProvider = ApplicationComponentProvider.PageViewModelProvider;
 
             if (ApplicationComponentProvider.Status is Observable observable)
             {
