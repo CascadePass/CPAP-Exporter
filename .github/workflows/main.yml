@@ -45,10 +45,10 @@ jobs:
       run: dotnet restore
 
     - name: Build in Release mode
-      run: dotnet build CPAP-Exporter.Core.csproj --configuration Release
+      run: dotnet build CPAP-Exporter.Core\CPAP-Exporter.Core.csproj --configuration Release
 
     - name: Build in Release mode
-      run: dotnet build CPAP-Exporter.UI.csproj --configuration Release
+      run: dotnet build CPAP-Exporter.UI\CPAP-Exporter.UI.csproj --configuration Release
 
     - name: Archive build artifacts
       uses: actions/upload-artifact@v4
