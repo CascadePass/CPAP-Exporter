@@ -30,4 +30,4 @@ jobs:
     - name: Archive build artifacts
       uses: actions/upload-artifact@v4
       with:
-        name: build-artifacts
+        path: build/
