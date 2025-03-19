@@ -13,6 +13,7 @@ namespace CascadePass.CPAPExporter
         private ObservableCollection<SignalViewModel> signals;
         private List<string> signalNames;
         private string sourcePath, destinationPath;
+        private UserSettings userSettings;
 
         #endregion
 
@@ -34,6 +35,10 @@ namespace CascadePass.CPAPExporter
             BindingOperations.EnableCollectionSynchronization(this.Reports, new object());
             BindingOperations.EnableCollectionSynchronization(this.Signals, new object());
             BindingOperations.EnableCollectionSynchronization(this.Settings, new object());
+
+            // Get the user's settings, if available.
+
+            this.UserPreferences = UserSettings.Load();
         }
 
         #endregion
@@ -84,6 +89,12 @@ namespace CascadePass.CPAPExporter
         {
             get => this.settings;
             set => this.SetPropertyValue(ref this.settings, value, nameof(this.Settings));
+        }
+
+        public UserSettings UserPreferences
+        {
+            get => this.userSettings;
+            set => this.SetPropertyValue(ref this.userSettings, value, nameof(this.UserPreferences));
         }
 
         #endregion
