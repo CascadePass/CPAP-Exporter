@@ -1,4 +1,6 @@
-﻿namespace CascadePass.CPAPExporter.UI.Tests
+﻿using System.Reflection;
+
+namespace CascadePass.CPAPExporter.UI.Tests
 {
     [TestClass]
     [DoNotParallelize]
@@ -18,6 +20,7 @@
         {
             var filename = UserSettings.Filename;
 
+            Console.WriteLine(filename);
             Assert.IsFalse(string.IsNullOrWhiteSpace(filename));
             StringAssert.EndsWith(filename, "UserSettings.json");
         }
@@ -77,5 +80,102 @@
 
             File.Delete(UserSettings.Filename);
         }
+
+        [TestMethod]
+        public void CreateSubFolder_DoesNotExist()
+        {
+            string filename = UserSettings.Filename;
+
+            string appSubFolder = Path.GetDirectoryName(filename);
+
+            if (Directory.Exists(appSubFolder))
+            {
+                Directory.Delete(appSubFolder, true);
+            }
+
+            UserSettings.CreateSubFolder();
+
+            Assert.IsTrue(Directory.Exists(appSubFolder));
+        }
+
+        [TestMethod]
+        public void CreateSubFolder_Exists()
+        {
+            string appDataPath = Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData);
+            string appName = Assembly.GetExecutingAssembly().GetName().Name;
+            string appSubFolder = Path.Combine(appDataPath, appName);
+
+            if (!Directory.Exists(appSubFolder))
+            {
+                Directory.CreateDirectory(appSubFolder);
+            }
+
+            Assert.IsTrue(Directory.Exists(appSubFolder));
+
+            UserSettings.CreateSubFolder();
+
+            Assert.IsTrue(Directory.Exists(appSubFolder));
+
+            // Expectation is that no exception is thrown when
+            // creating a folder that already exists.
+        }
+
+        #region AddFolder
+
+        [TestMethod]
+        public void AddFolder_AddsNewFolder()
+        {
+            var settings = new UserSettings();
+
+            settings.AddFolder("Folder1");
+            Assert.IsTrue(settings.RecentlyUsedFolders.Contains("Folder1"));
+        }
+
+        [TestMethod]
+        public void AddFolder_DoesNotAddDuplicateFolder()
+        {
+            var settings = new UserSettings();
+
+            settings.AddFolder("Folder1");
+            settings.AddFolder("Folder1"); // Duplicate
+
+            Assert.AreEqual(1, settings.RecentlyUsedFolders.Count);
+        }
+
+        [TestMethod]
+        public void AddFolder_RemovesOldestFolderWhenLimitExceeded()
+        {
+            var settings = new UserSettings();
+
+            for (int i = 0; i < 20; i++)
+            {
+                settings.AddFolder($"Folder{i}");
+            }
+
+            Assert.IsFalse(settings.RecentlyUsedFolders.Contains("Folder1"));
+            Assert.AreEqual(15, settings.RecentlyUsedFolders.Count); // Stays at limit
+        }
+
+        [TestMethod]
+        public void AddFolder_KeepsFoldersInOrder()
+        {
+            var settings = new UserSettings();
+
+            settings.AddFolder("Folder1");
+            settings.AddFolder("Folder2");
+            settings.AddFolder("Folder3");
+
+            CollectionAssert.AreEqual(
+                new List<string> { "Folder1", "Folder2", "Folder3" },
+                settings.RecentlyUsedFolders
+            );
+
+            CollectionAssert.AreEqual(
+                new List<string> { "Folder1", "Folder2", "Folder3" },
+                settings.RecentlyUsedFolders
+            );
+        }
+
+        #endregion
     }
 }

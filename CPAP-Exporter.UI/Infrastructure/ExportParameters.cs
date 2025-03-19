@@ -36,6 +36,8 @@ namespace CascadePass.CPAPExporter
             BindingOperations.EnableCollectionSynchronization(this.Signals, new object());
             BindingOperations.EnableCollectionSynchronization(this.Settings, new object());
 
+            // Get the user's settings, if available.
+
             this.UserPreferences = UserSettings.Load();
         }
 

@@ -6,19 +6,29 @@ using System.Windows;
 
 namespace CascadePass.CPAPExporter
 {
+    /// <summary>
+    /// User Settings, such as window location and size.
+    /// </summary>
     public class UserSettings
     {
         private static string filename;
+        private const int MAX_FOLDERS = 15;
+
+        #region Constructor
 
         public UserSettings() {
-            this.RecentlyUsedFolders = new();
+            this.RecentlyUsedFolders = [];
         }
 
-        public int WindowX { get; set; }
-        public int WindowY { get; set; }
+        #endregion
 
-        public int WindowWidth { get; set; }
-        public int WindowHeight { get; set; }
+        #region Properties
+
+        public double WindowX { get; set; }
+        public double WindowY { get; set; }
+
+        public double WindowWidth { get; set; }
+        public double WindowHeight { get; set; }
 
         public WindowState WindowState { get; set; }
 
@@ -28,6 +38,9 @@ namespace CascadePass.CPAPExporter
 
         public List<string> RecentlyUsedFolders { get; set; }
 
+        /// <summary>
+        /// Gets the fully qualified name of the settings file.
+        /// </summary>
         public static string Filename
         {
             get
@@ -45,29 +58,78 @@ namespace CascadePass.CPAPExporter
             }
         }
 
-        public void Save()
-        {
-            UserSettings.CreateSubFolder();
+        #endregion
 
-            var json = JsonConvert.SerializeObject(this);
-            File.WriteAllText(UserSettings.Filename, json);
+        #region Methods
+
+        /// <summary>
+        /// Adds a recently used folder, and evicts an old folder if necessary
+        /// to keep the list size within reason.
+        /// </summary>
+        /// <param name="folder">The folder to add to the list.</param>
+        public void AddFolder(string folder)
+        {
+            if (this.RecentlyUsedFolders.Contains(folder))
+            {
+                return;
+            }
+
+            if (this.RecentlyUsedFolders.Count >= UserSettings.MAX_FOLDERS)
+            {
+                this.RecentlyUsedFolders.RemoveAt(0);
+            }
+
+            this.RecentlyUsedFolders.Add(folder);
         }
 
+        /// <summary>
+        /// Saves the <see cref="UserSettings"/> instance to <see cref="Filename"/>.
+        /// </summary>
+        public void Save()
+        {
+            try
+            {
+                UserSettings.CreateSubFolder();
+
+                var json = JsonConvert.SerializeObject(this);
+                File.WriteAllText(UserSettings.Filename, json);
+            }
+            catch (Exception)
+            {
+                // Swallow for now
+            }
+        }
+
+        /// <summary>
+        /// Loads a <see cref="UserSettings"/> instance from <see cref="Filename"/>.
+        /// </summary>
+        /// <returns></returns>
         public static UserSettings Load()
         {
-            UserSettings.CreateSubFolder();
-
-            if (File.Exists(UserSettings.Filename))
+            try
             {
-                var json = File.ReadAllText(UserSettings.Filename);
-                var settings = JsonConvert.DeserializeObject<UserSettings>(json);
+                UserSettings.CreateSubFolder();
 
-                return settings;
+                if (File.Exists(UserSettings.Filename))
+                {
+                    var json = File.ReadAllText(UserSettings.Filename);
+                    var settings = JsonConvert.DeserializeObject<UserSettings>(json);
+
+                    return settings;
+                }
+            }
+            catch(Exception)
+            {
+                // Swallow for now
             }
 
             return new();
         }
 
+        /// <summary>
+        /// Creates an application specific folder under AppData, if one
+        /// doesn't already exist.
+        /// </summary>
         internal static void CreateSubFolder()
         {
             string appDataPath = Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData);
@@ -79,5 +141,7 @@ namespace CascadePass.CPAPExporter
                 Directory.CreateDirectory(appSubFolder);
             }
         }
+
+        #endregion
     }
 }
