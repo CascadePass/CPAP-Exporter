@@ -49,10 +49,3 @@ jobs:
 
     - name: Build in Release mode
       run: dotnet build CPAP-Exporter.UI\CPAP-Exporter.UI.csproj --configuration Release
-
-    - name: Archive build artifacts
-      uses: actions/upload-artifact@v4
-      with:
-        name: Release-Build
-        path: |
-          **/bin/Release/
