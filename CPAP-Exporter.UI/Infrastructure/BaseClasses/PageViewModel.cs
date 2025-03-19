@@ -27,9 +27,9 @@
         public IValidatable ValidationProvider
         {
             get => this.validationProvider;
-//#if DEBUG
+#if DEBUG
             set => this.SetPropertyValue(ref this.validationProvider, value, nameof(this.ValidationProvider));
-//#endif
+#endif
         }
 
         public ExportParameters ExportParameters
