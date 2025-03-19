@@ -1,6 +1,7 @@
 ﻿namespace CascadePass.CPAPExporter.UI.Tests
 {
     [TestClass]
+    [DoNotParallelize]
     public class UserSettingsTests
     {
         [TestMethod]
