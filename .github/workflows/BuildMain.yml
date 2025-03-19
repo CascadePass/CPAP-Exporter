@@ -30,4 +30,4 @@ jobs:
     - name: Archive build artifacts
       uses: actions/upload-artifact@v4
       with:
-        path: build/
+        path: CPAP-Exporter.Core/bin/Release/, CPAP-Exporter.UI/bin/Release/
