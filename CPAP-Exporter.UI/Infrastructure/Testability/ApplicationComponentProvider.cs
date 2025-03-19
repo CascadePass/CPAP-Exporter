@@ -7,6 +7,12 @@
             ApplicationComponentProvider.Status = new Status();
         }
 
-        public static IStatus Status { get; }
+        public static IStatus Status
+        {
+            get;
+#if DEBUG
+            set;
+#endif
+        }
     }
 }
