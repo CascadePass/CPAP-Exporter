@@ -1,0 +1,27 @@
+name: Build and Test
+
+on:
+  pull_request:
+
+jobs:
+  build-and-test:
+    name: Build and Test in Debug Mode
+    runs-on: windows-latest
+
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v4
+
+    - name: Setup .NET
+      uses: actions/setup-dotnet@v4
+      with:
+        dotnet-version: 9.0.x
+
+    - name: Install dependencies
+      run: dotnet restore
+
+    - name: Build in Debug mode
+      run: dotnet build --configuration Debug
+
+    - name: Run tests
+      run: dotnet test --configuration Debug
