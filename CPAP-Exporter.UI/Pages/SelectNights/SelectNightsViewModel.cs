@@ -159,6 +159,8 @@ namespace CascadePass.CPAPExporter
 
         internal DailyReportViewModel AddReport(DailyReport report)
         {
+            ArgumentNullException.ThrowIfNull(report, nameof(report));
+
             ApplicationComponentProvider.Status.StatusText = string.Format(Resources.AddingDate, report.ReportDate);
 
             DailyReportViewModel reportViewModel = new(report, this.IsAllSelected);

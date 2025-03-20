@@ -1,4 +1,7 @@
-﻿namespace CascadePass.CPAPExporter.UI.Tests
+﻿using cpaplib;
+using Microsoft.VisualStudio.TestTools.UnitTesting;
+
+namespace CascadePass.CPAPExporter.UI.Tests
 {
     [TestClass]
     public class SelectNightsViewModelTests
@@ -20,6 +23,8 @@
         }
 
         #endregion
+
+        #region IsAllSelected
 
         [TestMethod]
         public void IsAllSelected_True()
@@ -71,5 +76,94 @@
             selectNightsViewModel.IsAllSelected = false;
             Assert.IsFalse(selectNightsViewModel.Reports.Any(r => r.IsSelected));
         }
+
+        #endregion
+
+        #region AddReport
+
+        [TestMethod]
+        [ExpectedException(typeof(ArgumentNullException))]
+        public void AddReport_null()
+        {
+            var selectNightsViewModel = new SelectNightsViewModel(new());
+
+            selectNightsViewModel.AddReport(null);
+        }
+
+        [TestMethod]
+        public void AddReport_ValidReport_ReturnsWrappedViewModel()
+        {
+            var selectNightsViewModel = new SelectNightsViewModel(new());
+            DailyReport dailyReport = new();
+            var result = selectNightsViewModel.AddReport(dailyReport);
+
+            Assert.IsNotNull(result);
+            Assert.AreSame(dailyReport, result.DailyReport);
+        }
+
+        [TestMethod]
+        public void AddReport_ValidReport_AddsToReports()
+        {
+            var selectNightsViewModel = new SelectNightsViewModel(new());
+            DailyReport dailyReport = new();
+            var result = selectNightsViewModel.AddReport(dailyReport);
+
+            Assert.AreEqual(1, selectNightsViewModel.Reports.Count);
+            Assert.IsTrue(selectNightsViewModel.Reports.Any(r => r.DailyReport == dailyReport));
+        }
+
+        #endregion
+
+        #region Validate
+
+        [TestMethod]
+        public void Validate_NothingChecked()
+        {
+            var selectNightsViewModel = new SelectNightsViewModel(new());
+
+            for (int i = 0; i < 10; i++)
+            {
+                var nightViewModel = selectNightsViewModel.AddReport(new());
+                nightViewModel.IsSelected = false;
+            }
+
+            var result = selectNightsViewModel.Validate();
+
+            Assert.IsFalse(result);
+        }
+
+        [TestMethod]
+        public void Validate_EverythingChecked()
+        {
+            var selectNightsViewModel = new SelectNightsViewModel(new());
+
+            for (int i = 0; i < 10; i++)
+            {
+                var nightViewModel = selectNightsViewModel.AddReport(new());
+                nightViewModel.IsSelected = true;
+            }
+
+            var result = selectNightsViewModel.Validate();
+
+            Assert.IsTrue(result);
+        }
+
+        [TestMethod]
+        public void Validate_SomeChecked()
+        {
+            var selectNightsViewModel = new SelectNightsViewModel(new());
+
+            for (int i = 0; i < 10; i++)
+            {
+                var nightViewModel = selectNightsViewModel.AddReport(new());
+                nightViewModel.IsSelected = i % 2 == 0;
+            }
+
+            var result = selectNightsViewModel.Validate();
+
+            Assert.IsTrue(result);
+        }
+
+        #endregion
     }
 }
