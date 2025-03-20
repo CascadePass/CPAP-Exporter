@@ -22,7 +22,10 @@ jobs:
       run: dotnet restore
 
     - name: Build in Release mode
-      run: dotnet build
+      run: dotnet build --configuration Release
 
     - name: Archive build artifacts
       uses: actions/upload-artifact@v4
+      with:
+        path: bin/Release
+        
