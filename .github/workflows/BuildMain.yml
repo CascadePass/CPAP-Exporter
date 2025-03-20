@@ -21,11 +21,14 @@ jobs:
     - name: Install dependencies
       run: dotnet restore
 
-    - name: Build in Release mode
-      run: dotnet build --configuration Release
+    - name: Build Specific Projects in Release mode
+      run: |
+        dotnet build CPAP-Exporter.Core/CPAP-Exporter.Core.csproj --configuration Release
+        dotnet build CPAP-Exporter.UI/CPAP-Exporter.UI.csproj --configuration Release
 
     - name: Archive build artifacts
       uses: actions/upload-artifact@v4
       with:
-        path: bin/Release
-        
+        path: |
+          CPAP-Exporter.Core/bin/Release
+          CPAP-Exporter.UI/bin/Release
