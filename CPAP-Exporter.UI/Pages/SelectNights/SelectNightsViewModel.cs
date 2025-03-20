@@ -132,6 +132,7 @@ namespace CascadePass.CPAPExporter
             #endregion
 
             this.IsBusy = true;
+            this.ExportParameters.SourcePath = folder;
             ApplicationComponentProvider.Status.StatusText = string.Format(Resources.ReadingFolder, folder);
 
             // This is where the files are loaded from disc
@@ -142,21 +143,32 @@ namespace CascadePass.CPAPExporter
             {
                 foreach (var report in reports)
                 {
-                    ApplicationComponentProvider.Status.StatusText = string.Format(Resources.AddingDate, report.ReportDate);
-
-                    DailyReportViewModel reportViewModel = new(report, false);
-                    this.Reports.Add(reportViewModel);
-
-                    reportViewModel.PropertyChanged += this.ReportViewModel_PropertyChanged;
+                    this.AddReport(report);
                 }
             });
 
-            this.ExportParameters.Reports[^1].IsSelected = true;
-            this.IsAllSelected = this.ExportParameters.Reports.All(r => r.IsSelected);
+            if (!this.IsAllSelected)
+            {
+                this.ExportParameters.Reports[^1].IsSelected = true;
+                this.IsAllSelected = this.ExportParameters.Reports.All(r => r.IsSelected);
+            }
 
             this.IsBusy = false;
             ApplicationComponentProvider.Status.StatusText = string.Format(Resources.NightsAvailable, this.ExportParameters.Reports.Count, folder);
-            this.ExportParameters.SourcePath = folder;
+        }
+
+        internal DailyReportViewModel AddReport(DailyReport report)
+        {
+            ArgumentNullException.ThrowIfNull(report, nameof(report));
+
+            ApplicationComponentProvider.Status.StatusText = string.Format(Resources.AddingDate, report.ReportDate);
+
+            DailyReportViewModel reportViewModel = new(report, this.IsAllSelected);
+            this.Reports.Add(reportViewModel);
+
+            reportViewModel.PropertyChanged += this.ReportViewModel_PropertyChanged;
+
+            return reportViewModel;
         }
 
         /// <summary>

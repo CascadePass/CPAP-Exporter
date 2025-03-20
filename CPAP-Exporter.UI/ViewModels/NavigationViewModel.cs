@@ -174,13 +174,13 @@ namespace CascadePass.CPAPExporter
             if (dialog.ShowDialog() == true)
             {
                 var folder = dialog.FolderName;
-                this.exportParameters.SourcePath = dialog.FolderName;
 
                 if (!string.IsNullOrWhiteSpace(folder) && Directory.Exists(folder))
                 {
+                    this.exportParameters.SourcePath = folder;
+                    this.exportParameters.Reports.Clear();
                     ApplicationComponentProvider.Status.StatusText = string.Format(Resources.ReadingFolder, folder);
 
-                    this.exportParameters.SourcePath = folder;
                     var view = new SelectNightsView { DataContext = new SelectNightsViewModel(this.ExportParameters) };
 
                     this.CurrentView = view;
