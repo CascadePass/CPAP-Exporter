@@ -281,17 +281,35 @@ namespace CascadePass.CPAPExporter
 
         public void Subscribe(ViewModel viewModel)
         {
-            viewModel.PropertyChanged += ViewModel_PropertyChanged;
+            viewModel.PropertyChanged += this.ViewModel_PropertyChanged;
+
+            if (viewModel is PageViewModel pageViewModel)
+            {
+                pageViewModel.AdvancePage += this.PageViewModel_AdvancePage;
+            }
         }
 
         public void Unsubscribe(ViewModel viewModel)
         {
-            viewModel.PropertyChanged -= ViewModel_PropertyChanged;
+            viewModel.PropertyChanged -= this.ViewModel_PropertyChanged;
+
+            if (viewModel is PageViewModel pageViewModel)
+            {
+                pageViewModel.AdvancePage -= this.PageViewModel_AdvancePage;
+            }
         }
 
         private void ViewModel_PropertyChanged(object sender, System.ComponentModel.PropertyChangedEventArgs e)
         {
             this.OnPropertyChanged(nameof(this.CurrentView));
+        }
+
+        private void PageViewModel_AdvancePage(object sender, EventArgs e)
+        {
+            if (sender is OpenFilesViewModel)
+            {
+                this.SelectNights();
+            }
         }
 
         #endregion

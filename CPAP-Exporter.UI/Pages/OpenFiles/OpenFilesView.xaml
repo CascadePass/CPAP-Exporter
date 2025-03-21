@@ -5,34 +5,48 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:local="clr-namespace:CascadePass.CPAPExporter"
              mc:Ignorable="d" 
-             d:DesignHeight="450" d:DesignWidth="800">
+             d:DesignHeight="450" d:DesignWidth="800"
+             x:Name="OpenFilesControl"
+             >
     <StackPanel>
-        <CheckBox IsChecked="True">
+        <CheckBox IsChecked="True" Margin="10">
             <TextBlock
                 Text="Generate FL and FR events"
                 FontWeight="Bold"
                 />
         </CheckBox>
 
-        <Border BorderBrush="LightGray" BorderThickness="0.5" CornerRadius="4">
+        <Border BorderBrush="LightGray" BorderThickness="0.5" CornerRadius="4" Margin="10">
             <Button BorderBrush="Transparent" Background="Transparent" Command="{Binding BrowseCommand}">
                 <StackPanel Orientation="Horizontal">
-                    <Image Source="pack://application:,,,/Images/FolderOpenBlue.png" Style="{StaticResource NavigationButtonImage}" />
+                    <Image Source="pack://application:,,,/Images/OpenFolder.png" Style="{StaticResource NavigationButtonImage}" />
 
                     <TextBlock
                         Text="{x:Static local:Resources.Browse}"
+                        FontWeight="Bold"
                         VerticalAlignment="Center"
                         />
                 </StackPanel>
             </Button>
         </Border>
 
-        <ItemsControl ItemsSource="{Binding RecentlyUsedFolders}">
-            <ItemsControl.ItemsPanel>
-                <ItemsPanelTemplate>
-                    <WrapPanel Orientation="Horizontal" />
-                </ItemsPanelTemplate>
-            </ItemsControl.ItemsPanel>
+        <ItemsControl ItemsSource="{Binding Folders}" Margin="10">
+            <ItemsControl.ItemTemplate>
+                <DataTemplate>
+                    <Border BorderBrush="LightGray" BorderThickness="0.5" CornerRadius="4" Width="Auto">
+                        <Button BorderBrush="Transparent" Background="Transparent" Command="{Binding ElementName=OpenFilesControl, Path=DataContext.OpenCommand}" CommandParameter="{Binding .}">
+                            <StackPanel Orientation="Horizontal">
+                                <Image Source="pack://application:,,,/Images/OpenFolder.png" Style="{StaticResource NavigationButtonImage}" />
+
+                                <TextBlock
+                                    Text="{Binding .}"
+                                    VerticalAlignment="Center"
+                                    />
+                            </StackPanel>
+                        </Button>
+                    </Border>
+                </DataTemplate>
+            </ItemsControl.ItemTemplate>
         </ItemsControl>
     </StackPanel>
 </UserControl>
