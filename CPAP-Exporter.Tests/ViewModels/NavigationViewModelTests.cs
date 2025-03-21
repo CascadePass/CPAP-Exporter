@@ -4,6 +4,7 @@ using System.ComponentModel;
 namespace CascadePass.CPAPExporter.UI.Tests
 {
     [TestClass]
+    [DoNotParallelize]
     public class NavigationViewModelTests
     {
         private const string CURRENT_STYLE = "SelectedNavigationButtonStyle";
@@ -13,7 +14,8 @@ namespace CascadePass.CPAPExporter.UI.Tests
         [TestMethod]
         public void NewInstance_CurrentPageIsWelcomeScreen()
         {
-            NavigationViewModel navigationViewModel = new() { PageViewModelProvider = new MockViewProvider(new WelcomeViewModel()) };
+            ApplicationComponentProvider.PageViewModelProvider = new MockViewProvider(new WelcomeViewModel());
+            NavigationViewModel navigationViewModel = new();
 
             Assert.AreEqual(NavigationStep.Welcome, navigationViewModel.CurrentStep);
         }
@@ -74,9 +76,9 @@ namespace CascadePass.CPAPExporter.UI.Tests
         [TestMethod]
         public void Welcome_NavigationOptions()
         {
+            ApplicationComponentProvider.PageViewModelProvider = new MockViewProvider(new WelcomeViewModel());
             NavigationViewModel navigationViewModel = new() {
                 CurrentStep = NavigationStep.Welcome,
-                PageViewModelProvider = new MockViewProvider(new WelcomeViewModel())
             };
 
             Assert.AreEqual(CURRENT_STYLE, navigationViewModel.GetButtonStyleName(NavigationStep.Welcome));
@@ -90,10 +92,10 @@ namespace CascadePass.CPAPExporter.UI.Tests
         [TestMethod]
         public void SelectNights_NavigationOptions_Invalid()
         {
+            ApplicationComponentProvider.PageViewModelProvider = new MockViewProvider(new SelectNightsViewModel() { ValidationProvider = new MockValidator(false) });
             NavigationViewModel navigationViewModel = new()
             {
                 CurrentStep = NavigationStep.SelectDays,
-                PageViewModelProvider = new MockViewProvider(new SelectNightsViewModel() { ValidationProvider = new MockValidator(false) })
             };
 
             Assert.AreEqual(NORMAL_STYLE, navigationViewModel.GetButtonStyleName(NavigationStep.Welcome));
@@ -107,10 +109,10 @@ namespace CascadePass.CPAPExporter.UI.Tests
         [TestMethod]
         public void SelectNights_NavigationOptions_Valid()
         {
+            ApplicationComponentProvider.PageViewModelProvider = new MockViewProvider(new SelectNightsViewModel() { ValidationProvider = new MockValidator(true) });
             NavigationViewModel navigationViewModel = new()
             {
                 CurrentStep = NavigationStep.SelectDays,
-                PageViewModelProvider = new MockViewProvider(new SelectNightsViewModel() { ValidationProvider = new MockValidator(true) })
             };
 
             Assert.AreEqual(NORMAL_STYLE, navigationViewModel.GetButtonStyleName(NavigationStep.Welcome));
@@ -121,26 +123,41 @@ namespace CascadePass.CPAPExporter.UI.Tests
             Assert.AreEqual(DISABLED_STYLE, navigationViewModel.GetButtonStyleName(NavigationStep.Export));
         }
 
-        //[TestMethod]
-        //public void OpenFiles_NavigationOptions()
-        //{
-        //    NavigationViewModel navigationViewModel = new() { CurrentStep = NavigationStep.OpenFiles };
+        [TestMethod]
+        public void OpenFiles_NavigationOptions_Valid()
+        {
+            ApplicationComponentProvider.PageViewModelProvider = new MockViewProvider(new WelcomeViewModel() { ValidationProvider = new MockValidator(true) });
+            NavigationViewModel navigationViewModel = new() { CurrentStep = NavigationStep.OpenFiles };
 
-        //    Assert.AreEqual(NORMAL_STYLE, navigationViewModel.GetButtonStyleName(NavigationStep.Welcome));
-        //    Assert.AreEqual(CURRENT_STYLE, navigationViewModel.GetButtonStyleName(NavigationStep.OpenFiles));
-        //    Assert.AreEqual(NORMAL_STYLE, navigationViewModel.GetButtonStyleName(NavigationStep.SelectDays));
-        //    Assert.AreEqual(DISABLED_STYLE, navigationViewModel.GetButtonStyleName(NavigationStep.SelectSignals));
-        //    Assert.AreEqual(DISABLED_STYLE, navigationViewModel.GetButtonStyleName(NavigationStep.Settings));
-        //    Assert.AreEqual(DISABLED_STYLE, navigationViewModel.GetButtonStyleName(NavigationStep.Export));
-        //}
+            Assert.AreEqual(NORMAL_STYLE, navigationViewModel.GetButtonStyleName(NavigationStep.Welcome));
+            Assert.AreEqual(CURRENT_STYLE, navigationViewModel.GetButtonStyleName(NavigationStep.OpenFiles));
+            Assert.AreEqual(NORMAL_STYLE, navigationViewModel.GetButtonStyleName(NavigationStep.SelectDays));
+            Assert.AreEqual(DISABLED_STYLE, navigationViewModel.GetButtonStyleName(NavigationStep.SelectSignals));
+            Assert.AreEqual(DISABLED_STYLE, navigationViewModel.GetButtonStyleName(NavigationStep.Settings));
+            Assert.AreEqual(DISABLED_STYLE, navigationViewModel.GetButtonStyleName(NavigationStep.Export));
+        }
+
+        [TestMethod]
+        public void OpenFiles_NavigationOptions_Invalid()
+        {
+            ApplicationComponentProvider.PageViewModelProvider = new MockViewProvider(new WelcomeViewModel() { ValidationProvider = new MockValidator(false) });
+            NavigationViewModel navigationViewModel = new() { CurrentStep = NavigationStep.OpenFiles };
+
+            Assert.AreEqual(NORMAL_STYLE, navigationViewModel.GetButtonStyleName(NavigationStep.Welcome));
+            Assert.AreEqual(CURRENT_STYLE, navigationViewModel.GetButtonStyleName(NavigationStep.OpenFiles));
+            Assert.AreEqual(DISABLED_STYLE, navigationViewModel.GetButtonStyleName(NavigationStep.SelectDays));
+            Assert.AreEqual(DISABLED_STYLE, navigationViewModel.GetButtonStyleName(NavigationStep.SelectSignals));
+            Assert.AreEqual(DISABLED_STYLE, navigationViewModel.GetButtonStyleName(NavigationStep.Settings));
+            Assert.AreEqual(DISABLED_STYLE, navigationViewModel.GetButtonStyleName(NavigationStep.Export));
+        }
 
         [TestMethod]
         public void SelectSignals_NavigationOptions_Invalid()
         {
+            ApplicationComponentProvider.PageViewModelProvider = new MockViewProvider(new SelectSignalsViewModel() { ValidationProvider = new MockValidator(false) });
             NavigationViewModel navigationViewModel = new()
             {
                 CurrentStep = NavigationStep.SelectSignals,
-                PageViewModelProvider = new MockViewProvider(new SelectSignalsViewModel() { ValidationProvider = new MockValidator(false) })
             };
 
             Assert.AreEqual(NORMAL_STYLE, navigationViewModel.GetButtonStyleName(NavigationStep.Welcome));
@@ -154,10 +171,10 @@ namespace CascadePass.CPAPExporter.UI.Tests
         [TestMethod]
         public void SelectSignals_NavigationOptions_Valid()
         {
+            ApplicationComponentProvider.PageViewModelProvider = new MockViewProvider(new SelectSignalsViewModel() { ValidationProvider = new MockValidator(true) });
             NavigationViewModel navigationViewModel = new()
             {
                 CurrentStep = NavigationStep.SelectSignals,
-                PageViewModelProvider = new MockViewProvider(new SelectSignalsViewModel() { ValidationProvider = new MockValidator(true) })
             };
 
             Assert.AreEqual(NORMAL_STYLE, navigationViewModel.GetButtonStyleName(NavigationStep.Welcome));
@@ -171,10 +188,10 @@ namespace CascadePass.CPAPExporter.UI.Tests
         [TestMethod]
         public void Settings_NavigationOptions_Invalid()
         {
+            ApplicationComponentProvider.PageViewModelProvider = new MockViewProvider(new ExportOptionsPageViewModel(new()) { ValidationProvider = new MockValidator(false) });
             NavigationViewModel navigationViewModel = new()
             {
                 CurrentStep = NavigationStep.Settings,
-                PageViewModelProvider = new MockViewProvider(new ExportOptionsPageViewModel(new()) { ValidationProvider = new MockValidator(false) })
             };
 
             Assert.AreEqual(NORMAL_STYLE, navigationViewModel.GetButtonStyleName(NavigationStep.Welcome));
@@ -188,10 +205,10 @@ namespace CascadePass.CPAPExporter.UI.Tests
         [TestMethod]
         public void Settings_NavigationOptions_Valid()
         {
+            ApplicationComponentProvider.PageViewModelProvider = new MockViewProvider(new ExportOptionsPageViewModel(new()) { ValidationProvider = new MockValidator(true) });
             NavigationViewModel navigationViewModel = new()
             {
                 CurrentStep = NavigationStep.Settings,
-                PageViewModelProvider = new MockViewProvider(new ExportOptionsPageViewModel(new()) { ValidationProvider = new MockValidator(true) })
             };
 
             Assert.AreEqual(NORMAL_STYLE, navigationViewModel.GetButtonStyleName(NavigationStep.Welcome));
@@ -205,10 +222,10 @@ namespace CascadePass.CPAPExporter.UI.Tests
         [TestMethod]
         public void Export_NavigationOptions()
         {
+            ApplicationComponentProvider.PageViewModelProvider = new MockViewProvider(new SavedFilesViewModel() { ValidationProvider = new MockValidator(true) });
             NavigationViewModel navigationViewModel = new()
             {
                 CurrentStep = NavigationStep.Export,
-                PageViewModelProvider = new MockViewProvider(new SavedFilesViewModel())
             };
 
             Assert.AreEqual(NORMAL_STYLE, navigationViewModel.GetButtonStyleName(NavigationStep.Welcome));

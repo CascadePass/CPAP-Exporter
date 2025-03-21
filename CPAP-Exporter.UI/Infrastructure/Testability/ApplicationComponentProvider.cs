@@ -25,7 +25,7 @@
 #endif
         }
 
-        public static CpapSourceValidator CpapSourceValidator
+        public static ICpapSourceValidator CpapSourceValidator
         {
             get;
 #if DEBUG

@@ -12,7 +12,6 @@ namespace CascadePass.CPAPExporter
         private FrameworkElement currentView;
         private NavigationStep currentPage;
         private ExportParameters exportParameters;
-        private IPageViewModelProvider pageViewModelProvider;
         private DelegateCommand showWelcomeScreenCommand, openFilesCommand, selectNightsCommand, selectSignalsCommand, showExportSettingsCommand, exportCommand;
 
         #endregion
@@ -24,7 +23,6 @@ namespace CascadePass.CPAPExporter
         /// </summary>
         public NavigationViewModel()
         {
-            this.pageViewModelProvider = new PageViewModelProvider();
             this.ExportParameters = new();
         }
 
@@ -113,14 +111,6 @@ namespace CascadePass.CPAPExporter
         {
             get => this.showNavButtonLabels;
             set => this.SetPropertyValue(ref this.showNavButtonLabels, value, nameof(this.ShowNavigationButtonLabels));
-        }
-
-        public IPageViewModelProvider PageViewModelProvider
-        {
-            get => this.pageViewModelProvider;
-#if DEBUG
-            set => this.SetPropertyValue(ref this.pageViewModelProvider, value, nameof(this.PageViewModelProvider));
-#endif
         }
 
         #region Button Styles
@@ -270,7 +260,7 @@ namespace CascadePass.CPAPExporter
                 return "SelectedNavigationButtonStyle";
             }
 
-            int validationOffset = this.PageViewModelProvider.GetViewModel(this.currentView)?.IsValid ?? false ? 1 : 0;
+            int validationOffset = ApplicationComponentProvider.PageViewModelProvider.GetViewModel(this.currentView)?.IsValid ?? false ? 1 : 0;
             if (this.AchievedStep + validationOffset < step)
             {
                 return "DisabledButtonStyle";
