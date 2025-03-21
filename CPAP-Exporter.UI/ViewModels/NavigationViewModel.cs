@@ -42,7 +42,8 @@ namespace CascadePass.CPAPExporter
             {
                 if (this.currentView == null)
                 {
-                    this.ShowWelcomeScreen();
+                    //this.ShowWelcomeScreen();
+                    this.OpenFiles();
                 }
 
                 return this.currentView;
@@ -166,36 +167,9 @@ namespace CascadePass.CPAPExporter
 
         public void OpenFiles()
         {
-            var oldStep = this.currentPage;
+            var viewModel = new OpenFilesViewModel() { ExportParameters = this.exportParameters };
+            this.CurrentView = new OpenFilesView() { DataContext = viewModel };
             this.CurrentStep = NavigationStep.OpenFiles;
-
-            var dialog = new Microsoft.Win32.OpenFolderDialog();
-
-            if (dialog.ShowDialog() == true)
-            {
-                var folder = dialog.FolderName;
-
-                if (!string.IsNullOrWhiteSpace(folder) && Directory.Exists(folder))
-                {
-                    this.exportParameters.SourcePath = folder;
-                    this.exportParameters.Reports.Clear();
-                    ApplicationComponentProvider.Status.StatusText = string.Format(Resources.ReadingFolder, folder);
-
-                    var view = new SelectNightsView { DataContext = new SelectNightsViewModel(this.ExportParameters) };
-
-                    this.CurrentView = view;
-                    this.CurrentStep = NavigationStep.SelectDays;
-
-                    // AchievedStep may be all the way to save, but need to reset to SelectDays
-                    // to force the user to make selections against the newly loaded files.
-
-                    this.AchievedStep = NavigationStep.SelectDays;
-                }
-            }
-            else
-            {
-                this.currentPage = oldStep;
-            }
         }
 
         public void SelectNights()
@@ -307,17 +281,35 @@ namespace CascadePass.CPAPExporter
 
         public void Subscribe(ViewModel viewModel)
         {
-            viewModel.PropertyChanged += ViewModel_PropertyChanged;
+            viewModel.PropertyChanged += this.ViewModel_PropertyChanged;
+
+            if (viewModel is PageViewModel pageViewModel)
+            {
+                pageViewModel.AdvancePage += this.PageViewModel_AdvancePage;
+            }
         }
 
         public void Unsubscribe(ViewModel viewModel)
         {
-            viewModel.PropertyChanged -= ViewModel_PropertyChanged;
+            viewModel.PropertyChanged -= this.ViewModel_PropertyChanged;
+
+            if (viewModel is PageViewModel pageViewModel)
+            {
+                pageViewModel.AdvancePage -= this.PageViewModel_AdvancePage;
+            }
         }
 
         private void ViewModel_PropertyChanged(object sender, System.ComponentModel.PropertyChangedEventArgs e)
         {
             this.OnPropertyChanged(nameof(this.CurrentView));
+        }
+
+        private void PageViewModel_AdvancePage(object sender, EventArgs e)
+        {
+            if (sender is OpenFilesViewModel)
+            {
+                this.SelectNights();
+            }
         }
 
         #endregion

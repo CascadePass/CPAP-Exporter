@@ -6,6 +6,7 @@
         {
             ApplicationComponentProvider.Status = new Status();
             ApplicationComponentProvider.PageViewModelProvider = new PageViewModelProvider();
+            ApplicationComponentProvider.CpapSourceValidator = new CpapSourceValidator();
         }
 
         public static IStatus Status
@@ -17,6 +18,14 @@
         }
 
         public static IPageViewModelProvider PageViewModelProvider
+        {
+            get;
+#if DEBUG
+            set;
+#endif
+        }
+
+        public static CpapSourceValidator CpapSourceValidator
         {
             get;
 #if DEBUG

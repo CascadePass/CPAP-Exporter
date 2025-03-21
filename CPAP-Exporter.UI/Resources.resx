@@ -282,4 +282,16 @@
   <data name="Validation_MainWindow_Null" xml:space="preserve">
     <value>MainWindow is not set.</value>
   </data>
+  <data name="PageDesc_OpenFiles" xml:space="preserve">
+    <value>Open the PAP files you'd like to export.  They can be on an SD card, or CPAP Exporter can read them from any folder.</value>
+  </data>
+  <data name="PageTitle_OpenFiles" xml:space="preserve">
+    <value>Open PAP Files</value>
+  </data>
+  <data name="FolderDoesNotExist" xml:space="preserve">
+    <value>Folder '{0}' does not exist</value>
+  </data>
+  <data name="FolderIsNotPAP" xml:space="preserve">
+    <value>The folder '{0}' does not contain PAP data</value>
+  </data>
 </root>

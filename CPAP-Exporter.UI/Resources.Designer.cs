@@ -178,6 +178,24 @@ namespace CascadePass.CPAPExporter {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Folder &apos;{0}&apos; does not exist.
+        /// </summary>
+        public static string FolderDoesNotExist {
+            get {
+                return ResourceManager.GetString("FolderDoesNotExist", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to The folder &apos;{0}&apos; does not contain PAP data.
+        /// </summary>
+        public static string FolderIsNotPAP {
+            get {
+                return ResourceManager.GetString("FolderIsNotPAP", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Include Column Headers Row.
         /// </summary>
         public static string IncludeColumnHeaders {
@@ -376,6 +394,15 @@ namespace CascadePass.CPAPExporter {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Open the PAP files you&apos;d like to export.  They can be on an SD card, or CPAP Exporter can read them from any folder..
+        /// </summary>
+        public static string PageDesc_OpenFiles {
+            get {
+                return ResourceManager.GetString("PageDesc_OpenFiles", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Choose the details for your export..
         /// </summary>
         public static string PageDesc_Options {
@@ -408,6 +435,15 @@ namespace CascadePass.CPAPExporter {
         public static string PageDesc_SelectSignals {
             get {
                 return ResourceManager.GetString("PageDesc_SelectSignals", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Open PAP Files.
+        /// </summary>
+        public static string PageTitle_OpenFiles {
+            get {
+                return ResourceManager.GetString("PageTitle_OpenFiles", resourceCulture);
             }
         }
         

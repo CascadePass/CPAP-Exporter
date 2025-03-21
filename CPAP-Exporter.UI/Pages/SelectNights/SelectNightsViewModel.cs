@@ -1,9 +1,7 @@
 ﻿using cpaplib;
 using System.Collections.ObjectModel;
 using System.ComponentModel;
-using System.Diagnostics;
 using System.IO;
-using System.Windows.Controls;
 using System.Windows.Input;
 using System.Windows.Threading;
 
@@ -136,7 +134,7 @@ namespace CascadePass.CPAPExporter
             ApplicationComponentProvider.Status.StatusText = string.Format(Resources.ReadingFolder, folder);
 
             // This is where the files are loaded from disc
-            var reports = loader.LoadFromFolder(folder, null, null, new() { FlagFlowLimits = false });
+            var reports = loader.LoadFromFolder(folder, null, null, new() { FlagFlowLimits = this.ExportParameters.UserPreferences.GenerateFlowEvents });
 
             // And now it's time to process them.
             Dispatcher.CurrentDispatcher.Invoke(() =>
