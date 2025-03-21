@@ -38,6 +38,8 @@ namespace CascadePass.CPAPExporter
 
         public List<string> RecentlyUsedFolders { get; set; }
 
+        public bool GenerateFlowEvents { get; set; }
+
         /// <summary>
         /// Gets the fully qualified name of the settings file.
         /// </summary>
@@ -123,7 +125,12 @@ namespace CascadePass.CPAPExporter
                 // Swallow for now
             }
 
-            return new();
+            return UserSettings.CreateWithDefaults();
+        }
+
+        public static UserSettings CreateWithDefaults()
+        {
+            return new() { GenerateFlowEvents = true };
         }
 
         /// <summary>

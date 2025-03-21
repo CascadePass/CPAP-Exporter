@@ -177,5 +177,15 @@ namespace CascadePass.CPAPExporter.UI.Tests
         }
 
         #endregion
+
+        [TestMethod]
+        public void CreateWithDefaults_GenerateFlowEvents()
+        {
+            var settings = UserSettings.CreateWithDefaults();
+
+            Assert.IsNotNull( settings );
+
+            Assert.AreEqual(true, settings.GenerateFlowEvents);
+        }
     }
 }

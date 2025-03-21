@@ -134,7 +134,7 @@ namespace CascadePass.CPAPExporter
             ApplicationComponentProvider.Status.StatusText = string.Format(Resources.ReadingFolder, folder);
 
             // This is where the files are loaded from disc
-            var reports = loader.LoadFromFolder(folder, null, null, new() { FlagFlowLimits = false });
+            var reports = loader.LoadFromFolder(folder, null, null, new() { FlagFlowLimits = this.ExportParameters.UserPreferences.GenerateFlowEvents });
 
             // And now it's time to process them.
             Dispatcher.CurrentDispatcher.Invoke(() =>

@@ -5,8 +5,12 @@ namespace CascadePass.CPAPExporter
 {
     public class OpenFilesViewModel : PageViewModel
     {
+        #region Fields
+
         private bool clearReportsBeforeAdding, isValid;
         private DelegateCommand browseCommand, openCommand;
+
+        #endregion
 
         public OpenFilesViewModel() : base(Resources.PageTitle_OpenFiles, Resources.PageDesc_OpenFiles)
         {
@@ -22,13 +26,19 @@ namespace CascadePass.CPAPExporter
             set => this.SetPropertyValue(ref this.clearReportsBeforeAdding, value, nameof(this.ClearReportsBeforeAdding));
         }
 
+        #region Buttons
+
         public ICommand BrowseCommand => this.browseCommand ??= new(this.BrowseToOpen);
 
         public ICommand OpenCommand => this.openCommand ??= new(this.OpenFolder);
 
         #endregion
 
+        #endregion
+
         #region Methods
+
+        #region Buttons
 
         private void BrowseToOpen()
         {
@@ -44,6 +54,8 @@ namespace CascadePass.CPAPExporter
                 this.Load(folder);
             }
         }
+
+        #endregion
 
         public void BrowseAndLoad()
         {
@@ -81,6 +93,8 @@ namespace CascadePass.CPAPExporter
             }
 
             ApplicationComponentProvider.Status.StatusText = string.Format(Resources.ReadingFolder, folder);
+
+            this.OnAdvancePage();
         }
 
         internal bool CanImportFrom(string folder)
