@@ -8,8 +8,8 @@
              mc:Ignorable="d" 
              d:DesignHeight="450" d:DesignWidth="800">
 
-    <StackPanel>
-        <TextBlock Margin="0,0,0,10">
+    <DockPanel>
+        <TextBlock Margin="0,0,0,10" DockPanel.Dock="Top">
             <Run Text="{Binding Reports.Count, Mode=OneWay}" FontWeight="Bold" />
             <Run Text="{x:Static local:Resources.NightsFoundIn}" />
             <Hyperlink Command="{Binding OpenSourceFolderCommand}">
@@ -25,7 +25,10 @@
             AutoGenerateColumns="False"
             CanUserAddRows="False" CanUserDeleteRows="False"
             Background="Transparent"
-            EnableRowVirtualization="True" EnableColumnVirtualization="True">
+            EnableRowVirtualization="True" EnableColumnVirtualization="True"
+            VerticalScrollBarVisibility="Auto"
+            HorizontalScrollBarVisibility="Auto"
+            >
             <DataGrid.Columns>
                 <DataGridCheckBoxColumn Binding="{Binding IsSelected, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}">
                     <DataGridCheckBoxColumn.Header>
@@ -53,6 +56,6 @@
                 <DataGridTextColumn Header="{x:Static local:Resources.Rows}" Binding="{Binding SampleCount, StringFormat=N0}" />
             </DataGrid.Columns>
         </DataGrid>
-    </StackPanel>
+    </DockPanel>
 
 </UserControl>
