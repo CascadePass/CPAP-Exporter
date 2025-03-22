@@ -17,7 +17,7 @@ namespace CascadePass.CPAPExporter.UI.Tests
             ApplicationComponentProvider.PageViewModelProvider = new MockViewProvider(new WelcomeViewModel());
             NavigationViewModel navigationViewModel = new();
 
-            Assert.AreEqual(NavigationStep.Welcome, navigationViewModel.CurrentStep);
+            Assert.AreEqual(NavigationStep.OpenFiles, navigationViewModel.CurrentStep);
         }
 
         [TestMethod]
