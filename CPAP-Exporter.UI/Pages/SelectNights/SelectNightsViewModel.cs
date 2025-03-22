@@ -15,8 +15,10 @@ namespace CascadePass.CPAPExporter
         #region Private fields
 
         private DailyReportViewModel selectedReport;
-        private bool isAllSelected;
+        private bool isAllSelected, clearReportsBeforeAdding;
         private DelegateCommand openSourceFolderCommand;
+
+        private static List<string> loadedFolders;
 
         #endregion
 
@@ -32,8 +34,9 @@ namespace CascadePass.CPAPExporter
         public SelectNightsViewModel(ExportParameters exportParameters) : this()
         {
             this.ExportParameters = exportParameters;
+            this.ClearReportsBeforeAdding = exportParameters.UserPreferences.ClearFilesBeforeAddingMore;
 
-            if (!string.IsNullOrWhiteSpace(this.ExportParameters?.SourcePath) && this.ExportParameters.Reports.Count == 0)
+            if (!string.IsNullOrWhiteSpace(this.ExportParameters?.SourcePath))
             {
                 this.Work();
             }
@@ -41,6 +44,11 @@ namespace CascadePass.CPAPExporter
             {
                 ApplicationComponentProvider.Status.StatusText = string.Format(Resources.NightsAvailable, this.ExportParameters.Reports.Count, this.ExportParameters?.SourcePath);
             }
+        }
+
+        static SelectNightsViewModel()
+        {
+            SelectNightsViewModel.loadedFolders = new();
         }
 
         #endregion
@@ -63,6 +71,12 @@ namespace CascadePass.CPAPExporter
                     }
                 }
             }
+        }
+
+        public bool ClearReportsBeforeAdding
+        {
+            get => this.clearReportsBeforeAdding;
+            set => this.SetPropertyValue(ref this.clearReportsBeforeAdding, value, nameof(this.ClearReportsBeforeAdding));
         }
 
         /// <summary>
@@ -95,6 +109,11 @@ namespace CascadePass.CPAPExporter
         /// <param name="replaceExisting">If set to <c>true</c>, replaces existing reports.</param>
         public void LoadFromFolder(string folder, bool replaceExisting)
         {
+            if (SelectNightsViewModel.loadedFolders.Contains(folder))
+            {
+                return;
+            }
+
             #region Get ICpapDataLoader or quit
 
             if (!Path.Exists(folder))
@@ -125,6 +144,7 @@ namespace CascadePass.CPAPExporter
             if (replaceExisting)
             {
                 this.Reports.Clear();
+                SelectNightsViewModel.loadedFolders.Clear();
             }
 
             #endregion
@@ -151,6 +171,7 @@ namespace CascadePass.CPAPExporter
                 this.IsAllSelected = this.ExportParameters.Reports.All(r => r.IsSelected);
             }
 
+            SelectNightsViewModel.loadedFolders.Add(folder);
             this.IsBusy = false;
             ApplicationComponentProvider.Status.StatusText = string.Format(Resources.NightsAvailable, this.ExportParameters.Reports.Count, folder);
         }
@@ -184,11 +205,16 @@ namespace CascadePass.CPAPExporter
 
         public void Work()
         {
+            if (SelectNightsViewModel.loadedFolders.Contains(this.ExportParameters.SourcePath))
+            {
+                return;
+            }
+
             ApplicationComponentProvider.Status.StatusText = Resources.Working;
 
             Task.Run(() =>
             {
-                this.LoadFromFolder(this.ExportParameters.SourcePath, true);
+                this.LoadFromFolder(this.ExportParameters.SourcePath, this.ClearReportsBeforeAdding);
             });
         }
 
