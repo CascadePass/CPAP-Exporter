@@ -12,9 +12,19 @@ namespace CascadePass.CPAPExporter
 
         #endregion
 
+        #region Constructors
+
         public OpenFilesViewModel() : base(Resources.PageTitle_OpenFiles, Resources.PageDesc_OpenFiles)
         {
         }
+
+        public OpenFilesViewModel(ExportParameters exportParameters) : this()
+        {
+            this.ExportParameters = exportParameters;
+            this.ClearReportsBeforeAdding = exportParameters.UserPreferences.ClearFilesBeforeAddingMore;
+        }
+
+        #endregion
 
         #region Properties
 

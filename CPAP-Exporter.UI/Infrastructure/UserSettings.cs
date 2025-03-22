@@ -40,6 +40,8 @@ namespace CascadePass.CPAPExporter
 
         public bool GenerateFlowEvents { get; set; }
 
+        public bool ClearFilesBeforeAddingMore { get; set; }
+
         /// <summary>
         /// Gets the fully qualified name of the settings file.
         /// </summary>

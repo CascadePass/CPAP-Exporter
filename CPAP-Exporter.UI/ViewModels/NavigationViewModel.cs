@@ -12,7 +12,7 @@ namespace CascadePass.CPAPExporter
         private FrameworkElement currentView;
         private NavigationStep currentPage;
         private ExportParameters exportParameters;
-        private DelegateCommand showWelcomeScreenCommand, openFilesCommand, selectNightsCommand, selectSignalsCommand, showExportSettingsCommand, exportCommand;
+        private DelegateCommand openFilesCommand, selectNightsCommand, selectSignalsCommand, showExportSettingsCommand, exportCommand;
 
         #endregion
 
@@ -146,7 +146,7 @@ namespace CascadePass.CPAPExporter
 
         public void OpenFiles()
         {
-            var viewModel = new OpenFilesViewModel() { ExportParameters = this.exportParameters };
+            var viewModel = new OpenFilesViewModel(this.exportParameters);
             this.CurrentView = new OpenFilesView() { DataContext = viewModel };
             this.CurrentStep = NavigationStep.OpenFiles;
         }
@@ -162,10 +162,12 @@ namespace CascadePass.CPAPExporter
 
                 this.CurrentView = view;
             }
+            else
+            {
+                var vm = (SelectNightsViewModel)this.CurrentView.DataContext;
 
-            var vm = (SelectNightsViewModel)this.CurrentView.DataContext;
-
-            ApplicationComponentProvider.Status.StatusText = string.Format(Resources.NightsAvailable, vm.Reports.Count, this.ExportParameters.SourcePath);
+                ApplicationComponentProvider.Status.StatusText = string.Format(Resources.NightsAvailable, vm.Reports.Count, this.ExportParameters.SourcePath);
+            }
         }
 
         public void ShowSignals()
