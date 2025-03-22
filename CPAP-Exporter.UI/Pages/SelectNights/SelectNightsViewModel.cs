@@ -154,30 +154,44 @@ namespace CascadePass.CPAPExporter
             this.ExportParameters.SourcePath = folder;
             ApplicationComponentProvider.Status.StatusText = string.Format(Resources.ReadingFolder, folder);
 
-            // This is where the files are loaded from disc
-            var reports = loader.LoadFromFolder(folder, null, null, new() { FlagFlowLimits = this.ExportParameters.UserPreferences.GenerateFlowEvents });
+            // Prepare to load reports
+            List<DailyReport> reports = null;
+
+            try
+            {
+                // This is where the files are loaded from disc
+                reports = loader.LoadFromFolder(folder, null, null, new() { FlagFlowLimits = this.ExportParameters.UserPreferences.GenerateFlowEvents });
+            }
+            catch (Exception ex)
+            {
+                ApplicationComponentProvider.Status.StatusText += ex.ToString();
+            }
 
             // And now it's time to process them.
-            Dispatcher.CurrentDispatcher.Invoke(() =>
+            if (reports.Count > 0)
             {
-                ApplicationComponentProvider.Status.ProgressBar = new(0, reports.Count - 1, 0);
-
-                for (int i = 0; i < reports.Count; i++)
+                Dispatcher.CurrentDispatcher.Invoke(() =>
                 {
-                    ApplicationComponentProvider.Status.ProgressBar.Current = i;
+                    ApplicationComponentProvider.Status.ProgressBar = new(0, reports.Count - 1, 0);
 
-                    var report = reports[i];
-
-                    if (report.Sessions.Count > 0 && !report.Sessions.Any(session => session.Signals.Count == 0))
+                    for (int i = 0; i < reports.Count; i++)
                     {
-                        this.AddReport(report);
+                        ApplicationComponentProvider.Status.ProgressBar.Current = i;
+
+                        var report = reports[i];
+                        //bool isDetailReport = report.Sessions.Count > 0 && !report.Sessions.Any(session => session.Signals.Count == 0);
+
+                        if (report.HasDetailData)
+                        {
+                            this.AddReport(report);
+                        }
                     }
-                }
 
-                ApplicationComponentProvider.Status.ProgressBar = null;
-            });
+                    ApplicationComponentProvider.Status.ProgressBar = null;
+                });
+            }
 
-            if (!this.IsAllSelected)
+            if (!this.IsAllSelected && reports.Count > 0)
             {
                 this.ExportParameters.Reports[^1].IsSelected = true;
                 this.IsAllSelected = this.ExportParameters.Reports.All(r => r.IsSelected);
