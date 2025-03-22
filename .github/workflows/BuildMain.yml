@@ -25,10 +25,9 @@ jobs:
       run: |
         dotnet build CPAP-Exporter.Core/CPAP-Exporter.Core.csproj --configuration Release
         dotnet build CPAP-Exporter.UI/CPAP-Exporter.UI.csproj --configuration Release
-        dotnet build CPAP-Exporter.Core.Tests/CPAP-Exporter.Core.Tests.csproj --configuration Release
 
     - name: Run tests
-      run: dotnet test --configuration Release
+      run: dotnet test --configuration Debug
 
     - name: Archive build artifacts
       uses: actions/upload-artifact@v4
