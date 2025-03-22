@@ -1,4 +1,5 @@
 ﻿using System.Diagnostics;
+using System.Windows;
 
 namespace CascadePass.CPAPExporter
 {
@@ -9,7 +10,7 @@ namespace CascadePass.CPAPExporter
         private MainWindow mainWindow;
         private Version version;
         private IPageViewModelProvider pageViewModelProvider;
-        private DelegateCommand viewReleasesPageCommand;
+        private DelegateCommand viewReleasesPageCommand, aboutBoxCommand;
 
         #endregion
 
@@ -79,6 +80,8 @@ namespace CascadePass.CPAPExporter
 
         public DelegateCommand ViewReleasesPageCommand => this.viewReleasesPageCommand ??= new DelegateCommand(this.ViewReleasesPage);
 
+        public DelegateCommand ViewAboutBoxCommand => this.aboutBoxCommand ??= new DelegateCommand(this.ShowAboutBox);
+
         private void ViewReleasesPage()
         {
             try
@@ -88,6 +91,21 @@ namespace CascadePass.CPAPExporter
             catch (Exception)
             {
             }
+        }
+
+        private void ShowAboutBox()
+        {
+            MessageBox.Show(
+                "Acknowledgements:" + Environment.NewLine + Environment.NewLine +
+                "EEGKit: https://github.com/EEGKit/cpap-lib" + Environment.NewLine + Environment.NewLine +
+                "StagPoint: https://github.com/EEGKit/StagPoint.EuropeanDataFormat.Net",
+
+                $"{Resources.Window_Title} v{this.Version}",
+
+                MessageBoxButton.OK,
+
+                MessageBoxImage.Information
+            );
         }
 
         private void Observable_PropertyChanged(object sender, System.ComponentModel.PropertyChangedEventArgs e)
