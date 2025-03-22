@@ -82,7 +82,6 @@ namespace CascadePass.CPAPExporter
                     value,
                     [
                         nameof(this.CurrentStep),
-                        nameof(this.WelcomeButtonStyle),
                         nameof(this.OpenButtonStyle),
                         nameof(this.SelectNightButtonStyle),
                         nameof(this.SelectSignalsButtonStyle),
@@ -115,8 +114,6 @@ namespace CascadePass.CPAPExporter
 
         #region Button Styles
 
-        public Style WelcomeButtonStyle => this.GetButtonStyle(NavigationStep.Welcome);
-
         public Style OpenButtonStyle => this.GetButtonStyle(NavigationStep.OpenFiles);
 
         public Style SelectNightButtonStyle => this.GetButtonStyle(NavigationStep.SelectDays);
@@ -130,8 +127,6 @@ namespace CascadePass.CPAPExporter
         #endregion
 
         #region Button clicks
-
-        public DelegateCommand ShowWelcomeScreenCommand => this.showWelcomeScreenCommand ??= new DelegateCommand(this.ShowWelcomeScreen);
 
         public DelegateCommand OpenFilesCommand => this.openFilesCommand ??= new DelegateCommand(this.OpenFiles);
 
@@ -148,12 +143,6 @@ namespace CascadePass.CPAPExporter
         #endregion
 
         #region Methods
-
-        public void ShowWelcomeScreen()
-        {
-            this.CurrentView = new WelcomeView();
-            this.CurrentStep = NavigationStep.Welcome;
-        }
 
         public void OpenFiles()
         {

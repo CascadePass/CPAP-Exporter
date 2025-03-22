@@ -17,7 +17,7 @@ namespace CascadePass.CPAPExporter.UI.Tests
             ApplicationComponentProvider.PageViewModelProvider = new MockViewProvider(new WelcomeViewModel());
             NavigationViewModel navigationViewModel = new();
 
-            Assert.AreEqual(NavigationStep.Welcome, navigationViewModel.CurrentStep);
+            Assert.AreEqual(NavigationStep.OpenFiles, navigationViewModel.CurrentStep);
         }
 
         [TestMethod]
@@ -74,22 +74,6 @@ namespace CascadePass.CPAPExporter.UI.Tests
         #region Happy Path (CurrentStep vs availability)
 
         [TestMethod]
-        public void Welcome_NavigationOptions()
-        {
-            ApplicationComponentProvider.PageViewModelProvider = new MockViewProvider(new WelcomeViewModel());
-            NavigationViewModel navigationViewModel = new() {
-                CurrentStep = NavigationStep.Welcome,
-            };
-
-            Assert.AreEqual(CURRENT_STYLE, navigationViewModel.GetButtonStyleName(NavigationStep.Welcome));
-            Assert.AreEqual(NORMAL_STYLE, navigationViewModel.GetButtonStyleName(NavigationStep.OpenFiles));
-            Assert.AreEqual(DISABLED_STYLE, navigationViewModel.GetButtonStyleName(NavigationStep.SelectDays));
-            Assert.AreEqual(DISABLED_STYLE, navigationViewModel.GetButtonStyleName(NavigationStep.SelectSignals));
-            Assert.AreEqual(DISABLED_STYLE, navigationViewModel.GetButtonStyleName(NavigationStep.Settings));
-            Assert.AreEqual(DISABLED_STYLE, navigationViewModel.GetButtonStyleName(NavigationStep.Export));
-        }
-
-        [TestMethod]
         public void SelectNights_NavigationOptions_Invalid()
         {
             ApplicationComponentProvider.PageViewModelProvider = new MockViewProvider(new SelectNightsViewModel() { ValidationProvider = new MockValidator(false) });
@@ -98,7 +82,6 @@ namespace CascadePass.CPAPExporter.UI.Tests
                 CurrentStep = NavigationStep.SelectDays,
             };
 
-            Assert.AreEqual(NORMAL_STYLE, navigationViewModel.GetButtonStyleName(NavigationStep.Welcome));
             Assert.AreEqual(NORMAL_STYLE, navigationViewModel.GetButtonStyleName(NavigationStep.OpenFiles));
             Assert.AreEqual(CURRENT_STYLE, navigationViewModel.GetButtonStyleName(NavigationStep.SelectDays));
             Assert.AreEqual(DISABLED_STYLE, navigationViewModel.GetButtonStyleName(NavigationStep.SelectSignals));
@@ -115,7 +98,6 @@ namespace CascadePass.CPAPExporter.UI.Tests
                 CurrentStep = NavigationStep.SelectDays,
             };
 
-            Assert.AreEqual(NORMAL_STYLE, navigationViewModel.GetButtonStyleName(NavigationStep.Welcome));
             Assert.AreEqual(NORMAL_STYLE, navigationViewModel.GetButtonStyleName(NavigationStep.OpenFiles));
             Assert.AreEqual(CURRENT_STYLE, navigationViewModel.GetButtonStyleName(NavigationStep.SelectDays));
             Assert.AreEqual(NORMAL_STYLE, navigationViewModel.GetButtonStyleName(NavigationStep.SelectSignals));
@@ -129,7 +111,6 @@ namespace CascadePass.CPAPExporter.UI.Tests
             ApplicationComponentProvider.PageViewModelProvider = new MockViewProvider(new WelcomeViewModel() { ValidationProvider = new MockValidator(true) });
             NavigationViewModel navigationViewModel = new() { CurrentStep = NavigationStep.OpenFiles };
 
-            Assert.AreEqual(NORMAL_STYLE, navigationViewModel.GetButtonStyleName(NavigationStep.Welcome));
             Assert.AreEqual(CURRENT_STYLE, navigationViewModel.GetButtonStyleName(NavigationStep.OpenFiles));
             Assert.AreEqual(NORMAL_STYLE, navigationViewModel.GetButtonStyleName(NavigationStep.SelectDays));
             Assert.AreEqual(DISABLED_STYLE, navigationViewModel.GetButtonStyleName(NavigationStep.SelectSignals));
@@ -143,7 +124,6 @@ namespace CascadePass.CPAPExporter.UI.Tests
             ApplicationComponentProvider.PageViewModelProvider = new MockViewProvider(new WelcomeViewModel() { ValidationProvider = new MockValidator(false) });
             NavigationViewModel navigationViewModel = new() { CurrentStep = NavigationStep.OpenFiles };
 
-            Assert.AreEqual(NORMAL_STYLE, navigationViewModel.GetButtonStyleName(NavigationStep.Welcome));
             Assert.AreEqual(CURRENT_STYLE, navigationViewModel.GetButtonStyleName(NavigationStep.OpenFiles));
             Assert.AreEqual(DISABLED_STYLE, navigationViewModel.GetButtonStyleName(NavigationStep.SelectDays));
             Assert.AreEqual(DISABLED_STYLE, navigationViewModel.GetButtonStyleName(NavigationStep.SelectSignals));
@@ -160,7 +140,6 @@ namespace CascadePass.CPAPExporter.UI.Tests
                 CurrentStep = NavigationStep.SelectSignals,
             };
 
-            Assert.AreEqual(NORMAL_STYLE, navigationViewModel.GetButtonStyleName(NavigationStep.Welcome));
             Assert.AreEqual(NORMAL_STYLE, navigationViewModel.GetButtonStyleName(NavigationStep.OpenFiles));
             Assert.AreEqual(NORMAL_STYLE, navigationViewModel.GetButtonStyleName(NavigationStep.SelectDays));
             Assert.AreEqual(CURRENT_STYLE, navigationViewModel.GetButtonStyleName(NavigationStep.SelectSignals));
@@ -177,7 +156,6 @@ namespace CascadePass.CPAPExporter.UI.Tests
                 CurrentStep = NavigationStep.SelectSignals,
             };
 
-            Assert.AreEqual(NORMAL_STYLE, navigationViewModel.GetButtonStyleName(NavigationStep.Welcome));
             Assert.AreEqual(NORMAL_STYLE, navigationViewModel.GetButtonStyleName(NavigationStep.OpenFiles));
             Assert.AreEqual(NORMAL_STYLE, navigationViewModel.GetButtonStyleName(NavigationStep.SelectDays));
             Assert.AreEqual(CURRENT_STYLE, navigationViewModel.GetButtonStyleName(NavigationStep.SelectSignals));
@@ -194,7 +172,6 @@ namespace CascadePass.CPAPExporter.UI.Tests
                 CurrentStep = NavigationStep.Settings,
             };
 
-            Assert.AreEqual(NORMAL_STYLE, navigationViewModel.GetButtonStyleName(NavigationStep.Welcome));
             Assert.AreEqual(NORMAL_STYLE, navigationViewModel.GetButtonStyleName(NavigationStep.OpenFiles));
             Assert.AreEqual(NORMAL_STYLE, navigationViewModel.GetButtonStyleName(NavigationStep.SelectDays));
             Assert.AreEqual(NORMAL_STYLE, navigationViewModel.GetButtonStyleName(NavigationStep.SelectSignals));
@@ -211,7 +188,6 @@ namespace CascadePass.CPAPExporter.UI.Tests
                 CurrentStep = NavigationStep.Settings,
             };
 
-            Assert.AreEqual(NORMAL_STYLE, navigationViewModel.GetButtonStyleName(NavigationStep.Welcome));
             Assert.AreEqual(NORMAL_STYLE, navigationViewModel.GetButtonStyleName(NavigationStep.OpenFiles));
             Assert.AreEqual(NORMAL_STYLE, navigationViewModel.GetButtonStyleName(NavigationStep.SelectDays));
             Assert.AreEqual(NORMAL_STYLE, navigationViewModel.GetButtonStyleName(NavigationStep.SelectSignals));
@@ -228,7 +204,6 @@ namespace CascadePass.CPAPExporter.UI.Tests
                 CurrentStep = NavigationStep.Export,
             };
 
-            Assert.AreEqual(NORMAL_STYLE, navigationViewModel.GetButtonStyleName(NavigationStep.Welcome));
             Assert.AreEqual(NORMAL_STYLE, navigationViewModel.GetButtonStyleName(NavigationStep.OpenFiles));
             Assert.AreEqual(NORMAL_STYLE, navigationViewModel.GetButtonStyleName(NavigationStep.SelectDays));
             Assert.AreEqual(NORMAL_STYLE, navigationViewModel.GetButtonStyleName(NavigationStep.SelectSignals));

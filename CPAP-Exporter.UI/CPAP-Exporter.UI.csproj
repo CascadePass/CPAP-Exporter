@@ -43,9 +43,6 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Resource Include="Images\catpap.png" />
-    <Resource Include="Images\catpap2.png" />
-    <Resource Include="Images\catpap3.png" />
     <Resource Include="Images\Delete.png" />
     <Resource Include="Images\DerivedColumn.png" />
     <Resource Include="Images\Document.png" />

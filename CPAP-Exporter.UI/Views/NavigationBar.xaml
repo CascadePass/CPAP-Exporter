@@ -13,16 +13,6 @@
 
     <StackPanel>
         <Button
-            Style="{Binding WelcomeButtonStyle}" Command="{Binding ShowWelcomeScreenCommand}"
-            ToolTip="{x:Static local:Resources.Nav_Open_TT}">
-            <StackPanel Orientation="Horizontal">
-                <Image Source="pack://application:,,,/Images/catpap2.png" Style="{StaticResource NavigationButtonImage}" />
-
-                <TextBlock Text="{x:Static local:Resources.Nav_Open_TT}" Visibility="{Binding ShowNavigationButtonLabels, Converter={StaticResource BoolToVisibilityConverter}}" />
-            </StackPanel>
-        </Button>
-
-        <Button
             Style="{Binding OpenButtonStyle}" Command="{Binding OpenFilesCommand}" ToolTip="{x:Static local:Resources.Nav_Open_TT}">
             <StackPanel Orientation="Horizontal">
                 <Image Source="pack://application:,,,/Images/FolderOpenBlue.png" Style="{StaticResource NavigationButtonImage}" />
