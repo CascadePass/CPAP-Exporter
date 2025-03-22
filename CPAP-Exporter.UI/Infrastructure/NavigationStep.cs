@@ -2,7 +2,6 @@
 {
     public enum NavigationStep
     {
-        Welcome,
         OpenFiles,
         SelectDays,
         SelectSignals,
