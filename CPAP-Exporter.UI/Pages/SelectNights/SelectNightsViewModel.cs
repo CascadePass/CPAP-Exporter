@@ -165,8 +165,13 @@ namespace CascadePass.CPAPExporter
                 for (int i = 0; i < reports.Count; i++)
                 {
                     ApplicationComponentProvider.Status.ProgressBar.Current = i;
+
                     var report = reports[i];
-                    this.AddReport(report);
+
+                    if (report.Sessions.Count > 0 && !report.Sessions.Any(session => session.Signals.Count == 0))
+                    {
+                        this.AddReport(report);
+                    }
                 }
 
                 ApplicationComponentProvider.Status.ProgressBar = null;
