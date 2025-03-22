@@ -14,6 +14,14 @@
 
         <StatusBarItem HorizontalAlignment="Right">
             <StackPanel Orientation="Horizontal">
+                <ProgressBar
+                    MinWidth="100"
+                    Minimum="{Binding ProgressBarInfo.Min}"
+                    Maximum="{Binding ProgressBarInfo.Max}"
+                    Value="{Binding ProgressBarInfo.Current}"
+                    Visibility="{Binding IsProgressBarVisible, Converter={StaticResource BoolToVisibilityConverter}}"
+                    />
+                
                 <Border BorderBrush="LightGray" BorderThickness="0.25" CornerRadius="3" Margin="4,0,4,0" Padding="1">
                     <StackPanel Orientation="Horizontal">
                         <Button Background="Transparent" BorderBrush="Transparent" Command="{Binding ViewAboutBoxCommand}">
