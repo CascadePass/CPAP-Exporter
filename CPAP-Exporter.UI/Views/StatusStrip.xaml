@@ -15,9 +15,15 @@
         <StatusBarItem HorizontalAlignment="Right">
             <StackPanel Orientation="Horizontal">
                 <Border BorderBrush="LightGray" BorderThickness="0.25" CornerRadius="3" Margin="4,0,4,0" Padding="1">
-                    <Button Background="Transparent" BorderBrush="Transparent" Command="{Binding ViewReleasesPageCommand}">
-                        <TextBlock Text="{Binding Version}" />
-                    </Button>
+                    <StackPanel Orientation="Horizontal">
+                        <Button Background="Transparent" BorderBrush="Transparent" Command="{Binding ViewAboutBoxCommand}">
+                            <Image Source="/Images/AboutBox.png" Height="12" Width="12" />
+                        </Button>
+
+                        <Button Background="Transparent" BorderBrush="Transparent" Command="{Binding ViewReleasesPageCommand}">
+                            <TextBlock Text="{Binding Version}" />
+                        </Button>
+                    </StackPanel>
                 </Border>
 
                 <Border BorderBrush="LightGray" BorderThickness="0.25" CornerRadius="3" Margin="4,0,4,0" Padding="1" Visibility="Collapsed">
