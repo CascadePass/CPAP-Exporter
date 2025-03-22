@@ -71,9 +71,14 @@ namespace CascadePass.CPAPExporter
         {
             this.isValid = false;
 
-            #region Guard Clauses
+            #region Validate Path
 
             ArgumentNullException.ThrowIfNull(folder, nameof(folder));
+
+            if (!this.CanImportFrom(folder))
+            {
+                folder = this.FindImportableParentFolder(folder);
+            }
 
             if (!this.CanImportFrom(folder))
             {
@@ -99,6 +104,12 @@ namespace CascadePass.CPAPExporter
 
         internal bool CanImportFrom(string folder)
         {
+            if (string.IsNullOrWhiteSpace(folder))
+            {
+                // No reason to do any I/O or talk to the file system if there's no folder.
+                return false;
+            }
+
             if (!Directory.Exists(folder))
             {
                 ApplicationComponentProvider.Status.StatusText = string.Format(Resources.FolderDoesNotExist, folder);
@@ -112,6 +123,31 @@ namespace CascadePass.CPAPExporter
             }
 
             return true;
+        }
+
+        internal string FindImportableParentFolder(string folder)
+        {
+            string path = folder;
+
+            while (path is not null)
+            {
+                if (ApplicationComponentProvider.CpapSourceValidator.IsCpapFolderStructure(path))
+                {
+                    return path;
+                }
+
+                DirectoryInfo dir = new(path);
+
+                if (dir.Parent is null)
+                {
+                    ApplicationComponentProvider.Status.StatusText = string.Format(Resources.NoPapData, folder);
+                    return null;
+                }
+
+                path = dir.Parent.FullName;
+            }
+
+            return path;
         }
 
         public override bool Validate()

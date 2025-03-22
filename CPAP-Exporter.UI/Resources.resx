@@ -294,4 +294,7 @@
   <data name="FolderIsNotPAP" xml:space="preserve">
     <value>The folder '{0}' does not contain PAP data</value>
   </data>
+  <data name="NoPapData" xml:space="preserve">
+    <value>Can't find PAP data in '{0}' or any parent folder.</value>
+  </data>
 </root>
