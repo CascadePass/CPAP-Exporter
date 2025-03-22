@@ -16,7 +16,7 @@
                 />
         </CheckBox>
 
-        <Border BorderBrush="LightGray" BorderThickness="0.5" CornerRadius="4" Margin="10">
+        <Border BorderBrush="DarkGray" BorderThickness="0.5" CornerRadius="4" Margin="10">
             <Button BorderBrush="Transparent" Background="Transparent" Command="{Binding BrowseCommand}">
                 <StackPanel Orientation="Horizontal">
                     <Image Source="pack://application:,,,/Images/OpenFolder.png" Style="{StaticResource NavigationButtonImage}" />
@@ -33,7 +33,7 @@
         <ItemsControl ItemsSource="{Binding Folders}" Margin="10">
             <ItemsControl.ItemTemplate>
                 <DataTemplate>
-                    <Border BorderBrush="LightGray" BorderThickness="0.5" CornerRadius="4" Width="Auto">
+                    <Border BorderBrush="LightGray" BorderThickness="0.5" CornerRadius="4" Width="Auto" Margin="0,5,0,5">
                         <Button BorderBrush="Transparent" Background="Transparent" Command="{Binding ElementName=OpenFilesControl, Path=DataContext.OpenCommand}" CommandParameter="{Binding .}">
                             <StackPanel Orientation="Horizontal">
                                 <Image Source="pack://application:,,,/Images/OpenFolder.png" Style="{StaticResource NavigationButtonImage}" />

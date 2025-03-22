@@ -394,6 +394,15 @@ namespace CascadePass.CPAPExporter {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Can&apos;t find PAP data in &apos;{0}&apos; or any parent folder..
+        /// </summary>
+        public static string NoPapData {
+            get {
+                return ResourceManager.GetString("NoPapData", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Open the PAP files you&apos;d like to export.  They can be on an SD card, or CPAP Exporter can read them from any folder..
         /// </summary>
         public static string PageDesc_OpenFiles {

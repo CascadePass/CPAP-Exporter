@@ -1,6 +1,4 @@
-﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
-
-namespace CascadePass.CPAPExporter.UI.Tests
+﻿namespace CascadePass.CPAPExporter.UI.Tests
 {
     [TestClass]
     public class OpenFilesViewModelTests
@@ -32,6 +30,8 @@ namespace CascadePass.CPAPExporter.UI.Tests
             Assert.IsFalse(viewModel.IsValid);
         }
 
+        #region CanImportFrom
+
         [TestMethod]
         public void CanImportFrom_WithNonExistentFolder_ShouldReturnFalse()
         {
@@ -41,6 +41,52 @@ namespace CascadePass.CPAPExporter.UI.Tests
             Assert.IsFalse(viewModel.CanImportFrom(folderPath));
         }
 
-        //TODO: Add real machine data
+        [TestMethod]
+        public void CanImportFrom_Whitespace_ShouldReturnFalse()
+        {
+            var viewModel = new OpenFilesViewModel();
+
+            Assert.IsFalse(viewModel.CanImportFrom(" "));
+        }
+
+        [TestMethod]
+        public void CanImportFrom_Null_ShouldReturnFalse()
+        {
+            var viewModel = new OpenFilesViewModel();
+
+            Assert.IsFalse(viewModel.CanImportFrom(" "));
+        }
+
+        #endregion
+
+        #region FindImportableParentFolder
+
+        [TestMethod]
+        public void FindImportableParentFolder_ValidFolder()
+        {
+            var folderPath = @"C:\PAP Data\Machine";
+            var viewModel = new OpenFilesViewModel();
+
+            ApplicationComponentProvider.CpapSourceValidator = new MockCpapSourceValidator(null, true);
+
+            var result = viewModel.FindImportableParentFolder(folderPath);
+
+            Assert.IsFalse(string.IsNullOrWhiteSpace(result));
+        }
+
+        [TestMethod]
+        public void FindImportableParentFolder_InvalidFolder()
+        {
+            var folderPath = @"C:\PAP Data\Machine";
+            var viewModel = new OpenFilesViewModel();
+
+            ApplicationComponentProvider.CpapSourceValidator = new MockCpapSourceValidator(null, false);
+
+            var result = viewModel.FindImportableParentFolder(folderPath);
+
+            Assert.IsTrue(string.IsNullOrWhiteSpace(result));
+        }
+
+        #endregion
     }
 }
