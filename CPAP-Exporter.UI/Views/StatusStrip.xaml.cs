@@ -1,18 +1,7 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Windows;
+﻿using System.Windows;
 using System.Windows.Controls;
-using System.Windows.Controls.Primitives;
 using System.Windows.Data;
-using System.Windows.Documents;
-using System.Windows.Input;
 using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Navigation;
-using System.Windows.Shapes;
 
 namespace CascadePass.CPAPExporter
 {
@@ -23,7 +12,7 @@ namespace CascadePass.CPAPExporter
     {
         public StatusStrip()
         {
-            InitializeComponent();
+            this.InitializeComponent();
         }
 
         public override void OnApplyTemplate()
@@ -32,7 +21,7 @@ namespace CascadePass.CPAPExporter
 
             if (this.DataContext is StatusBarViewModel statusBarViewModel)
             {
-                statusBarViewModel.PropertyChanged += StatusBarViewModel_PropertyChanged;
+                statusBarViewModel.PropertyChanged += this.StatusBarViewModel_PropertyChanged;
             }
         }
 
@@ -48,7 +37,7 @@ namespace CascadePass.CPAPExporter
                 for (int i = 0; i < VisualTreeHelper.GetChildrenCount(obj); i++)
                 {
                     DependencyObject child = VisualTreeHelper.GetChild(obj, i);
-                    UpdateBindings(child);
+                    this.UpdateBindings(child);
                 }
 
                 var localValues = obj.GetLocalValueEnumerator();
@@ -65,7 +54,7 @@ namespace CascadePass.CPAPExporter
             else
             {
                 // Invoke the dispatcher to run the logic on the UI thread
-                obj.Dispatcher.Invoke(() => UpdateBindings(obj));
+                obj.Dispatcher.Invoke(() => this.UpdateBindings(obj));
             }
         }
 

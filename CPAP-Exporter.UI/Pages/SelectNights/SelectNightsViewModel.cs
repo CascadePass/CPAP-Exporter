@@ -2,6 +2,7 @@
 using System.Collections.ObjectModel;
 using System.ComponentModel;
 using System.IO;
+using System.Windows.Controls;
 using System.Windows.Input;
 using System.Windows.Threading;
 
@@ -159,10 +160,16 @@ namespace CascadePass.CPAPExporter
             // And now it's time to process them.
             Dispatcher.CurrentDispatcher.Invoke(() =>
             {
-                foreach (var report in reports)
+                ApplicationComponentProvider.Status.ProgressBar = new(0, reports.Count - 1, 0);
+
+                for (int i = 0; i < reports.Count; i++)
                 {
+                    ApplicationComponentProvider.Status.ProgressBar.Current = i;
+                    var report = reports[i];
                     this.AddReport(report);
                 }
+
+                ApplicationComponentProvider.Status.ProgressBar = null;
             });
 
             if (!this.IsAllSelected)
@@ -207,6 +214,7 @@ namespace CascadePass.CPAPExporter
         {
             if (SelectNightsViewModel.loadedFolders.Contains(this.ExportParameters.SourcePath))
             {
+                ApplicationComponentProvider.Status.StatusText = string.Format(Resources.NightsAvailable, this.ExportParameters.Reports.Count, this.ExportParameters.SourcePath);
                 return;
             }
 

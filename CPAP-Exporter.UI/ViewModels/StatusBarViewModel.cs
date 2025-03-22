@@ -48,6 +48,10 @@ namespace CascadePass.CPAPExporter
 
         public string StatusText => ApplicationComponentProvider.Status.StatusText;
 
+        public StatusProgressBar ProgressBarInfo => ApplicationComponentProvider.Status.ProgressBar;
+
+        public bool IsProgressBarVisible => ApplicationComponentProvider.Status.ProgressBar != null;
+
         public double FontSize
         {
             get => this.MainWindow?.FontSize ?? default;
@@ -111,6 +115,8 @@ namespace CascadePass.CPAPExporter
         private void Observable_PropertyChanged(object sender, System.ComponentModel.PropertyChangedEventArgs e)
         {
             this.OnPropertyChanged(nameof(this.StatusText));
+            this.OnPropertyChanged(nameof(this.IsProgressBarVisible));
+            this.OnPropertyChanged(nameof(this.ProgressBarInfo));
         }
     }
 }
