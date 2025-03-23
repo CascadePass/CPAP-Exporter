@@ -10,7 +10,7 @@ namespace CascadePass.CPAPExporter
         private MainWindow mainWindow;
         private Version version;
         private IPageViewModelProvider pageViewModelProvider;
-        private DelegateCommand viewReleasesPageCommand, aboutBoxCommand;
+        private DelegateCommand viewReleasesPageCommand, aboutBoxCommand, viewHashesCommand;
 
         #endregion
 
@@ -86,6 +86,9 @@ namespace CascadePass.CPAPExporter
 
         public DelegateCommand ViewAboutBoxCommand => this.aboutBoxCommand ??= new DelegateCommand(this.ShowAboutBox);
 
+        public DelegateCommand ViewHashesCommand => this.viewHashesCommand ??= new DelegateCommand(this.ViewHashes);
+
+
         private void ViewReleasesPage()
         {
             try
@@ -110,6 +113,11 @@ namespace CascadePass.CPAPExporter
 
                 MessageBoxImage.Information
             );
+        }
+
+        private void ViewHashes()
+        {
+            this.NavigationViewModel?.ShowHashView();
         }
 
         private void Observable_PropertyChanged(object sender, System.ComponentModel.PropertyChangedEventArgs e)
