@@ -75,9 +75,18 @@ namespace CascadePass.CPAPExporter
 
             if (reports.Count > 0 && signalNames.Count > 0)
             {
-                CsvExporter csvExporter = new(reports, signalNames) { RowLimit = 10 };
+                try
+                {
+                    CsvExporter csvExporter = new(reports, signalNames) { RowLimit = 10 };
 
-                return csvExporter.ExportToString();
+                    return csvExporter.ExportToString();
+                }
+                catch (Exception ex)
+                {
+#if DEBUG
+                    ApplicationComponentProvider.Status.StatusText = ex.Message;
+#endif
+                }
             }
 
             return string.Empty;
