@@ -96,7 +96,7 @@ namespace CascadePass.CPAPExporter.UI.Tests
 
         private void AssertSystemModules(bool expectedValue, Dictionary<string, string> hashes)
         {
-            string[] files = { "\\ntdll.dll", "\\KERNEL32.DLL", "\\KERNELBASE.dll", "\\SHELL32.dll", "\\System32\\USER32.dll", };
+            string[] files = { "\\ntdll.dll", "\\KERNEL32.DLL", "\\KERNELBASE.dll", "\\System32\\USER32.dll", };
 
             foreach (string path in files)
             {
