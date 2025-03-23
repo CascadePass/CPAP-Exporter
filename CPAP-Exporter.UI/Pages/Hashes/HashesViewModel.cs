@@ -5,11 +5,9 @@ namespace CascadePass.CPAPExporter
     public class HashesViewModel : PageViewModel
     {
         private bool includeSystemModules;
-        private NavigationViewModel navViewModel;
 
-        public HashesViewModel(NavigationViewModel navigationViewModel) : base(Resources.PageTitle_Hashes, Resources.PageDesc_Hashes)
+        public HashesViewModel() : base(Resources.PageTitle_Hashes, Resources.PageDesc_Hashes)
         {
-            this.navViewModel = navigationViewModel;
             this.FileHashes = [];
             this.GetFileHashes();
         }
