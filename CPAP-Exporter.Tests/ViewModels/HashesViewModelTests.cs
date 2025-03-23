@@ -35,13 +35,15 @@
         {
             var viewModel = new HashesViewModel();
 
-            var result = viewModel.FileHashes;
+            // Need to call .ToArray() because FileHashes is an ObservableCollection that gets cleared
+            var result = viewModel.FileHashes.ToArray();
 
             viewModel.IncludeSystemModules = !viewModel.IncludeSystemModules;
 
-            var result2 = viewModel.FileHashes;
+            // Need to call .ToArray() because FileHashes is an ObservableCollection that gets cleared
+            var result2 = viewModel.FileHashes.ToArray();
 
-            Assert.AreNotEqual(result.Count, result2.Count);
+            Assert.AreNotEqual(result.Length, result2.Length);
         }
     }
 }

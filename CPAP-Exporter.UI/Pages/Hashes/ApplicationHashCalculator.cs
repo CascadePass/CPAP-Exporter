@@ -71,10 +71,18 @@ namespace CascadePass.CPAPExporter
                 throw new FileNotFoundException(filePath);
             }
 
-            using FileStream stream = File.OpenRead(filePath);
-            using SHA256 sha256 = SHA256.Create();
-            byte[] hash = sha256.ComputeHash(stream);
-            return Convert.ToHexStringLower(hash);
+            try
+            {
+                using FileStream stream = File.OpenRead(filePath);
+                using SHA256 sha256 = SHA256.Create();
+                byte[] hash = sha256.ComputeHash(stream);
+                return Convert.ToHexStringLower(hash);
+            }
+            catch (Exception)
+            {
+                // File was locked for reading?
+                return new string('0', 32);
+            }
         }
     }
 }

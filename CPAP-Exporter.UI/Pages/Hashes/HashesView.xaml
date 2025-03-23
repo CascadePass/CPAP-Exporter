@@ -21,7 +21,11 @@
                 Visibility="{Binding PageDescription, Converter={StaticResource StringToVisibilityConverter}}"
                 />
 
-            <CheckBox IsChecked="{Binding IncludeSystemModules}" Content="{x:Static local:Resources.Label_IncludeSystemModules}" />
+            <CheckBox
+                Margin="0,0,0,10"
+                IsChecked="{Binding IncludeSystemModules}"
+                Content="{x:Static local:Resources.Label_IncludeSystemModules}"
+                />
         </StackPanel>
         
         <DataGrid
