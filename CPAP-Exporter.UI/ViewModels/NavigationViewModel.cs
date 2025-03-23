@@ -166,7 +166,7 @@ namespace CascadePass.CPAPExporter
             {
                 var vm = (SelectNightsViewModel)this.CurrentView.DataContext;
 
-                ApplicationComponentProvider.Status.StatusText = string.Format(Resources.NightsAvailable, vm.Reports.Count, this.ExportParameters.SourcePath);
+                vm.ShowDefaultStatusMessage();
             }
         }
 

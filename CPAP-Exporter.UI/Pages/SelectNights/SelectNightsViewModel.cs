@@ -2,7 +2,6 @@
 using System.Collections.ObjectModel;
 using System.ComponentModel;
 using System.IO;
-using System.Windows.Controls;
 using System.Windows.Input;
 using System.Windows.Threading;
 
@@ -19,7 +18,7 @@ namespace CascadePass.CPAPExporter
         private bool isAllSelected, clearReportsBeforeAdding;
         private DelegateCommand openSourceFolderCommand;
 
-        private static List<string> loadedFolders;
+        private static Dictionary<string, int> loadedFolders;
 
         #endregion
 
@@ -43,7 +42,7 @@ namespace CascadePass.CPAPExporter
             }
             else
             {
-                ApplicationComponentProvider.Status.StatusText = string.Format(Resources.NightsAvailable, this.ExportParameters.Reports.Count, this.ExportParameters?.SourcePath);
+                this.ShowDefaultStatusMessage();
             }
         }
 
@@ -94,6 +93,8 @@ namespace CascadePass.CPAPExporter
             set => this.SetPropertyValue(ref this.selectedReport, value, nameof(this.SelectedReport));
         }
 
+        public List<KeyValuePair<string, int>> SourceFolders => [..SelectNightsViewModel.loadedFolders];
+
         /// <summary>
         /// Gets the command to open the source folder.
         /// </summary>
@@ -110,7 +111,7 @@ namespace CascadePass.CPAPExporter
         /// <param name="replaceExisting">If set to <c>true</c>, replaces existing reports.</param>
         public void LoadFromFolder(string folder, bool replaceExisting)
         {
-            if (SelectNightsViewModel.loadedFolders.Contains(folder))
+            if (SelectNightsViewModel.loadedFolders.ContainsKey(folder))
             {
                 return;
             }
@@ -197,9 +198,10 @@ namespace CascadePass.CPAPExporter
                 this.IsAllSelected = this.ExportParameters.Reports.All(r => r.IsSelected);
             }
 
-            SelectNightsViewModel.loadedFolders.Add(folder);
+            SelectNightsViewModel.loadedFolders.Add(folder, reports.Count);
+            this.OnPropertyChanged(nameof(this.SourceFolders));
             this.IsBusy = false;
-            ApplicationComponentProvider.Status.StatusText = string.Format(Resources.NightsAvailable, this.ExportParameters.Reports.Count, folder);
+            this.ShowDefaultStatusMessage();
         }
 
         internal DailyReportViewModel AddReport(DailyReport report)
@@ -231,9 +233,9 @@ namespace CascadePass.CPAPExporter
 
         public void Work()
         {
-            if (SelectNightsViewModel.loadedFolders.Contains(this.ExportParameters.SourcePath))
+            if (SelectNightsViewModel.loadedFolders.ContainsKey(this.ExportParameters.SourcePath))
             {
-                ApplicationComponentProvider.Status.StatusText = string.Format(Resources.NightsAvailable, this.ExportParameters.Reports.Count, this.ExportParameters.SourcePath);
+                this.ShowDefaultStatusMessage();
                 return;
             }
 
@@ -245,6 +247,15 @@ namespace CascadePass.CPAPExporter
             });
         }
 
+        internal string GetFolderList()
+        {
+            return string.Join(',', SelectNightsViewModel.loadedFolders.Keys);
+        }
+
+        public void ShowDefaultStatusMessage()
+        {
+            ApplicationComponentProvider.Status.StatusText = string.Format(Resources.NightsAvailable, this.ExportParameters.Reports.Count, this.GetFolderList());
+        }
 
         private void ReportViewModel_PropertyChanged(object sender, PropertyChangedEventArgs e)
         {
