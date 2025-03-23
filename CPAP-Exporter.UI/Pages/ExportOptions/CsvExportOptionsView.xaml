@@ -15,97 +15,99 @@
                 </CheckBox>
             </Expander.Header>
 
-            <StackPanel Margin="10">
-                <StackPanel Orientation="Horizontal">
-                    <Image Source="/Images/Document.png" />
+            <ScrollViewer>
+                <StackPanel Margin="10">
+                    <StackPanel Orientation="Horizontal">
+                        <Image Source="/Images/Document.png" />
 
-                    <TextBlock
-                        Text="{x:Static local:Resources.Label_FileHandlingRule}"
-                        Style="{StaticResource Header}"
-                        FontSize="{DynamicResource FontSize.Large}"
-                        />
-                </StackPanel>
+                        <TextBlock
+                            Text="{x:Static local:Resources.Label_FileHandlingRule}"
+                            Style="{StaticResource Header}"
+                            FontSize="{DynamicResource FontSize.Large}"
+                            />
+                    </StackPanel>
 
-                <StackPanel Orientation="Horizontal" Margin="15,0,0,0">
-                    <RadioButton
-                        Content="{x:Static local:Resources.Label_OneFilePerNight}"
-                        IsChecked="{Binding OutputFileHandling, Converter={StaticResource EnumToBooleanConverter}, ConverterParameter=OneFilePerNight}" />
+                    <StackPanel Orientation="Horizontal" Margin="15,0,0,0">
+                        <RadioButton
+                            Content="{x:Static local:Resources.Label_OneFilePerNight}"
+                            IsChecked="{Binding OutputFileHandling, Converter={StaticResource EnumToBooleanConverter}, ConverterParameter=OneFilePerNight}" />
                     
-                    <RadioButton
-                        Content="{x:Static local:Resources.Label_CombinedIntoSingleFile}"
-                        Margin="15,0,0,0"
-                        IsChecked="{Binding OutputFileHandling, Converter={StaticResource EnumToBooleanConverter}, ConverterParameter=CombinedIntoSingleFile}" />
-                </StackPanel>
+                        <RadioButton
+                            Content="{x:Static local:Resources.Label_CombinedIntoSingleFile}"
+                            Margin="15,0,0,0"
+                            IsChecked="{Binding OutputFileHandling, Converter={StaticResource EnumToBooleanConverter}, ConverterParameter=CombinedIntoSingleFile}" />
+                    </StackPanel>
 
-                <CheckBox IsChecked="{Binding IncludeEvents}" Margin="15,0,0,0">
-                    <TextBlock Text="{x:Static local:Resources.Events}" />
-                </CheckBox>
+                    <CheckBox IsChecked="{Binding IncludeEvents}" Margin="15,0,0,0">
+                        <TextBlock Text="{x:Static local:Resources.Events}" />
+                    </CheckBox>
                 
 
-                <StackPanel Orientation="Horizontal" Margin="0,15,0,0">
-                    <Image Source="/Images/Document.png" />
+                    <StackPanel Orientation="Horizontal" Margin="0,15,0,0">
+                        <Image Source="/Images/Document.png" />
 
-                    <TextBlock
-                        Text="{x:Static local:Resources.Label_ColumnOptions}"
-                        Style="{StaticResource Header}"
-                        FontSize="{DynamicResource FontSize.Large}"
-                        />
+                        <TextBlock
+                            Text="{x:Static local:Resources.Label_ColumnOptions}"
+                            Style="{StaticResource Header}"
+                            FontSize="{DynamicResource FontSize.Large}"
+                            />
+                    </StackPanel>
+
+                    <StackPanel Margin="15,0,0,0">
+                        <CheckBox IsChecked="{Binding IncludeColumnHeaders}">
+                            <TextBlock Text="{x:Static local:Resources.IncludeColumnHeaders}" />
+                        </CheckBox>
+
+                        <CheckBox IsChecked="{Binding IncludeRowNumber}">
+                            <TextBlock Text="{x:Static local:Resources.IncludeRowNumber}" />
+                        </CheckBox>
+
+                        <CheckBox IsChecked="{Binding IncludeSessionNumber}">
+                            <TextBlock Text="{x:Static local:Resources.IncludeSessionNumber}" />
+                        </CheckBox>
+
+                        <CheckBox IsChecked="{Binding IncludeTimestamp}">
+                            <TextBlock Text="{x:Static local:Resources.IncludeTimestamp}" />
+                        </CheckBox>
+
+                        <CheckBox IsChecked="{Binding IncludePythonBoilerplate}" IsEnabled="False">
+                            <TextBlock Text="{x:Static local:Resources.IncludePythonBoilerplate}" />
+                        </CheckBox>
+
+                        <TextBlock Text="{x:Static local:Resources.Delimiter}" />
+                        <TextBox Text="{Binding Delimiter}" />
+
+                    </StackPanel>
+
+                    <StackPanel Orientation="Horizontal" Margin="0,15,0,0">
+                        <Image Source="/Images/Document.png" />
+
+                        <TextBlock
+                            Text="{x:Static local:Resources.Label_FileNames}"
+                            Style="{StaticResource Header}"
+                            FontSize="{DynamicResource FontSize.Large}"
+                            />
+                    </StackPanel>
+
+                    <TextBlock Text="Filenames in the grid below are editable." FontStyle="Italic" />
+
+                    <DataGrid
+                        ItemsSource="{Binding ExportFilenames}"
+                        AutoGenerateColumns="False"
+                        CanUserAddRows="False" CanUserDeleteRows="False"
+                        HeadersVisibility="Column"
+                        VerticalScrollBarVisibility="Auto"
+                        HorizontalScrollBarVisibility="Auto"
+                        >
+                        <DataGrid.Columns>
+                            <DataGridTextColumn Header="{x:Static local:Resources.Date}" Binding="{Binding Label}" IsReadOnly="True" />
+                            <DataGridTextColumn Header="{x:Static local:Resources.Label_FileNames}" Binding="{Binding RawFilename}" />
+                            <DataGridTextColumn Header="{x:Static local:Resources.Label_FileNames}" Binding="{Binding EventsFilename}" />
+                        </DataGrid.Columns>
+                    </DataGrid>
+
                 </StackPanel>
-
-                <StackPanel Margin="15,0,0,0">
-                    <CheckBox IsChecked="{Binding IncludeColumnHeaders}">
-                        <TextBlock Text="{x:Static local:Resources.IncludeColumnHeaders}" />
-                    </CheckBox>
-
-                    <CheckBox IsChecked="{Binding IncludeRowNumber}">
-                        <TextBlock Text="{x:Static local:Resources.IncludeRowNumber}" />
-                    </CheckBox>
-
-                    <CheckBox IsChecked="{Binding IncludeSessionNumber}">
-                        <TextBlock Text="{x:Static local:Resources.IncludeSessionNumber}" />
-                    </CheckBox>
-
-                    <CheckBox IsChecked="{Binding IncludeTimestamp}">
-                        <TextBlock Text="{x:Static local:Resources.IncludeTimestamp}" />
-                    </CheckBox>
-
-                    <CheckBox IsChecked="{Binding IncludePythonBoilerplate}" IsEnabled="False">
-                        <TextBlock Text="{x:Static local:Resources.IncludePythonBoilerplate}" />
-                    </CheckBox>
-
-                    <TextBlock Text="{x:Static local:Resources.Delimiter}" />
-                    <TextBox Text="{Binding Delimiter}" />
-
-                </StackPanel>
-
-                <StackPanel Orientation="Horizontal" Margin="0,15,0,0">
-                    <Image Source="/Images/Document.png" />
-
-                    <TextBlock
-                        Text="{x:Static local:Resources.Label_FileNames}"
-                        Style="{StaticResource Header}"
-                        FontSize="{DynamicResource FontSize.Large}"
-                        />
-                </StackPanel>
-
-                <TextBlock Text="Filenames in the grid below are editable." FontStyle="Italic" />
-
-                <DataGrid
-                    ItemsSource="{Binding ExportFilenames}"
-                    AutoGenerateColumns="False"
-                    CanUserAddRows="False" CanUserDeleteRows="False"
-                    HeadersVisibility="Column"
-                    VerticalScrollBarVisibility="Auto"
-                    HorizontalScrollBarVisibility="Auto"
-                    >
-                    <DataGrid.Columns>
-                        <DataGridTextColumn Header="{x:Static local:Resources.Date}" Binding="{Binding Label}" IsReadOnly="True" />
-                        <DataGridTextColumn Header="{x:Static local:Resources.Label_FileNames}" Binding="{Binding RawFilename}" />
-                        <DataGridTextColumn Header="{x:Static local:Resources.Label_FileNames}" Binding="{Binding EventsFilename}" />
-                    </DataGrid.Columns>
-                </DataGrid>
-
-            </StackPanel>
+            </ScrollViewer>
         </Expander>
     </Border>
 </UserControl>
