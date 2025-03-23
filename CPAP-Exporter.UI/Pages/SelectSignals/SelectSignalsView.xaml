@@ -7,32 +7,37 @@
              mc:Ignorable="d" 
              d:DesignHeight="450" d:DesignWidth="800">
 
-    <StackPanel>
-        <DataGrid
-            ItemsSource="{Binding Signals}"
-            Background="Transparent"
-            CanUserAddRows="False" CanUserDeleteRows="False"
-            AutoGenerateColumns="False" HeadersVisibility="Column"
-            EnableRowVirtualization="True" EnableColumnVirtualization="True">
-            <DataGrid.Columns>
-                <DataGridCheckBoxColumn Header="Export" Binding="{Binding IsSelected}" />
-                <DataGridTextColumn Header="Signal" Binding="{Binding SignalInfo.Name}" />
-                <DataGridTextColumn Header="Frequency" Binding="{Binding SignalInfo.FrequencyInHz}" />
-                <DataGridTextColumn Header="SampleCount" Binding="{Binding SignalInfo.SampleCount, StringFormat=N0}" />
-                <DataGridTextColumn Header="Unit" Binding="{Binding SignalInfo.UnitOfMeasurement}" />
-                <DataGridTextColumn Header="Example Data" Binding="{Binding SignalInfo.Sample}" />
-            </DataGrid.Columns>
-        </DataGrid>
+    <ScrollViewer>
+        <StackPanel>
+            <DataGrid
+                ItemsSource="{Binding Signals}"
+                Background="Transparent"
+                CanUserAddRows="False" CanUserDeleteRows="False"
+                AutoGenerateColumns="False" HeadersVisibility="Column"
+                EnableRowVirtualization="True" EnableColumnVirtualization="True"
+                VerticalScrollBarVisibility="Auto"
+                HorizontalScrollBarVisibility="Auto"
+                >
+                <DataGrid.Columns>
+                    <DataGridCheckBoxColumn Header="Export" Binding="{Binding IsSelected}" />
+                    <DataGridTextColumn Header="Signal" Binding="{Binding SignalInfo.Name}" />
+                    <DataGridTextColumn Header="Frequency" Binding="{Binding SignalInfo.FrequencyInHz}" />
+                    <DataGridTextColumn Header="SampleCount" Binding="{Binding SignalInfo.SampleCount, StringFormat=N0}" />
+                    <DataGridTextColumn Header="Unit" Binding="{Binding SignalInfo.UnitOfMeasurement}" />
+                    <DataGridTextColumn Header="Example Data" Binding="{Binding SignalInfo.Sample}" />
+                </DataGrid.Columns>
+            </DataGrid>
 
-        <StackPanel Orientation="Horizontal" Margin="0,15,0,10">
-            <Image Source="/Images/Document.png" />
-            <TextBlock Text="Example CSV Export" Style="{StaticResource Header}" FontSize="{DynamicResource FontSize.Large}" />
+            <StackPanel Orientation="Horizontal" Margin="0,15,0,10">
+                <Image Source="/Images/Document.png" />
+                <TextBlock Text="Example CSV Export" Style="{StaticResource Header}" FontSize="{DynamicResource FontSize.Large}" />
+            </StackPanel>
+
+            <TextBlock
+                Text="{Binding SampleCSV}"
+                Style="{StaticResource FileSample}"
+                />
         </StackPanel>
-
-        <TextBlock
-            Text="{Binding SampleCSV}"
-            Style="{StaticResource FileSample}"
-            />
-    </StackPanel>
+    </ScrollViewer>
 
 </UserControl>

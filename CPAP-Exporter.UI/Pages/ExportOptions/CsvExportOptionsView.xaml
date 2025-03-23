@@ -90,7 +90,14 @@
 
                 <TextBlock Text="Filenames in the grid below are editable." FontStyle="Italic" />
 
-                <DataGrid ItemsSource="{Binding ExportFilenames}" AutoGenerateColumns="False" CanUserAddRows="False" CanUserDeleteRows="False" HeadersVisibility="Column">
+                <DataGrid
+                    ItemsSource="{Binding ExportFilenames}"
+                    AutoGenerateColumns="False"
+                    CanUserAddRows="False" CanUserDeleteRows="False"
+                    HeadersVisibility="Column"
+                    VerticalScrollBarVisibility="Auto"
+                    HorizontalScrollBarVisibility="Auto"
+                    >
                     <DataGrid.Columns>
                         <DataGridTextColumn Header="{x:Static local:Resources.Date}" Binding="{Binding Label}" IsReadOnly="True" />
                         <DataGridTextColumn Header="{x:Static local:Resources.Label_FileNames}" Binding="{Binding RawFilename}" />
