@@ -7,17 +7,33 @@
              mc:Ignorable="d" 
              d:DesignHeight="450" d:DesignWidth="800">
     
-    <DockPanel>
+    <DockPanel Margin="10">
+        <StackPanel DockPanel.Dock="Top">
+            <TextBlock
+                Style="{DynamicResource PageTitle}"
+                Text="{Binding Title}"
+                />
+
+            <TextBlock
+                Style="{DynamicResource PageDescription}"
+                Text="{Binding PageDescription}"
+                TextWrapping="Wrap"
+                Visibility="{Binding PageDescription, Converter={StaticResource StringToVisibilityConverter}}"
+                />
+
+            <CheckBox IsChecked="{Binding IncludeSystemModules}" Content="{x:Static local:Resources.Label_IncludeSystemModules}" />
+        </StackPanel>
+        
         <DataGrid
+            x:Name="HashList"
             ItemsSource="{Binding FileHashes}"
             AutoGenerateColumns="False"
             CanUserAddRows="False" CanUserDeleteRows="False"
             HeadersVisibility="Column"
-            Margin="10"
             >
             <DataGrid.Columns>
-                <DataGridTextColumn Header="Filename" Binding="{Binding Key}" />
-                <DataGridTextColumn Header="SHA256" Binding="{Binding Value}" />
+                <DataGridTextColumn Header="Filename" Binding="{Binding Key, Mode=OneWay}" />
+                <DataGridTextColumn Header="SHA256" Binding="{Binding Value, Mode=OneWay}" />
             </DataGrid.Columns>
         </DataGrid>
     </DockPanel>

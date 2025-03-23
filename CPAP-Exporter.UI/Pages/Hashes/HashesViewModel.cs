@@ -1,28 +1,43 @@
-﻿using System.Windows;
-using System.Windows.Input;
+﻿using System.Collections.ObjectModel;
 
 namespace CascadePass.CPAPExporter
 {
     public class HashesViewModel : PageViewModel
     {
+        private bool includeSystemModules;
         private NavigationViewModel navViewModel;
-        private DelegateCommand closeCommand;
 
-        public HashesViewModel(NavigationViewModel navigationViewModel) : base(Resources.PageTitle_OpenFiles, Resources.PageDesc_OpenFiles)
+        public HashesViewModel(NavigationViewModel navigationViewModel) : base(Resources.PageTitle_Hashes, Resources.PageDesc_Hashes)
         {
             this.navViewModel = navigationViewModel;
-            this.FileHashes = [.. ApplicationHashCalculator.CalculateHashes()];
+            this.FileHashes = [];
+            this.GetFileHashes();
         }
 
-        public List<KeyValuePair<string, string>> FileHashes { get; set; }
+        public ObservableCollection<KeyValuePair<string, string>> FileHashes { get; set; }
 
-        public FrameworkElement PreviewView { get; set; }
-
-        public ICommand CloseCommand => this.closeCommand ??= new DelegateCommand(this.Close);
-
-        private void Close()
+        public bool IncludeSystemModules
         {
-            this.navViewModel.CurrentView = this.PreviewView;
+            get => this.includeSystemModules;
+            set
+            {
+                bool wasUpdated = this.SetPropertyValue(ref this.includeSystemModules, value, nameof(this.IncludeSystemModules));
+
+                if (wasUpdated)
+                {
+                    this.GetFileHashes();
+                }
+            }
+        }
+
+        internal void GetFileHashes()
+        {
+            this.FileHashes.Clear();
+
+            foreach (var kvp in ApplicationHashCalculator.CalculateHashes(this.IncludeSystemModules))
+            {
+                this.FileHashes.Add(kvp);
+            }
         }
     }
 }

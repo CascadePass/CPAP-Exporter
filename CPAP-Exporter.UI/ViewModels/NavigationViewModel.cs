@@ -249,11 +249,7 @@ namespace CascadePass.CPAPExporter
             var curView = this.CurrentView;
 
             var hashView = new HashesView() { DataContext = new HashesViewModel(this) };
-            //this.CurrentView = new HashesView() { DataContext = new HashesViewModel(this) };
-            //var hashesViewModel = (HashesViewModel)this.CurrentView.DataContext;
             var hashesViewModel = (HashesViewModel)hashView.DataContext;
-
-            hashesViewModel.PreviewView = curView;
 
             Window mainWindow = Application.Current.MainWindow;
             Window host = new() {

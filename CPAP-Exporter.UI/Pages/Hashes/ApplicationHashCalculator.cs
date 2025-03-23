@@ -4,11 +4,17 @@ using System.Security.Cryptography;
 
 namespace CascadePass.CPAPExporter
 {
-    public class ApplicationHashCalculator
+    public static class ApplicationHashCalculator
     {
         public static Dictionary<string, string> CalculateHashes()
         {
+            return ApplicationHashCalculator.CalculateHashes(false);
+        }
+
+        public static Dictionary<string, string> CalculateHashes(bool includeSystemModules)
+        {
             var hashes = new Dictionary<string, string>();
+
             try
             {
                 // Get the main module (the EXE of the running application)
@@ -24,8 +30,7 @@ namespace CascadePass.CPAPExporter
                 {
                     string modulePath = module.FileName;
 
-                    // Exclude Microsoft DLLs
-                    if (IsMicrosoftDll(modulePath))
+                    if (!includeSystemModules && IsMicrosoftDll(modulePath))
                     {
                         continue;
                     }
@@ -36,15 +41,16 @@ namespace CascadePass.CPAPExporter
                     }
                 }
             }
-            catch (Exception ex)
+            catch (Exception)
             {
-                Console.WriteLine($"Error calculating hashes: {ex.Message}");
             }
 
-            return hashes;
+            return hashes
+                .OrderBy(hash => IsMicrosoftDll(hash.Key))
+                .ToDictionary(hash => hash.Key, hash => hash.Value);
         }
 
-        private static bool IsMicrosoftDll(string filePath)
+        internal static bool IsMicrosoftDll(string filePath)
         {
             string lowerFilePath = filePath.ToLowerInvariant();
 
@@ -58,14 +64,17 @@ namespace CascadePass.CPAPExporter
                    ;
         }
 
-        private static string ComputeSHA256Hash(string filePath)
+        internal static string ComputeSHA256Hash(string filePath)
         {
-            using (FileStream stream = File.OpenRead(filePath))
-            using (SHA256 sha256 = SHA256.Create())
+            if (!File.Exists(filePath))
             {
-                byte[] hash = sha256.ComputeHash(stream);
-                return BitConverter.ToString(hash).Replace("-", "").ToLowerInvariant();
+                throw new FileNotFoundException(filePath);
             }
+
+            using FileStream stream = File.OpenRead(filePath);
+            using SHA256 sha256 = SHA256.Create();
+            byte[] hash = sha256.ComputeHash(stream);
+            return Convert.ToHexStringLower(hash);
         }
     }
 }

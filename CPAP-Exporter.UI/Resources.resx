@@ -297,4 +297,13 @@
   <data name="NoPapData" xml:space="preserve">
     <value>Can't find PAP data in '{0}' or any parent folder.</value>
   </data>
+  <data name="PageTitle_Hashes" xml:space="preserve">
+    <value>SHA-256 Hashes</value>
+  </data>
+  <data name="PageDesc_Hashes" xml:space="preserve">
+    <value>These are the SHA-256 hash values for CPAP-Exporter and all of the modules it has loaded.  You can calculate these independently with the software of your choosing, and compare them to the expected values in the release to make sure none of the files you're using have been tampered with.</value>
+  </data>
+  <data name="Label_IncludeSystemModules" xml:space="preserve">
+    <value>Include system modules that have been loaded by CPAP-Explorer</value>
+  </data>
 </root>
