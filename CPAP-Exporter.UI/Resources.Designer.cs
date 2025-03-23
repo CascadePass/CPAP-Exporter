@@ -277,6 +277,15 @@ namespace CascadePass.CPAPExporter {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Include system modules that have been loaded by CPAP-Explorer.
+        /// </summary>
+        public static string Label_IncludeSystemModules {
+            get {
+                return ResourceManager.GetString("Label_IncludeSystemModules", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to One File per Night.
         /// </summary>
         public static string Label_OneFilePerNight {
@@ -403,6 +412,15 @@ namespace CascadePass.CPAPExporter {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to These are the SHA-256 hash values for CPAP-Exporter and all of the modules it has loaded.  You can calculate these independently with the software of your choosing, and compare them to the expected values in the release to make sure none of the files you&apos;re using have been tampered with..
+        /// </summary>
+        public static string PageDesc_Hashes {
+            get {
+                return ResourceManager.GetString("PageDesc_Hashes", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Open the PAP files you&apos;d like to export.  They can be on an SD card, or CPAP Exporter can read them from any folder..
         /// </summary>
         public static string PageDesc_OpenFiles {
@@ -444,6 +462,15 @@ namespace CascadePass.CPAPExporter {
         public static string PageDesc_SelectSignals {
             get {
                 return ResourceManager.GetString("PageDesc_SelectSignals", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to SHA-256 Hashes.
+        /// </summary>
+        public static string PageTitle_Hashes {
+            get {
+                return ResourceManager.GetString("PageTitle_Hashes", resourceCulture);
             }
         }
         

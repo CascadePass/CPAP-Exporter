@@ -40,7 +40,6 @@ namespace CascadePass.CPAPExporter
             {
                 if (this.currentView == null)
                 {
-                    //this.ShowWelcomeScreen();
                     this.OpenFiles();
                 }
 
@@ -243,6 +242,26 @@ namespace CascadePass.CPAPExporter
             this.CurrentView = savedView;
 
             ApplicationComponentProvider.Status.StatusText = string.Format(Resources.FilesWritten, savedVM.Files.Count);
+        }
+
+        public void ShowHashView()
+        {
+            var curView = this.CurrentView;
+
+            var hashView = new HashesView() { DataContext = new HashesViewModel() };
+            var hashesViewModel = (HashesViewModel)hashView.DataContext;
+
+            Window mainWindow = Application.Current.MainWindow;
+            Window host = new() {
+                Owner = mainWindow,
+                Content = hashView,
+                Top = mainWindow.Top,
+                Left = mainWindow.Left,
+                Width = mainWindow.Width,
+                Height = mainWindow.Height,
+            };
+
+            host.ShowDialog();
         }
 
         #region Helper methods

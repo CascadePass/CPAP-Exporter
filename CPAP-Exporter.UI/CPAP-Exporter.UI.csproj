@@ -23,6 +23,7 @@
     <None Remove="Images\FolderOpenBlue.png" />
     <None Remove="Images\FolderOpened.png" />
     <None Remove="Images\HelpTableOfContents.png" />
+    <None Remove="Images\KeyVertical.png" />
     <None Remove="Images\mask.png" />
     <None Remove="Images\mask2.png" />
     <None Remove="Images\MonthCalendar.png" />
@@ -53,6 +54,7 @@
     <Resource Include="Images\FolderOpenBlue.png" />
     <Resource Include="Images\FolderOpened.png" />
     <Resource Include="Images\HelpTableOfContents.png" />
+    <Resource Include="Images\KeyVertical.png" />
     <Resource Include="Images\mask.png" />
     <Resource Include="Images\mask2.png" />
     <Resource Include="Images\MonthCalendar.png" />

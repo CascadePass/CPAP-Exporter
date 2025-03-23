@@ -24,6 +24,10 @@
                 
                 <Border BorderBrush="LightGray" BorderThickness="0.25" CornerRadius="3" Margin="4,0,4,0" Padding="1">
                     <StackPanel Orientation="Horizontal">
+                        <Button Background="Transparent" BorderBrush="Transparent" Command="{Binding ViewHashesCommand}">
+                            <Image Source="/Images/KeyVertical.png" Height="12" Width="12" />
+                        </Button>
+
                         <Button Background="Transparent" BorderBrush="Transparent" Command="{Binding ViewAboutBoxCommand}">
                             <Image Source="/Images/AboutBox.png" Height="12" Width="12" />
                         </Button>
