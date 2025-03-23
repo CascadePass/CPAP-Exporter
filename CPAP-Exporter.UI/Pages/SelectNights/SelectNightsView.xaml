@@ -4,18 +4,26 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:local="clr-namespace:CascadePass.CPAPExporter"
+             xmlns:diag="clr-namespace:System.Diagnostics;assembly=WindowsBase"
              Background="Transparent"
+             x:Name="SelectNightsViewControl"
              mc:Ignorable="d" 
              d:DesignHeight="450" d:DesignWidth="800">
 
     <DockPanel>
-        <TextBlock Margin="0,0,0,10" DockPanel.Dock="Top">
-            <Run Text="{Binding Reports.Count, Mode=OneWay}" FontWeight="Bold" />
-            <Run Text="{x:Static local:Resources.NightsFoundIn}" />
-            <Hyperlink Command="{Binding OpenSourceFolderCommand}">
-                <Run Text="{Binding ExportParameters.SourcePath, Mode=OneWay}" />
-            </Hyperlink>
-        </TextBlock>
+        <ItemsControl x:Name="SourceFoldersDisplay" Margin="0,0,0,10" DockPanel.Dock="Top" ItemsSource="{Binding SourceFolders}">
+            <ItemsControl.ItemTemplate>
+                <DataTemplate>
+                    <TextBlock>
+                        <Run Text="{Binding Value, Mode=OneWay}" FontWeight="Bold" />
+                        <Run Text="{x:Static local:Resources.NightsFoundIn}" />
+                        <Hyperlink Command="{Binding ElementName=SelectNightsViewControl, Path=DataContext.OpenSourceFolderCommand}">
+                            <Run Text="{Binding Key, Mode=OneWay}" />
+                        </Hyperlink>
+                    </TextBlock>
+                </DataTemplate>
+            </ItemsControl.ItemTemplate>
+        </ItemsControl>
 
         <DataGrid
             x:Name="SelectNightDataGrid"
