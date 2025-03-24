@@ -201,47 +201,14 @@ namespace CascadePass.CPAPExporter
 
             SavedFilesView savedView = new();
             var savedVM = (SavedFilesViewModel)savedView.DataContext;
-
-            try
-            {
-                CsvExportSettings csvSettings = (CsvExportSettings)this.ExportParameters.Settings.FirstOrDefault(s => s is CsvExportSettings);
-                CsvExporter exporter = new(
-                    [.. this.exportParameters.Reports.Where(r => r.IsSelected).Select(r => r.DailyReport)],
-                    this.exportParameters.SignalNames
-                    );
-
-                if (csvSettings.OutputFileHandling == OutputFileRule.CombinedIntoSingleFile)
-                {
-                    exporter.ExportToFile(Path.Combine(folder, csvSettings.Filenames.First()));
-                    exporter.ExportFlaggedEventsToFile(Path.Combine(folder, csvSettings.EventFilenames.First()));
-
-                    savedVM.AddFile(Path.Combine(folder, csvSettings.Filenames.First()), Resources.FilesLabel_FullExport);
-                    savedVM.AddFile(Path.Combine(folder, csvSettings.EventFilenames.First()), Resources.FilesLabel_EventsExport);
-                }
-                else
-                {
-                    exporter.DailyReports.Clear();
-                    for (int i = 0; i < this.exportParameters.Reports.Where(r => r.IsSelected).Count(); i++)
-                    {
-                        exporter.DailyReports.Add(this.exportParameters.Reports.Where(r => r.IsSelected).ElementAt(i).DailyReport);
-
-                        exporter.ExportToFile(Path.Combine(folder, csvSettings.Filenames[i]));
-                        exporter.ExportFlaggedEventsToFile(Path.Combine(folder, csvSettings.EventFilenames[i]));
-
-                        savedVM.AddFile(Path.Combine(folder, csvSettings.Filenames[i]), Resources.FilesLabel_FullExport);
-                        savedVM.AddFile(Path.Combine(folder, csvSettings.EventFilenames[i]), Resources.FilesLabel_EventsExport);
-                    }
-                }
-            }
-            catch (Exception ex)
-            {
-                ApplicationComponentProvider.Status.StatusText = ex.Message;
-            }
+            savedVM.ExportParameters = this.ExportParameters;
 
             this.CurrentStep = NavigationStep.Export;
             this.CurrentView = savedView;
 
-            ApplicationComponentProvider.Status.StatusText = string.Format(Resources.FilesWritten, savedVM.Files.Count);
+            savedVM.PerformExportAsync(folder);
+
+            //ApplicationComponentProvider.Status.StatusText = string.Format(Resources.FilesWritten, savedVM.Files.Count);
         }
 
         public void ShowHashView()

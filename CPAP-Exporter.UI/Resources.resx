@@ -178,7 +178,7 @@
     <value>Rows</value>
   </data>
   <data name="PageDesc_SelectNights" xml:space="preserve">
-    <value>Select which nights to export data from.  You'll have more options soon.</value>
+    <value>Select which nights to export data from.  You can go back and add more files, or forward to set options for your export.</value>
   </data>
   <data name="PageDesc_SelectSignals" xml:space="preserve">
     <value>Select which signals to include in the export.  Don't worry about how many samples each has, we'll make it work properly.</value>
