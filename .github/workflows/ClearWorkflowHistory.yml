@@ -1,0 +1,19 @@
+name: Delete Workflow Run History
+
+on:
+  workflow_dispatch: # Trigger manually
+
+jobs:
+  delete-runs:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Delete all workflow runs
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          for run_id in $(curl -s -H "Authorization: token ${{ secrets.WORKFLOW_TOKEN }}" \
+                         https://api.github.com/repos/<owner>/<repo>/actions/runs \
+                         | jq '.workflow_runs[].id'); do
+            curl -X DELETE -H "Authorization: token ${{ secrets.GITHUB_TOKEN }}" \
+            https://api.github.com/repos/<owner>/<repo>/actions/runs/$run_id;
+          done
