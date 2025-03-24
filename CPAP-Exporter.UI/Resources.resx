@@ -306,4 +306,7 @@
   <data name="Label_IncludeSystemModules" xml:space="preserve">
     <value>Include system modules that have been loaded by CPAP-Explorer</value>
   </data>
+  <data name="ReportsSelected" xml:space="preserve">
+    <value>{0} of {1} nightly reports selected</value>
+  </data>
 </root>

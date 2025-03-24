@@ -448,7 +448,7 @@ namespace CascadePass.CPAPExporter {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Select which nights to export data from.  You&apos;ll have more options soon..
+        ///   Looks up a localized string similar to Select which nights to export data from.  You can go back and add more files, or forward to set options for your export..
         /// </summary>
         public static string PageDesc_SelectNights {
             get {
@@ -552,6 +552,15 @@ namespace CascadePass.CPAPExporter {
         public static string ReadyToExport {
             get {
                 return ResourceManager.GetString("ReadyToExport", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to {0} of {1} nightly reports selected.
+        /// </summary>
+        public static string ReportsSelected {
+            get {
+                return ResourceManager.GetString("ReportsSelected", resourceCulture);
             }
         }
         
