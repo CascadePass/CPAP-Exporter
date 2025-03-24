@@ -69,7 +69,7 @@ Contributions are welcome! There are usually some "[good first issues](https://g
 
 **Options**: Choose whether you want column headers, columns like a session identifier, whether to combine all of the data into a single file or one per night, and whether to write events.  Because CSV is *single table*, events will be written to a separate file.
 
-![image](https://github.com/user-attachments/assets/279d73c2-5207-44ec-b319-5ce94da12b99)
+![image](https://github.com/user-attachments/assets/d608f080-e22b-4cda-bf2f-6f1b420f06ac)
 
 **Saved Files**: Once the files are saved, it's easy to manage them.
 
