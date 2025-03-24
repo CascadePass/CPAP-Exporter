@@ -37,7 +37,7 @@ This level of customization makes it easier for users to analyze their data in t
 - CPAP-Exporter currently needs Windows and .NET 9 to run.
 
 #### Developer
-- [Visual Studio](https://visualstudio.microsoft.com/) is necessary to use the code.
+- [Visual Studio](https://visualstudio.microsoft.com/) is the easiest way to use the code.
 
 ### Getting the Code Base
 1. Clone the repository:
