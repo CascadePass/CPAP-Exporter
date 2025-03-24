@@ -53,6 +53,28 @@ This level of customization makes it easier for users to analyze their data in t
 ### Contributing
 Contributions are welcome! There are usually some "[good first issues](https://github.com/CascadePass/CPAP-Exporter/labels/good%20first%20issue)" for new developers, and more challenging problems too.  See [CONTRIBUTING.md](CONTRIBUTING.md) for more details.
 
+## Screenshots
+
+**Opening Files**: CPAP-Exporter keeps a history of the folders you've imported from recently.
+
+![image](https://github.com/user-attachments/assets/37ad3576-5025-4029-8b0b-8b7cdd0c15d8)
+
+**Choosing Nights**: Check each nights you want to include in your export.
+
+![image](https://github.com/user-attachments/assets/b74de2e4-731b-4b32-aa6f-60e73be0ce24)
+
+**Choose Signals**: Choose which columns you'd like to export.  CPAP-Exporter can resample Flow Rate, Mask Pressure, and any other high resolution data to match everything else in the file.
+
+![image](https://github.com/user-attachments/assets/866dfa66-6a62-49ed-b55b-552952c3c2bc)
+
+**Options**: Choose whether you want column headers, columns like a session identifier, whether to combine all of the data into a single file or one per night, and whether to write events.  Because CSV is *single table*, events will be written to a separate file.
+
+![image](https://github.com/user-attachments/assets/54df86f8-9d52-4e16-ae79-b55bf04b9f67)
+
+**Saved Files**: Once the files are saved, it's easy to manage them.
+
+![image](https://github.com/user-attachments/assets/055f7f52-c187-4e19-8d9a-b693632c136c)
+
 ## Acknowledgments
 
 CPAP-Exporter wouldn’t have been possible without the invaluable contributions of the open-source community. We want to acknowledge and express our gratitude to the developers and maintainers of the libraries that made this application a reality:
