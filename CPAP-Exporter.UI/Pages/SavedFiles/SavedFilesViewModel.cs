@@ -94,6 +94,8 @@ namespace CascadePass.CPAPExporter
                     this.ExportParameters.SignalNames
                     );
 
+                csvSettings.ProgressInterval = Math.Min(100, Math.Max(10000, csvSettings.ProgressInterval));
+
                 exporter.Progress += this.Exporter_Progress;
 
                 if (csvSettings.OutputFileHandling == OutputFileRule.CombinedIntoSingleFile)
@@ -125,6 +127,7 @@ namespace CascadePass.CPAPExporter
             }
 
             ApplicationComponentProvider.Status.ProgressBar = null;
+            ApplicationComponentProvider.Status.StatusText = string.Empty;
         }
 
         #region Button click implementations
@@ -177,6 +180,7 @@ namespace CascadePass.CPAPExporter
             if (this.Dispatcher?.CheckAccess() ?? true)
             {
                 ApplicationComponentProvider.Status.ProgressBar = new(0, e.ExpectedRows, e.CurrentRowIndex);
+                ApplicationComponentProvider.Status.StatusText = string.Format(Resources.RowsWritten, e.CurrentRowIndex.ToString("#,##0"));
             }
             else
             {

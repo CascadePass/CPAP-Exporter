@@ -12,7 +12,7 @@ namespace CascadePass.CPAPExporter
         public ExportOptionsPageViewModel(ExportParameters exportParameters) : base(Resources.PageTitle_Options, Resources.PageDesc_Options)
         {
             this.ExportParameters = exportParameters;
-            this.csvExportOptions = new(this.ExportParameters);
+            this.csvExportOptions = new(this.ExportParameters) { ProgressInterval = this.ExportParameters.UserPreferences.ProgressInterval };
             this.ExportParameters.Settings.Add(this.csvExportOptions.Settings);
 
             this.ExportParameters.Reports.CollectionChanged += this.Reports_CollectionChanged;

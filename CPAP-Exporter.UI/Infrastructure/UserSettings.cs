@@ -1,7 +1,6 @@
 ﻿using Newtonsoft.Json;
 using System.IO;
 using System.Reflection;
-using System.Runtime.CompilerServices;
 using System.Windows;
 
 namespace CascadePass.CPAPExporter
@@ -41,6 +40,10 @@ namespace CascadePass.CPAPExporter
         public bool GenerateFlowEvents { get; set; }
 
         public bool ClearFilesBeforeAddingMore { get; set; }
+
+
+        public int ProgressInterval { get; set; }
+
 
         /// <summary>
         /// Gets the fully qualified name of the settings file.
@@ -93,7 +96,7 @@ namespace CascadePass.CPAPExporter
         {
             try
             {
-                UserSettings.CreateSubFolder();
+                UserSettings.CreateApplicationDataSubFolder();
 
                 var json = JsonConvert.SerializeObject(this);
                 File.WriteAllText(UserSettings.Filename, json);
@@ -112,12 +115,14 @@ namespace CascadePass.CPAPExporter
         {
             try
             {
-                UserSettings.CreateSubFolder();
+                UserSettings.CreateApplicationDataSubFolder();
 
                 if (File.Exists(UserSettings.Filename))
                 {
                     var json = File.ReadAllText(UserSettings.Filename);
                     var settings = JsonConvert.DeserializeObject<UserSettings>(json);
+
+                    settings.EnforceLimits();
 
                     return settings;
                 }
@@ -132,14 +137,32 @@ namespace CascadePass.CPAPExporter
 
         public static UserSettings CreateWithDefaults()
         {
-            return new() { GenerateFlowEvents = true };
+            return new() {
+                GenerateFlowEvents = true,
+                ProgressInterval = 500,
+            };
+        }
+
+        internal void EnforceLimits()
+        {
+            if (this.ProgressInterval < 100)
+            {
+                this.ProgressInterval = 100;
+            }
+
+            if (this.ProgressInterval > 10000)
+            {
+                this.ProgressInterval = 10000;
+            }
+
+            this.RecentlyUsedFolders ??= [];
         }
 
         /// <summary>
         /// Creates an application specific folder under AppData, if one
         /// doesn't already exist.
         /// </summary>
-        internal static void CreateSubFolder()
+        internal static void CreateApplicationDataSubFolder()
         {
             string appDataPath = Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData);
             string appName = Assembly.GetExecutingAssembly().GetName().Name;

@@ -207,7 +207,7 @@ namespace CascadePass.CPAPExporter.Core
 
                         #region Report Progress
 
-                        if (rowCount % 100 == 0)
+                        if (this.ExportSettings.ProgressInterval > 0 && rowCount % this.ExportSettings.ProgressInterval == 0)
                         {
                             this.OnProgress(rowCount, details.ExpectedSampleCount);
                         }
