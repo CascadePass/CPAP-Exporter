@@ -53,7 +53,7 @@ This level of customization makes it easier for users to analyze their data in t
 ### Contributing
 Contributions are welcome! There are usually some "[good first issues](https://github.com/CascadePass/CPAP-Exporter/labels/good%20first%20issue)" for new developers, and more challenging problems too.  See [CONTRIBUTING.md](CONTRIBUTING.md) for more details.
 
-### Acknowledgments
+## Acknowledgments
 
 CPAP-Exporter wouldn’t have been possible without the invaluable contributions of the open-source community. We want to acknowledge and express our gratitude to the developers and maintainers of the libraries that made this application a reality:
 
