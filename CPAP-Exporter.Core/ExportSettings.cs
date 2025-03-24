@@ -55,5 +55,7 @@
         public bool IncludePythonBoilerplate { get; set; }
 
         public List<string> Filenames { get; set; }
+
+        public int ProgressInterval { get; set; }
     }
 }

@@ -309,4 +309,7 @@
   <data name="ReportsSelected" xml:space="preserve">
     <value>{0} of {1} nightly reports selected</value>
   </data>
+  <data name="RowsWritten" xml:space="preserve">
+    <value>{0} rows written</value>
+  </data>
 </root>

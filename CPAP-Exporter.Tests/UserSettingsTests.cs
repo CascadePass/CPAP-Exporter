@@ -93,7 +93,7 @@ namespace CascadePass.CPAPExporter.UI.Tests
                 Directory.Delete(appSubFolder, true);
             }
 
-            UserSettings.CreateSubFolder();
+            UserSettings.CreateApplicationDataSubFolder();
 
             Assert.IsTrue(Directory.Exists(appSubFolder));
         }
@@ -112,7 +112,7 @@ namespace CascadePass.CPAPExporter.UI.Tests
 
             Assert.IsTrue(Directory.Exists(appSubFolder));
 
-            UserSettings.CreateSubFolder();
+            UserSettings.CreateApplicationDataSubFolder();
 
             Assert.IsTrue(Directory.Exists(appSubFolder));
 

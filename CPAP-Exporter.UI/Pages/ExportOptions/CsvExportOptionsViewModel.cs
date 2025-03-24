@@ -143,6 +143,19 @@ namespace CascadePass.CPAPExporter
             }
         }
 
+        public int ProgressInterval
+        {
+            get => Math.Max(10000, Math.Min(this.Settings.ProgressInterval, 100));
+            set
+            {
+                if (this.Settings.ProgressInterval != value)
+                {
+                    this.Settings.ProgressInterval = value;
+                    this.OnPropertyChanged(nameof(this.ProgressInterval));
+                }
+            }
+        }
+
         #endregion
 
         #region Methods

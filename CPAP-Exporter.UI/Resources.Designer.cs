@@ -574,6 +574,15 @@ namespace CascadePass.CPAPExporter {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to {0} rows written.
+        /// </summary>
+        public static string RowsWritten {
+            get {
+                return ResourceManager.GetString("RowsWritten", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Sessions.
         /// </summary>
         public static string Sessions {
