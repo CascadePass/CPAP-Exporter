@@ -154,25 +154,6 @@ namespace CascadePass.CPAPExporter.Core
 
                         ExportRow data = new(rowCount, sessionIndex, session.StartTime.AddSeconds(2 * y_sampleIndex));
 
-                        //#region Optional row headers
-
-                        //if (this.ExportSettings.IncludeRowNumber)
-                        //{
-                        //    this.WriteValue(writer, $"{1 + rowCount}", true);
-                        //}
-
-                        //if (this.ExportSettings.IncludeSessionNumber)
-                        //{
-                        //    this.WriteValue(writer, $"{1 + sessionIndex}", true);
-                        //}
-
-                        //if (this.ExportSettings.IncludeTimestamp)
-                        //{
-                        //    this.WriteValue(writer, $"{session.StartTime.AddSeconds(2 * y_sampleIndex)}", true);
-                        //}
-
-                        //#endregion
-
                         for (int x_signalIndex = 0; x_signalIndex < session.Signals.Count; x_signalIndex++)
                         {
                             var signal = session.Signals[x_signalIndex];
@@ -220,6 +201,15 @@ namespace CascadePass.CPAPExporter.Core
                         if (rowCount % 100 == 0)
                         {
                             writer.Flush();
+                        }
+
+                        #endregion
+
+                        #region Report Progress
+
+                        if (rowCount % 100 == 0)
+                        {
+                            this.OnProgress(rowCount, details.ExpectedSampleCount);
                         }
 
                         #endregion

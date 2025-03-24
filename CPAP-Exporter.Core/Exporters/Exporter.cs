@@ -1,10 +1,7 @@
-﻿using CascadePass.CPAPExporter.Core;
-using cpaplib;
+﻿using cpaplib;
 using System.Data;
 using System.IO;
 using System.Reflection;
-using System.Text;
-using System.Xml.Linq;
 
 namespace CascadePass.CPAPExporter.Core
 {
@@ -13,6 +10,8 @@ namespace CascadePass.CPAPExporter.Core
     /// </summary>
     public abstract class Exporter
     {
+        public event EventHandler<ExportProgressEventArgs> Progress;
+
         #region Properties
 
         /// <summary>
@@ -85,100 +84,17 @@ namespace CascadePass.CPAPExporter.Core
 
         internal ExportDetails ExamineSignals()
         {
-            ExportDetails details = new(this.DailyReports);
+            return new(this.DailyReports);
+        }
 
-            // Bucket signals by cardinality
-            //foreach (var report in this.DailyReports)
-            //{
-            //    foreach (Session session in report.Sessions)
-            //    {
-            //        foreach (Signal signal in session.Signals)
-            //        {
-            //            if (!this.SignalNamesToExport.Contains(signal.Name))
-            //            {
-            //                continue;
-            //            }
+        internal void OnProgress(int current, int expected)
+        {
+            this.OnProgress(this, new() { CurrentRowIndex = current, ExpectedRows = expected, });
+        }
 
-            //            if (details.LowResolutionSampleNames.Contains(signal.Name) || details.HighResolutionSampleNames.Contains(signal.Name))
-            //            {
-            //                continue;
-            //            }
-
-            //            if (signal.FrequencyInHz <= 1)
-            //            {
-            //                details.LowResolutionSampleNames.Add(signal.Name);
-            //            }
-            //            else
-            //            {
-            //                details.HighResolutionSampleNames.Add(signal.Name);
-            //            }
-            //        }
-            //    }
-            //}
-
-            // Count all samples for each signal
-            //foreach (var report in this.DailyReports)
-            //{
-            //    foreach (Session session in report.Sessions)
-            //    {
-            //        foreach (Signal signal in session.Signals)
-            //        {
-            //            if (!details.LowResolutionSampleNames.Contains(signal.Name))
-            //            {
-            //                continue;
-            //            }
-
-            //            if (!details.SampleCountsBySignal.ContainsKey(signal.Name))
-            //            {
-            //                details.SampleCountsBySignal[signal.Name] = signal.Samples.Count;
-            //            }
-            //            else
-            //            {
-            //                if (details.SampleCountsBySignal[signal.Name] < signal.Samples.Count)
-            //                {
-            //                    details.SampleCountsBySignal[signal.Name] = signal.Samples.Count;
-            //                }
-            //            }
-            //        }
-            //    }
-            //}
-
-            // Find the largest number of normal rate samples
-            //foreach (var item in details.SampleCountsBySignal)
-            //{
-            //    if (item.Value > details.ExpectedSampleCount)
-            //    {
-            //        details.ExpectedSampleCount = item.Value;
-            //    }
-            //}
-
-            // Calculate downsampling factors
-            //if (details.HasMixedFrequencies)
-            //{
-            //    var lowResFrequency = this.DailyReports
-            //        .SelectMany(report => report.Sessions)
-            //        .SelectMany(session => session.Signals)
-            //        .Where(signal => details.LowResolutionSampleNames.Contains(signal.Name))
-            //        .Select(signal => signal.FrequencyInHz)
-            //        .FirstOrDefault();
-
-            //    foreach (var highResSignal in details.HighResolutionSampleNames)
-            //    {
-            //        var highResFrequency = this.DailyReports
-            //            .SelectMany(report => report.Sessions)
-            //            .SelectMany(session => session.Signals)
-            //            .Where(signal => signal.Name == highResSignal)
-            //            .Select(signal => signal.FrequencyInHz)
-            //            .FirstOrDefault();
-
-            //        if (lowResFrequency > 0 && highResFrequency > 0)
-            //        {
-            //            details.DownsamplingFactors[highResSignal] = highResFrequency / lowResFrequency;
-            //        }
-            //    }
-            //}
-
-            return details;
+        internal void OnProgress(object sender, ExportProgressEventArgs eventArgs)
+        {
+            this.Progress?.Invoke(sender, eventArgs);
         }
 
         #endregion
