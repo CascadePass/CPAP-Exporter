@@ -254,12 +254,17 @@ namespace CascadePass.CPAPExporter
 
         public void ShowDefaultStatusMessage()
         {
-            ApplicationComponentProvider.Status.StatusText = string.Format(Resources.NightsAvailable, this.ExportParameters.Reports.Count, this.GetFolderList());
+            ApplicationComponentProvider.Status.StatusText = string.Format(
+                Resources.ReportsSelected,
+                this.ExportParameters.Reports.Count(report => report.IsSelected),
+                this.ExportParameters.Reports.Count
+            );
         }
 
         private void ReportViewModel_PropertyChanged(object sender, PropertyChangedEventArgs e)
         {
             this.OnPropertyChanged(nameof(this.Reports));
+            this.ShowDefaultStatusMessage();
         }
 
 
