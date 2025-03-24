@@ -4,7 +4,6 @@ using System.ComponentModel;
 using System.Diagnostics;
 using System.IO;
 using System.Windows;
-using System.Windows.Controls;
 using System.Windows.Input;
 using System.Windows.Threading;
 
@@ -19,7 +18,16 @@ namespace CascadePass.CPAPExporter
         public SavedFilesViewModel() : base(Resources.PageTitle_SavedFiles, Resources.PageDesc_SavedFiles)
         {
             this.Files = [];
-            this.Dispatcher = Application.Current.Dispatcher;
+
+            // Assign the application's Dispatcher to allow the ViewModel to marshal updates to the UI thread. 
+            // Application.Current may be null during unit testing or in non-UI contexts.
+
+            this.Dispatcher = Application.Current?.Dispatcher;
+
+            if (this.Dispatcher == null && Application.Current != null)
+            {
+                throw new InvalidOperationException();
+            }
         }
 
         #endregion
@@ -38,15 +46,15 @@ namespace CascadePass.CPAPExporter
 
         public SavedFileViewModel AddFile(string filename, string fileDescription)
         {
-            if (Application.Current.Dispatcher.CheckAccess())
+            if (this.Dispatcher?.CheckAccess() ?? true)
             {
-                // Already on the UI thread
+                // Already on the UI thread, or there is no dispatcher meaning this is a unit test.
                 return AddFileInternal(filename, fileDescription);
             }
             else
             {
                 // On a background thread, so marshal the call to the UI thread
-                return Application.Current.Dispatcher.Invoke(() => AddFileInternal(filename, fileDescription));
+                return this.Dispatcher.Invoke(() => AddFileInternal(filename, fileDescription));
             }
         }
 
@@ -166,10 +174,17 @@ namespace CascadePass.CPAPExporter
 
         private void Exporter_Progress(object sender, ExportProgressEventArgs e)
         {
-            this.Dispatcher.Invoke(() =>
+            if (this.Dispatcher?.CheckAccess() ?? true)
             {
                 ApplicationComponentProvider.Status.ProgressBar = new(0, e.ExpectedRows, e.CurrentRowIndex);
-            });
+            }
+            else
+            {
+                this.Dispatcher.Invoke(() =>
+                {
+                    ApplicationComponentProvider.Status.ProgressBar = new(0, e.ExpectedRows, e.CurrentRowIndex);
+                });
+            }
         }
 
         #endregion
