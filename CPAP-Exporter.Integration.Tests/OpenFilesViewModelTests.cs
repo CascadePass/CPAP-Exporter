@@ -200,6 +200,17 @@
 
         #region Folders
 
+        [TestMethod]
+        public void Folders_AS11_Root()
+        {
+            var exportParams = new ExportParameters();
+            var viewModel = new OpenFilesViewModel(exportParams);
+            string path = TestFilePaths.GetEffectivePath(TestFilePaths.AS11_ROOT_PATH);
+
+            viewModel.Load(path);
+            Assert.IsTrue(viewModel.Folders.Contains(path));
+        }
+
         #endregion
     }
 }
