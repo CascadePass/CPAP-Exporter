@@ -30,7 +30,7 @@
 
             nightsViewModel.LoadFromFolder(source, true);
 
-            Assert.IsTrue(viewModel.Reports.Count > 0);
+            Assert.IsTrue(viewModel.Signals.Count > 0, "There are no signals.");
         }
     }
 }

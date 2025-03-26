@@ -88,7 +88,7 @@ namespace CascadePass.CPAPExporter
 
             try
             {
-                CsvExportSettings csvSettings = (CsvExportSettings)this.ExportParameters.Settings.FirstOrDefault(s => s is CsvExportSettings);
+                CsvExportSettings csvSettings = (CsvExportSettings)this.ExportParameters.Settings.FirstOrDefault(s => s is CsvExportSettings) ?? new();
                 CsvExporter exporter = new(
                     [.. this.ExportParameters.Reports.Where(r => r.IsSelected).Select(r => r.DailyReport)],
                     this.ExportParameters.SignalNames
@@ -109,9 +109,11 @@ namespace CascadePass.CPAPExporter
                 else
                 {
                     exporter.DailyReports.Clear();
-                    for (int i = 0; i < this.ExportParameters.Reports.Where(r => r.IsSelected).Count(); i++)
+                    var relevantDailyReports = this.ExportParameters.Reports.Where(r => r.IsSelected);
+
+                    for (int i = 0; i < relevantDailyReports.Count(); i++)
                     {
-                        exporter.DailyReports.Add(this.ExportParameters.Reports.Where(r => r.IsSelected).ElementAt(i).DailyReport);
+                        exporter.DailyReports.Add(relevantDailyReports.ElementAt(i).DailyReport);
 
                         exporter.ExportToFile(Path.Combine(folder, csvSettings.Filenames[i]));
                         exporter.ExportFlaggedEventsToFile(Path.Combine(folder, csvSettings.EventFilenames[i]));
@@ -124,6 +126,11 @@ namespace CascadePass.CPAPExporter
             catch (Exception ex)
             {
                 ApplicationComponentProvider.Status.StatusText = ex.Message;
+
+                if (Debugger.IsAttached)
+                {
+                    Debugger.Break();
+                }
             }
 
             ApplicationComponentProvider.Status.ProgressBar = null;
