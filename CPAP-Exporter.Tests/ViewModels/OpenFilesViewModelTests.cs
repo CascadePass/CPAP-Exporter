@@ -88,6 +88,19 @@
             Assert.IsTrue(string.IsNullOrWhiteSpace(result));
         }
 
+        [TestMethod]
+        public void FindImportableParentFolder_null()
+        {
+            var folderPath = @"C:\PAP Data\Machine";
+            var viewModel = new OpenFilesViewModel();
+
+            ApplicationComponentProvider.CpapSourceValidator = new MockCpapSourceValidator(null, false);
+
+            var result = viewModel.FindImportableParentFolder(null);
+
+            Assert.IsTrue(string.IsNullOrWhiteSpace(result));
+        }
+
         #endregion
     }
 }
