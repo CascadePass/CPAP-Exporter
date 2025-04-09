@@ -171,25 +171,17 @@ namespace CascadePass.CPAPExporter
             // And now it's time to process them.
             if (reports.Count > 0)
             {
-                Dispatcher.CurrentDispatcher.Invoke(() =>
+                if (Dispatcher.CurrentDispatcher != null && !Dispatcher.CurrentDispatcher.CheckAccess())
                 {
-                    ApplicationComponentProvider.Status.ProgressBar = new(0, reports.Count - 1, 0);
-
-                    for (int i = 0; i < reports.Count; i++)
+                    Dispatcher.CurrentDispatcher.Invoke(() =>
                     {
-                        ApplicationComponentProvider.Status.ProgressBar.Current = i;
-
-                        var report = reports[i];
-                        //bool isDetailReport = report.Sessions.Count > 0 && !report.Sessions.Any(session => session.Signals.Count == 0);
-
-                        if (report.HasDetailData)
-                        {
-                            this.AddReport(report);
-                        }
-                    }
-
-                    ApplicationComponentProvider.Status.ProgressBar = null;
-                });
+                        this.ConsumeReports(reports);
+                    });
+                }
+                else
+                {
+                    this.ConsumeReports(reports);
+                }
             }
 
             if (!this.IsAllSelected && reports.Count > 0)
@@ -198,10 +190,34 @@ namespace CascadePass.CPAPExporter
                 this.IsAllSelected = this.ExportParameters.Reports.All(r => r.IsSelected);
             }
 
-            SelectNightsViewModel.loadedFolders.Add(folder, reports.Count);
+            if (!SelectNightsViewModel.loadedFolders.ContainsKey(folder))
+            {
+                SelectNightsViewModel.loadedFolders.Add(folder, reports.Count);
+            }
+
             this.OnPropertyChanged(nameof(this.SourceFolders));
             this.IsBusy = false;
             this.ShowDefaultStatusMessage();
+        }
+
+        internal void ConsumeReports(List<DailyReport> reports)
+        {
+            ApplicationComponentProvider.Status.ProgressBar = new(0, reports.Count - 1, 0);
+
+            for (int i = 0; i < reports.Count; i++)
+            {
+                ApplicationComponentProvider.Status.ProgressBar.Current = i;
+
+                var report = reports[i];
+                //bool isDetailReport = report.Sessions.Count > 0 && !report.Sessions.Any(session => session.Signals.Count == 0);
+
+                if (report.HasDetailData)
+                {
+                    this.AddReport(report);
+                }
+            }
+
+            ApplicationComponentProvider.Status.ProgressBar = null;
         }
 
         internal DailyReportViewModel AddReport(DailyReport report)

@@ -11,3 +11,4 @@ using System.Windows;
 )]
 
 [assembly: InternalsVisibleTo("CPAP-Exporter.UI.Tests")]
+[assembly: InternalsVisibleTo("CPAP-Exporter.Integration.Tests")]

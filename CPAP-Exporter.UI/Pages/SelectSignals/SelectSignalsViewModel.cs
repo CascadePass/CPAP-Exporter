@@ -18,6 +18,7 @@ namespace CascadePass.CPAPExporter
         public SelectSignalsViewModel(ExportParameters exportParameters) : this()
         {
             this.ExportParameters = exportParameters;
+            this.ConsumeExportParameters();
         }
 
         #endregion
