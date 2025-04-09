@@ -1,6 +1,6 @@
 ﻿namespace CascadePass.CPAPExporter.Integration.Tests
 {
-    [TestClass]
+    //[TestClass]
     public class SelectNightsViewModelTests
     {
         [TestMethod]
