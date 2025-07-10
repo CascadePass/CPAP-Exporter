@@ -312,4 +312,16 @@
   <data name="RowsWritten" xml:space="preserve">
     <value>{0} rows written</value>
   </data>
+  <data name="GenerateCustomEvents" xml:space="preserve">
+    <value>Generate FL and FR events (Examine the flow rate wave form and identify times when breathing was too shallow)</value>
+  </data>
+  <data name="Label_FlowReductionExplaination" xml:space="preserve">
+    <value>Your machine flags apneas (10+ second pauses in breathing), hypopneas (30% or more reduction in air flow for 10 seconds or longer) and may flag RERAs (raspatory effort related arousals) but won't flag more subtle times when you were breathing, but not enough.  OSCAR is great at identifying "sub threshold events" when you stopped breathing for 7 or 8 seconds, not long enough to count as an apnea.  CPAP Exporter can find "flow reduction" events when you were breathing more shallowly than normal.  Check the box to include these in the list of events that get exported.</value>
+  </data>
+  <data name="FlowReductionCodeUri1" xml:space="preserve">
+    <value>https://github.com/CascadePass/Sleeper/blob/master/cpap-lib/Calculations/ButterworthFilter.cs</value>
+  </data>
+  <data name="FlowReductionCodeUri2" xml:space="preserve">
+    <value>https://github.com/CascadePass/Sleeper/blob/master/cpap-lib/Calculations/BreathDetection.cs</value>
+  </data>
 </root>

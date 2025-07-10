@@ -3,19 +3,25 @@
                     xmlns:local="clr-namespace:CascadePass.CPAPExporter"
                     >
 
+    <Style TargetType="TextBlock">
+        <Setter Property="Foreground" Value="{DynamicResource Text.Foreground}" />
+    </Style>
+
     <Style x:Key="PageTitle" TargetType="TextBlock">
+        <Setter Property="FontFamily" Value="Poppins" />
         <Setter Property="FontSize" Value="{DynamicResource FontSize.Title}" />
         <Setter Property="FontWeight" Value="Bold" />
-        <Setter Property="Foreground" Value="Black" />
-        <Setter Property="Margin" Value="0, 5, 0, 0" />
+        <Setter Property="Foreground" Value="{DynamicResource PageTitle.Foreground}" />
+        <Setter Property="Margin" Value="0, 4, 0, 0" />
     </Style>
 
     <Style x:Key="PageDescription" TargetType="TextBlock">
+        <Setter Property="FontFamily" Value="Roboto Mono" />
         <Setter Property="FontSize" Value="{DynamicResource FontSize.Large}" />
         <Setter Property="FontWeight" Value="Light" />
         <Setter Property="FontStyle" Value="Italic" />
-        <Setter Property="Foreground" Value="Gray" />
-        <Setter Property="Margin" Value="0, 0, 0, 15" />
+        <Setter Property="Foreground" Value="{DynamicResource PageDescription.Foreground}" />
+        <Setter Property="Margin" Value="0, 0, 12, 16" />
     </Style>
 
     <Style x:Key="Header" TargetType="TextBlock">
@@ -94,21 +100,19 @@
                 <Setter Property="Background" Value="Transparent" />
             </Trigger>
             <Trigger Property="IsMouseOver" Value="True">
-                <Setter Property="Background" Value="Aqua" />
-                <Setter Property="Effect">
+                <Setter Property="Background" Value="{DynamicResource Navigation.MouseOver.Background}" />
+                <!--<Setter Property="Effect">
                     <Setter.Value>
-                        <DropShadowEffect Color="LightBlue" BlurRadius="10" ShadowDepth="0" />
+                        <DropShadowEffect Color="{DynamicResource Navigation.MouseOver.Shadow}" BlurRadius="10" ShadowDepth="0" />
                     </Setter.Value>
-                </Setter>
+                </Setter>-->
             </Trigger>
         </Style.Triggers>
     </Style>
 
     <Style x:Key="SelectedNavigationButtonStyle" TargetType="Button" BasedOn="{StaticResource NavigationButtonStyle}">
-        <Setter Property="BorderBrush" Value="Blue" />
+        <Setter Property="BorderBrush" Value="{DynamicResource Navigation.SelectedIndicator.Foreground}" />
         <Setter Property="BorderThickness" Value="2,0,0,0" />
-        <!--<Setter Property="BorderThickness" Value="2,0.25,0.25,0.25" />-->
-        <Setter Property="Background" Value="#EEEEFF" />
     </Style>
 
     <Style x:Key="DisabledButtonStyle" TargetType="Button">

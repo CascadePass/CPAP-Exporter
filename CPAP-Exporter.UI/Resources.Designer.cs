@@ -178,6 +178,24 @@ namespace CascadePass.CPAPExporter {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to https://github.com/CascadePass/Sleeper/blob/master/cpap-lib/Calculations/ButterworthFilter.cs.
+        /// </summary>
+        public static string FlowReductionCodeUri1 {
+            get {
+                return ResourceManager.GetString("FlowReductionCodeUri1", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to https://github.com/CascadePass/Sleeper/blob/master/cpap-lib/Calculations/BreathDetection.cs.
+        /// </summary>
+        public static string FlowReductionCodeUri2 {
+            get {
+                return ResourceManager.GetString("FlowReductionCodeUri2", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Folder &apos;{0}&apos; does not exist.
         /// </summary>
         public static string FolderDoesNotExist {
@@ -192,6 +210,15 @@ namespace CascadePass.CPAPExporter {
         public static string FolderIsNotPAP {
             get {
                 return ResourceManager.GetString("FolderIsNotPAP", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Generate FL and FR events (Examine the flow rate wave form and identify times when breathing was too shallow).
+        /// </summary>
+        public static string GenerateCustomEvents {
+            get {
+                return ResourceManager.GetString("GenerateCustomEvents", resourceCulture);
             }
         }
         
@@ -273,6 +300,15 @@ namespace CascadePass.CPAPExporter {
         public static string Label_FileNames {
             get {
                 return ResourceManager.GetString("Label_FileNames", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Your machine flags apneas (10+ second pauses in breathing), hypopneas (30% or more reduction in air flow for 10 seconds or longer) and may flag RERAs (raspatory effort related arousals) but won&apos;t flag more subtle times when you were breathing, but not enough.  OSCAR is great at identifying &quot;sub threshold events&quot; when you stopped breathing for 7 or 8 seconds, not long enough to count as an apnea.  CPAP Exporter can find &quot;flow reduction&quot; events when you were breathing more shallowly than normal.  Check the bo [rest of string was truncated]&quot;;.
+        /// </summary>
+        public static string Label_FlowReductionExplaination {
+            get {
+                return ResourceManager.GetString("Label_FlowReductionExplaination", resourceCulture);
             }
         }
         
