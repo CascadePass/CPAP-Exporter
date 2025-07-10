@@ -9,24 +9,64 @@
              x:Name="OpenFilesControl"
              >
     <StackPanel>
-        <CheckBox IsChecked="{Binding ExportParameters.UserPreferences.GenerateFlowEvents}" Margin="10">
-            <TextBlock
-                Text="Generate FL and FR events"
-                FontWeight="Bold"
-                />
-        </CheckBox>
+        <Border BorderBrush="{DynamicResource OpenFiles.FlowReductionPanel.Border}" BorderThickness="1" CornerRadius="6" Margin="10" Padding="10" Background="{DynamicResource OpenFiles.FlowReductionPanel.Background}">
+            <Expander IsExpanded="{Binding IsFlowReductionDescriptionExpanded}">
+                <Expander.Header>
+                    <CheckBox IsChecked="{Binding ExportParameters.UserPreferences.GenerateFlowEvents}" Margin="10">
+                        <TextBlock
+                            Text="{x:Static local:Resources.GenerateCustomEvents}"
+                            Foreground="{DynamicResource Text.Foreground}"
+                            FontWeight="Bold"
+                            />
+                    </CheckBox>
+                </Expander.Header>
+
+                <DockPanel LastChildFill="True">
+                    <StackPanel DockPanel.Dock="Top">
+                        <TextBlock
+                            TextWrapping="Wrap"
+                            Margin="8"
+                            FontFamily="Calibri"
+                            Text="{x:Static local:Resources.Label_FlowReductionExplaination}" />
+
+                        <TextBlock Visibility="Collapsed">                            
+                            <Hyperlink>
+                                <TextBlock Text="{x:Static local:Resources.FlowReductionCodeUri1}"
+                                           Foreground="{DynamicResource Text.Foreground}"
+                                           FontWeight="Bold"
+                                           Margin="8,0,0,0" /> "
+                            </Hyperlink>
+                        </TextBlock>
+
+                        <TextBlock Visibility="Collapsed">                            
+                            <Hyperlink>
+                                <TextBlock Text="{x:Static local:Resources.FlowReductionCodeUri2}"
+                                           Foreground="{DynamicResource Text.Foreground}"
+                                           FontWeight="Bold"
+                                           Margin="8,0,0,0" /> "
+                            </Hyperlink>
+                        </TextBlock>
+                    </StackPanel>
+
+                    <Border BorderBrush="{DynamicResource OpenFiles.FlowReductionImage.Border}" Background="{DynamicResource OpenFiles.FlowReductionImage.Border}" CornerRadius="12" Padding="8">
+                        <Image Source="/Images/FlowReduction.png" />
+                    </Border>
+                </DockPanel>
+            </Expander>
+        </Border>
 
         <Border BorderBrush="DarkGray" BorderThickness="0.5" CornerRadius="4" Margin="10">
-            <Button BorderBrush="Transparent" Background="Transparent" Command="{Binding BrowseCommand}">
-                <StackPanel Orientation="Horizontal">
-                    <Image Source="pack://application:,,,/Images/OpenFolder.png" Style="{StaticResource NavigationButtonImage}" />
-
-                    <TextBlock
-                        Text="{x:Static local:Resources.Browse}"
-                        FontWeight="Bold"
-                        VerticalAlignment="Center"
-                        />
-                </StackPanel>
+            <Button BorderBrush="Transparent" Command="{Binding BrowseCommand}" MinHeight="{Binding ButtonMinimumHeight, Mode=OneTime}">
+                <Button.Background>
+                    <ImageBrush ImageSource="/Images/BrowseButtonBackground.png" Stretch="Fill" />
+                </Button.Background>
+                <TextBlock
+                    Text="{x:Static local:Resources.Browse}"
+                    Foreground="{DynamicResource Text.Foreground}"
+                    Margin="8"
+                    FontWeight="Bold"
+                    VerticalAlignment="Center"
+                    />
             </Button>
         </Border>
 
@@ -34,15 +74,19 @@
             <ItemsControl.ItemTemplate>
                 <DataTemplate>
                     <Border BorderBrush="LightGray" BorderThickness="0.5" CornerRadius="4" Width="Auto" Margin="0,5,0,5">
-                        <Button BorderBrush="Transparent" Background="Transparent" Command="{Binding ElementName=OpenFilesControl, Path=DataContext.OpenCommand}" CommandParameter="{Binding .}">
-                            <StackPanel Orientation="Horizontal">
-                                <Image Source="pack://application:,,,/Images/OpenFolder.png" Style="{StaticResource NavigationButtonImage}" />
-
-                                <TextBlock
-                                    Text="{Binding .}"
-                                    VerticalAlignment="Center"
-                                    />
-                            </StackPanel>
+                        <Button
+                            BorderBrush="Transparent"
+                            MinHeight="{Binding ElementName=OpenFilesControl, Path=DataContext.ButtonMinimumHeight, Mode=OneTime}"
+                            Command="{Binding ElementName=OpenFilesControl, Path=DataContext.OpenCommand}"
+                            CommandParameter="{Binding .}">
+                            <Button.Background>
+                                <ImageBrush ImageSource="/Images/BrowseButtonBackground.png" Stretch="Fill" />
+                            </Button.Background>
+                            <TextBlock
+                                Text="{Binding .}"
+                                Foreground="{DynamicResource Text.Foreground}"
+                                VerticalAlignment="Center"
+                                />
                         </Button>
                     </Border>
                 </DataTemplate>

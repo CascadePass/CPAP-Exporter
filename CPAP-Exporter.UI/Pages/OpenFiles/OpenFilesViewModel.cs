@@ -28,12 +28,27 @@ namespace CascadePass.CPAPExporter
 
         #region Properties
 
+        public int ButtonMinimumHeight => 100;
+
         public List<string> Folders => this.ExportParameters.UserPreferences.RecentlyUsedFolders;
 
         public bool ClearReportsBeforeAdding
         {
             get => this.clearReportsBeforeAdding;
             set => this.SetPropertyValue(ref this.clearReportsBeforeAdding, value, nameof(this.ClearReportsBeforeAdding));
+        }
+
+        public bool IsFlowReductionDescriptionExpanded
+        {
+            get => this.ExportParameters.UserPreferences.IsFlowReductionDescriptionExpanded;
+            set
+            {
+                if (this.ExportParameters.UserPreferences.IsFlowReductionDescriptionExpanded != value)
+                {
+                    this.ExportParameters.UserPreferences.IsFlowReductionDescriptionExpanded = value;
+                    this.OnPropertyChanged(nameof(this.IsFlowReductionDescriptionExpanded));
+                }
+            }
         }
 
         #region Buttons

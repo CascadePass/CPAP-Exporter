@@ -12,27 +12,41 @@
 
   <ItemGroup>
     <None Remove="Images\AboutBox.png" />
+    <None Remove="Images\BrowseButtonBackground.png" />
     <None Remove="Images\catpap.png" />
     <None Remove="Images\catpap2.png" />
     <None Remove="Images\catpap3.png" />
     <None Remove="Images\Delete.png" />
-    <None Remove="Images\DerivedColumn.png" />
     <None Remove="Images\Document.png" />
     <None Remove="Images\Export.png" />
-    <None Remove="Images\FolderBrowserDialogControl.png" />
-    <None Remove="Images\FolderOpenBlue.png" />
-    <None Remove="Images\FolderOpened.png" />
+    <None Remove="Images\FlowReduction.png" />
     <None Remove="Images\HelpTableOfContents.png" />
     <None Remove="Images\KeyVertical.png" />
     <None Remove="Images\mask.png" />
-    <None Remove="Images\mask2.png" />
     <None Remove="Images\MonthCalendar.png" />
+    <None Remove="Images\Navigation.ExportSettings.Dark.png" />
+    <None Remove="Images\Navigation.ExportSettings.Light.png" />
+    <None Remove="Images\Navigation.ExportSettings.Normal.png" />
+    <None Remove="Images\Navigation.ExportSettings.Selected.png" />
+    <None Remove="Images\Navigation.OpenFiles.Dark.png" />
+    <None Remove="Images\Navigation.OpenFiles.Light.png" />
+    <None Remove="Images\Navigation.OpenFiles.Normal.png" />
+    <None Remove="Images\Navigation.OpenFiles.Selected.png" />
+    <None Remove="Images\Navigation.Save.Dark.png" />
+    <None Remove="Images\Navigation.Save.Light.png" />
+    <None Remove="Images\Navigation.Save.Normal.png" />
+    <None Remove="Images\Navigation.Save.Selected.png" />
+    <None Remove="Images\Navigation.SelectNights.Dark.png" />
+    <None Remove="Images\Navigation.SelectNights.Light.png" />
+    <None Remove="Images\Navigation.SelectNights.Normal.png" />
+    <None Remove="Images\Navigation.SelectSignals.Dark.png" />
+    <None Remove="Images\Navigation.SelectSignals.Light.png" />
+    <None Remove="Images\Navigation.SelectSignals.Normal.png" />
+    <None Remove="Images\Navigation.SelectSignals.Selected.png" />
     <None Remove="Images\Open.png" />
-    <None Remove="Images\OpenFolder.png" />
     <None Remove="Images\RunTestDialog.png" />
     <None Remove="Images\SamplesFolder.png" />
     <None Remove="Images\Save.png" />
-    <None Remove="Images\Settings.png" />
     <None Remove="Images\TraceTransferInto.png" />
   </ItemGroup>
 
@@ -46,26 +60,28 @@
 
   <ItemGroup>
     <Resource Include="Images\AboutBox.png" />
+    <Resource Include="Images\BrowseButtonBackground.png" />
     <Resource Include="Images\Delete.png" />
-    <Resource Include="Images\DerivedColumn.png" />
     <Resource Include="Images\Document.png" />
     <Resource Include="Images\Export.png" />
-    <Resource Include="Images\FolderBrowserDialogControl.png" />
-    <Resource Include="Images\FolderOpenBlue.png" />
-    <Resource Include="Images\FolderOpened.png" />
+    <Resource Include="Images\FlowReduction.png" />
     <Resource Include="Images\HelpTableOfContents.png" />
     <Resource Include="Images\KeyVertical.png" />
     <Resource Include="Images\mask.png" />
-    <Resource Include="Images\mask2.png" />
-    <Resource Include="Images\MonthCalendar.png" />
+    <Resource Include="Images\Navigation.ExportSettings.Normal.png" />
+    <Resource Include="Images\Navigation.ExportSettings.Selected.png" />
+    <Resource Include="Images\Navigation.OpenFiles.Normal.png" />
+    <Resource Include="Images\Navigation.OpenFiles.Selected.png" />
+    <Resource Include="Images\Navigation.Save.Normal.png" />
+    <Resource Include="Images\Navigation.Save.Selected.png" />
+    <Resource Include="Images\Navigation.SelectNights.Normal.png" />
+    <Resource Include="Images\Navigation.SelectSignals.Normal.png" />
+    <Resource Include="Images\Navigation.SelectSignals.Selected.png" />
     <Resource Include="Images\Open.png">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Resource>
-    <Resource Include="Images\OpenFolder.png" />
     <Resource Include="Images\RunTestDialog.png" />
     <Resource Include="Images\SamplesFolder.png" />
-    <Resource Include="Images\Save.png" />
-    <Resource Include="Images\Settings.png" />
     <Resource Include="Images\TraceTransferInto.png" />
   </ItemGroup>
 

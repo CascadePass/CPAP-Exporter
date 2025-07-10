@@ -85,7 +85,12 @@ namespace CascadePass.CPAPExporter
                         nameof(this.SelectNightButtonStyle),
                         nameof(this.SelectSignalsButtonStyle),
                         nameof(this.SettingsButtonStyle),
-                        nameof(this.ExportButtonStyle)
+                        nameof(this.ExportButtonStyle),
+                        nameof(this.OpenButtonImageUri),
+                        nameof(this.SelectNightButtonImageUri),
+                        nameof(this.SelectSignalsButtonImageUri),
+                        nameof(this.SettingsButtonImageUri),
+                        nameof(this.ExportButtonImageUri),
                     ]
                 );
             }
@@ -122,6 +127,20 @@ namespace CascadePass.CPAPExporter
         public Style SettingsButtonStyle => this.GetButtonStyle(NavigationStep.Settings);
 
         public Style ExportButtonStyle => this.GetButtonStyle(NavigationStep.Export);
+
+        #endregion
+
+        #region Button Icons
+
+        public string OpenButtonImageUri => this.currentPage == NavigationStep.OpenFiles ? "/Images/Navigation.OpenFiles.Selected.png" : "/Images/Navigation.OpenFiles.Normal.png";
+
+        public string SelectNightButtonImageUri => this.currentPage == NavigationStep.SelectDays ? "/Images/Navigation.SelectNights.Selected.png" : "/Images/Navigation.SelectNights.Normal.png";
+
+        public string SelectSignalsButtonImageUri => this.currentPage == NavigationStep.SelectSignals ? "/Images/Navigation.SelectSignals.Selected.png" : "/Images/Navigation.SelectSignals.Normal.png";
+
+        public string SettingsButtonImageUri => this.currentPage == NavigationStep.Settings ? "/Images/Navigation.ExportSettings.Selected.png" : "/Images/Navigation.ExportSettings.Normal.png";
+
+        public string ExportButtonImageUri => this.currentPage == NavigationStep.Export ? "/Images/Navigation.Save.Selected.png" : "/Images/Navigation.Save.Normal.png";
 
         #endregion
 

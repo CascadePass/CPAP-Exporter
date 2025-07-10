@@ -44,6 +44,8 @@ namespace CascadePass.CPAPExporter
 
         public int ProgressInterval { get; set; }
 
+        public bool IsFlowReductionDescriptionExpanded { get; set; }
+
 
         /// <summary>
         /// Gets the fully qualified name of the settings file.
@@ -138,6 +140,7 @@ namespace CascadePass.CPAPExporter
         public static UserSettings CreateWithDefaults()
         {
             return new() {
+                IsFlowReductionDescriptionExpanded = true,
                 GenerateFlowEvents = true,
                 ProgressInterval = 500,
             };
