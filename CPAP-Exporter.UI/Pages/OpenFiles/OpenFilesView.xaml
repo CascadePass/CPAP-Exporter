@@ -55,7 +55,7 @@
             </Expander>
         </Border>
 
-        <Border BorderBrush="DarkGray" BorderThickness="0.5" CornerRadius="4" Margin="10">
+        <Border BorderBrush="{DynamicResource Default.Border}" BorderThickness="1" CornerRadius="4" Margin="10">
             <Button BorderBrush="Transparent" Command="{Binding BrowseCommand}" MinHeight="{Binding ButtonMinimumHeight, Mode=OneTime}">
                 <Button.Background>
                     <ImageBrush ImageSource="/Images/BrowseButtonBackground.png" Stretch="Fill" />
@@ -73,7 +73,7 @@
         <ItemsControl ItemsSource="{Binding Folders}" Margin="10">
             <ItemsControl.ItemTemplate>
                 <DataTemplate>
-                    <Border BorderBrush="LightGray" BorderThickness="0.5" CornerRadius="4" Width="Auto" Margin="0,5,0,5">
+                    <Border BorderBrush="{DynamicResource Default.Border}" BorderThickness="1" CornerRadius="4" Width="Auto" Margin="0,5,0,5">
                         <Button
                             BorderBrush="Transparent"
                             MinHeight="{Binding ElementName=OpenFilesControl, Path=DataContext.ButtonMinimumHeight, Mode=OneTime}"
