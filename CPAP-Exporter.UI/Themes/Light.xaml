@@ -6,14 +6,16 @@
     <SolidColorBrush x:Key="PageTitle.Foreground" Color="DarkGray" />
     <SolidColorBrush x:Key="PageDescription.Foreground" Color="DarkSlateGray" />
 
+    <SolidColorBrush x:Key="Navigation.Drawer.Background" Color="#EEEEEE" />
     <SolidColorBrush x:Key="Navigation.SelectedIndicator.Foreground" Color="Blue" />
     <SolidColorBrush x:Key="Navigation.MouseOver.Background" Color="Aqua" />
     <SolidColorBrush x:Key="Navigation.MouseOver.Shadow" Color="LightBlue" />
 
     <SolidColorBrush x:Key="OpenFiles.FlowReductionPanel.Border" Color="Blue" />
     <LinearGradientBrush x:Key="OpenFiles.FlowReductionPanel.Background" StartPoint="0,0" EndPoint="0,1">
-        <GradientStop Color="#003366" Offset="0.0" />
-        <GradientStop Color="#222222" Offset="1.0" />
+        <GradientStop Color="Transparent" Offset="0.0" />
+        <GradientStop Color="Transparent" Offset="0.6" />
+        <GradientStop Color="Transparent" Offset="1.0" />
     </LinearGradientBrush>
     <SolidColorBrush x:Key="OpenFiles.FlowReductionImage.Border" Color="#333333" />
 </ResourceDictionary>

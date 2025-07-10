@@ -39,6 +39,7 @@
     <None Remove="Images\Navigation.SelectNights.Dark.png" />
     <None Remove="Images\Navigation.SelectNights.Light.png" />
     <None Remove="Images\Navigation.SelectNights.Normal.png" />
+    <None Remove="Images\Navigation.SelectNights.Selected.png" />
     <None Remove="Images\Navigation.SelectSignals.Dark.png" />
     <None Remove="Images\Navigation.SelectSignals.Light.png" />
     <None Remove="Images\Navigation.SelectSignals.Normal.png" />
@@ -75,6 +76,7 @@
     <Resource Include="Images\Navigation.Save.Normal.png" />
     <Resource Include="Images\Navigation.Save.Selected.png" />
     <Resource Include="Images\Navigation.SelectNights.Normal.png" />
+    <Resource Include="Images\Navigation.SelectNights.Selected.png" />
     <Resource Include="Images\Navigation.SelectSignals.Normal.png" />
     <Resource Include="Images\Navigation.SelectSignals.Selected.png" />
     <Resource Include="Images\Open.png">

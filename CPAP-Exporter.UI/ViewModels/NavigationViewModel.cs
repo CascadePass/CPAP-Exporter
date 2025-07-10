@@ -1,6 +1,4 @@
-﻿using CascadePass.CPAPExporter.Core;
-using System.IO;
-using System.Windows;
+﻿using System.Windows;
 
 namespace CascadePass.CPAPExporter
 {
