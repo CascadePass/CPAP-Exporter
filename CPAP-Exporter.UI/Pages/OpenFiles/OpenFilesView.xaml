@@ -12,14 +12,13 @@
         <Border BorderBrush="{DynamicResource OpenFiles.FlowReductionPanel.Border}" BorderThickness="1" CornerRadius="6" Margin="10" Padding="10" Background="{DynamicResource OpenFiles.FlowReductionPanel.Background}">
             <Expander IsExpanded="{Binding IsFlowReductionDescriptionExpanded}">
                 <Expander.Header>
-                    <local:ToggleSwitch />
-                    <!--<CheckBox IsChecked="{Binding ExportParameters.UserPreferences.GenerateFlowEvents}" Margin="10">
+                    <CheckBox IsChecked="{Binding ExportParameters.UserPreferences.GenerateFlowEvents}" Margin="10">
                         <TextBlock
                             Text="{x:Static local:Resources.GenerateCustomEvents}"
                             Foreground="{DynamicResource Text.Foreground}"
                             FontWeight="Bold"
                             />
-                    </CheckBox>-->
+                    </CheckBox>
                 </Expander.Header>
 
                 <DockPanel LastChildFill="True">
