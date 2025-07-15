@@ -1,0 +1,84 @@
+﻿<UserControl x:Class="CascadePass.CPAPExporter.ToggleSwitch"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:local="clr-namespace:CascadePass.CPAPExporter"
+             mc:Ignorable="d" 
+             Width="60" Height="30"
+             d:DesignHeight="450" d:DesignWidth="800">
+
+    <UserControl.Resources>
+        <Style x:Key="ModernToggleSwitch" TargetType="ToggleButton">
+            <Setter Property="BorderBrush" Value="{Binding TrackBorderBrush, RelativeSource={RelativeSource AncestorType=UserControl}}"/>
+            <Setter Property="BorderThickness" Value="1"/>
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="ToggleButton">
+                        <Grid x:Name="RootGrid">
+                            <!-- Track -->
+                            <Border
+                                x:Name="Track"
+                                CornerRadius="{Binding TrackCornerRadius, RelativeSource={RelativeSource AncestorType=UserControl}}"
+                                Background="{Binding TrackBackgroundBrush, RelativeSource={RelativeSource AncestorType=UserControl}}"
+                                BorderBrush="{Binding TrackBorderBrush, RelativeSource={RelativeSource AncestorType=UserControl}}"
+                                BorderThickness="{TemplateBinding BorderThickness}"/>
+
+                            <!-- Knob -->
+                            <Ellipse
+                                x:Name="Knob"
+                                Width="{Binding KnobSize, RelativeSource={RelativeSource AncestorType=UserControl}}"
+                                Height="{Binding KnobSize, RelativeSource={RelativeSource AncestorType=UserControl}}"
+                                Fill="White"
+                                Margin="2"
+                                HorizontalAlignment="Left"
+                                VerticalAlignment="Center">
+                                <Ellipse.RenderTransform>
+                                    <TranslateTransform x:Name="KnobTransform" />
+                                </Ellipse.RenderTransform>
+                            </Ellipse>
+
+                            
+                            <!-- Optional Label -->
+                            <ContentPresenter HorizontalAlignment="Center"
+                              VerticalAlignment="Center"
+                              Content="{TemplateBinding Content}"/>
+                        </Grid>
+
+                        <ControlTemplate.Triggers>
+                            <!-- Checked State -->
+                            <Trigger Property="IsChecked" Value="True">
+                                <Setter TargetName="Track" Property="Background" Value="{Binding TrackCheckedBackgroundBrush, RelativeSource={RelativeSource AncestorType=UserControl}}"/>
+                            </Trigger>
+
+                            <!-- Disabled State -->
+                            <Trigger Property="IsEnabled" Value="False">
+                                <Setter TargetName="Track" Property="Background" Value="{Binding TrackDisabledBackgroundBrush, RelativeSource={RelativeSource AncestorType=UserControl}}"/>
+                                <Setter TargetName="Knob" Property="Fill" Value="{Binding KnobDisabledBackgroundBrush, RelativeSource={RelativeSource AncestorType=UserControl}}"/>
+                            </Trigger>
+
+                            <!-- MouseOver State -->
+                            <Trigger Property="IsMouseOver" Value="True">
+                                <Setter TargetName="Track" Property="Effect">
+                                    <Setter.Value>
+                                        <DropShadowEffect Color="{Binding TrackHoverShadowBrush, RelativeSource={RelativeSource AncestorType=UserControl}}" BlurRadius="10" ShadowDepth="0" Opacity="0.6"/>
+                                    </Setter.Value>
+                                </Setter>
+                            </Trigger>
+                        </ControlTemplate.Triggers>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
+    </UserControl.Resources>
+
+    <ToggleButton
+        x:Name="ToggleSwitchButton"
+        Focusable="True"
+        Style="{StaticResource ModernToggleSwitch}"
+        IsChecked="{Binding Value, RelativeSource={RelativeSource AncestorType=UserControl}}"
+        Checked="ToggleButton_ToggleChanged"
+        Unchecked="ToggleButton_ToggleChanged"
+        />
+
+</UserControl>
