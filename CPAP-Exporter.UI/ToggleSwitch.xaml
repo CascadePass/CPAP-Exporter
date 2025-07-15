@@ -10,8 +10,7 @@
 
     <UserControl.Resources>
         <Style x:Key="ModernToggleSwitch" TargetType="ToggleButton">
-            <Setter Property="Background" Value="LightGray"/>
-            <Setter Property="BorderBrush" Value="Gray"/>
+            <Setter Property="BorderBrush" Value="{Binding TrackBorderBrush, RelativeSource={RelativeSource AncestorType=UserControl}}"/>
             <Setter Property="BorderThickness" Value="1"/>
             <Setter Property="Template">
                 <Setter.Value>
@@ -21,8 +20,8 @@
                             <Border
                                 x:Name="Track"
                                 CornerRadius="{Binding TrackCornerRadius, RelativeSource={RelativeSource AncestorType=UserControl}}"
-                                Background="{TemplateBinding Background}"
-                                BorderBrush="{TemplateBinding BorderBrush}"
+                                Background="{Binding TrackBackgroundBrush, RelativeSource={RelativeSource AncestorType=UserControl}}"
+                                BorderBrush="{Binding TrackBorderBrush, RelativeSource={RelativeSource AncestorType=UserControl}}"
                                 BorderThickness="{TemplateBinding BorderThickness}"/>
 
                             <!-- Knob -->
@@ -49,20 +48,20 @@
                         <ControlTemplate.Triggers>
                             <!-- Checked State -->
                             <Trigger Property="IsChecked" Value="True">
-                                <Setter TargetName="Track" Property="Background" Value="#0078D7"/>
+                                <Setter TargetName="Track" Property="Background" Value="{Binding TrackCheckedBackgroundBrush, RelativeSource={RelativeSource AncestorType=UserControl}}"/>
                             </Trigger>
 
                             <!-- Disabled State -->
                             <Trigger Property="IsEnabled" Value="False">
-                                <Setter TargetName="Track" Property="Background" Value="#CCC"/>
-                                <Setter TargetName="Knob" Property="Fill" Value="#EEE"/>
+                                <Setter TargetName="Track" Property="Background" Value="{Binding TrackDisabledBackgroundBrush, RelativeSource={RelativeSource AncestorType=UserControl}}"/>
+                                <Setter TargetName="Knob" Property="Fill" Value="{Binding KnobDisabledBackgroundBrush, RelativeSource={RelativeSource AncestorType=UserControl}}"/>
                             </Trigger>
 
-
+                            <!-- MouseOver State -->
                             <Trigger Property="IsMouseOver" Value="True">
                                 <Setter TargetName="Track" Property="Effect">
                                     <Setter.Value>
-                                        <DropShadowEffect Color="Black" BlurRadius="5" ShadowDepth="0" Opacity="0.3"/>
+                                        <DropShadowEffect Color="{Binding TrackHoverShadowBrush, RelativeSource={RelativeSource AncestorType=UserControl}}" BlurRadius="10" ShadowDepth="0" Opacity="0.6"/>
                                     </Setter.Value>
                                 </Setter>
                             </Trigger>
@@ -75,6 +74,7 @@
 
     <ToggleButton
         x:Name="ToggleSwitchButton"
+        Focusable="True"
         Style="{StaticResource ModernToggleSwitch}"
         IsChecked="{Binding Value, RelativeSource={RelativeSource AncestorType=UserControl}}"
         Checked="ToggleButton_ToggleChanged"
