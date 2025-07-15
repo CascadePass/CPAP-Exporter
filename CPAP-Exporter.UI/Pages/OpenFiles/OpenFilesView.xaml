@@ -27,6 +27,7 @@
                             TextWrapping="Wrap"
                             Margin="8"
                             FontFamily="Calibri"
+                            Foreground="{DynamicResource Text.Foreground}"
                             Text="{x:Static local:Resources.Label_FlowReductionExplaination}" />
 
                         <TextBlock Visibility="Collapsed">                            
@@ -55,42 +56,53 @@
             </Expander>
         </Border>
 
-        <Border BorderBrush="{DynamicResource Default.Border}" BorderThickness="1" CornerRadius="4" Margin="10">
-            <Button BorderBrush="Transparent" Command="{Binding BrowseCommand}" MinHeight="{Binding ButtonMinimumHeight, Mode=OneTime}">
-                <Button.Background>
-                    <ImageBrush ImageSource="/Images/BrowseButtonBackground.png" Stretch="Fill" />
-                </Button.Background>
-                <TextBlock
-                    Text="{x:Static local:Resources.Browse}"
-                    Foreground="{DynamicResource Text.Foreground}"
-                    Margin="8"
-                    FontWeight="Bold"
-                    VerticalAlignment="Center"
-                    />
-            </Button>
-        </Border>
+        <ScrollViewer HorizontalScrollBarVisibility="Hidden" VerticalScrollBarVisibility="Auto">
+            <Grid>
+                <Grid.RowDefinitions>
+                    <RowDefinition />
+                    <RowDefinition />
+                </Grid.RowDefinitions>
 
-        <ItemsControl ItemsSource="{Binding Folders}" Margin="10">
-            <ItemsControl.ItemTemplate>
-                <DataTemplate>
-                    <Border BorderBrush="{DynamicResource Default.Border}" BorderThickness="1" CornerRadius="4" Width="Auto" Margin="0,5,0,5">
-                        <Button
-                            BorderBrush="Transparent"
-                            MinHeight="{Binding ElementName=OpenFilesControl, Path=DataContext.ButtonMinimumHeight, Mode=OneTime}"
-                            Command="{Binding ElementName=OpenFilesControl, Path=DataContext.OpenCommand}"
-                            CommandParameter="{Binding .}">
-                            <Button.Background>
-                                <ImageBrush ImageSource="/Images/BrowseButtonBackground.png" Stretch="Fill" />
-                            </Button.Background>
+                <Border Grid.Row="0" BorderBrush="{DynamicResource Default.Border}" BorderThickness="1" CornerRadius="4" Margin="10">
+                    <Button BorderBrush="Transparent" Command="{Binding BrowseCommand}" MinHeight="{Binding ButtonMinimumHeight, Mode=OneTime}">
+                        <Button.Background>
+                            <ImageBrush ImageSource="/Images/BrowseButtonBackground.png" Stretch="Fill" />
+                        </Button.Background>
+                        <Border BorderBrush="Black" BorderThickness=".5" CornerRadius="6" Background="Black" Opacity=".4" Padding="4">
                             <TextBlock
-                                Text="{Binding .}"
+                                Text="{x:Static local:Resources.Browse}"
                                 Foreground="{DynamicResource Text.Foreground}"
+                                Margin="8"
+                                FontWeight="Bold"
                                 VerticalAlignment="Center"
                                 />
-                        </Button>
-                    </Border>
-                </DataTemplate>
-            </ItemsControl.ItemTemplate>
-        </ItemsControl>
+                        </Border>
+                    </Button>
+                </Border>
+
+                <ItemsControl Grid.Row="1" ItemsSource="{Binding Folders}" Margin="10">
+                    <ItemsControl.ItemTemplate>
+                        <DataTemplate>
+                            <Border BorderBrush="{DynamicResource Default.Border}" BorderThickness="1" CornerRadius="4" Width="Auto" Margin="0,5,0,5">
+                                <Button
+                                    BorderBrush="Transparent"
+                                    MinHeight="{Binding ElementName=OpenFilesControl, Path=DataContext.ButtonMinimumHeight, Mode=OneTime}"
+                                    Command="{Binding ElementName=OpenFilesControl, Path=DataContext.OpenCommand}"
+                                    CommandParameter="{Binding .}">
+                                    <Button.Background>
+                                        <ImageBrush ImageSource="/Images/BrowseButtonBackground.png" Stretch="Fill" />
+                                    </Button.Background>
+                                    <TextBlock
+                                        Text="{Binding .}"
+                                        Foreground="{DynamicResource Text.Foreground}"
+                                        VerticalAlignment="Center"
+                                        />
+                                </Button>
+                            </Border>
+                        </DataTemplate>
+                    </ItemsControl.ItemTemplate>
+                </ItemsControl>
+            </Grid>
+        </ScrollViewer>
     </StackPanel>
 </UserControl>
