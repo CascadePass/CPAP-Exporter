@@ -13,30 +13,38 @@ namespace CascadePass.CPAPExporter
     {
         #region Dependency Properties
 
-        #region Control behavior
-
         public static readonly DependencyProperty ValueProperty =
             DependencyProperty.Register(nameof(Value), typeof(bool), typeof(ToggleSwitch),
                 new PropertyMetadata(false, OnValueChanged));
 
+        #region Control Appearance
+
         public static readonly DependencyProperty KnobSizeProperty =
             DependencyProperty.Register("KnobSize", typeof(double), typeof(ToggleSwitch),
-                new PropertyMetadata(26.0));
+                new PropertyMetadata(0.0));
 
         public static readonly DependencyProperty TrackCornerRadiusProperty =
             DependencyProperty.Register("TrackCornerRadius", typeof(double), typeof(ToggleSwitch),
-                new PropertyMetadata(16.0));
+                new PropertyMetadata(0.0));
+
+        public static readonly DependencyProperty TrackBorderThicknessProperty =
+            DependencyProperty.Register("TrackBorderThickness", typeof(double), typeof(ToggleSwitch),
+                new PropertyMetadata(1.0));
+
+        public static readonly DependencyProperty KnobMarginProperty =
+            DependencyProperty.Register("KnobMargin", typeof(double), typeof(ToggleSwitch),
+                new PropertyMetadata(2.0));
 
         #endregion
 
-        #region Animation properties
+        #region Animation
 
         public static readonly DependencyProperty IsSlideEnabledProperty =
             DependencyProperty.Register("IsSlideEnabled", typeof(bool), typeof(ToggleSwitch),
                 new PropertyMetadata(true));
 
-        public static readonly DependencyProperty IsBouceEnabledProperty =
-            DependencyProperty.Register("IsBouceEnabled", typeof(bool), typeof(ToggleSwitch),
+        public static readonly DependencyProperty IsBounceEnabledProperty =
+            DependencyProperty.Register("IsBounceEnabled", typeof(bool), typeof(ToggleSwitch),
                 new PropertyMetadata(true));
 
         public static readonly DependencyProperty IsFadeEnabledProperty =
@@ -50,6 +58,10 @@ namespace CascadePass.CPAPExporter
         #endregion
 
         #region Brushes
+
+        public static readonly DependencyProperty KnobForegroundBrushProperty =
+            DependencyProperty.Register(nameof(KnobForegroundBrush), typeof(Brush), typeof(ToggleSwitch),
+                new PropertyMetadata(Brushes.White, null));
 
         public static readonly DependencyProperty TrackBorderBrushProperty =
             DependencyProperty.Register(nameof(TrackBorderBrush), typeof(Brush), typeof(ToggleSwitch),
@@ -71,16 +83,13 @@ namespace CascadePass.CPAPExporter
             DependencyProperty.Register(nameof(KnobDisabledBackgroundBrush), typeof(Brush), typeof(ToggleSwitch),
                 new PropertyMetadata(Brushes.Gray, null));
 
-        public static readonly DependencyProperty TrackHoverShadowBrushProperty =
-            DependencyProperty.Register(nameof(TrackHoverShadowBrush), typeof(Brush), typeof(ToggleSwitch),
-                new PropertyMetadata(Brushes.LightBlue, null));
-
         #endregion
 
         #endregion
 
         #region Fields
 
+        private bool autoSizeKnob, autoRoundCorners;
         private TranslateTransform knobTransform;
         private Ellipse knob;
         private Border track;
@@ -93,35 +102,25 @@ namespace CascadePass.CPAPExporter
         {
             this.InitializeComponent();
 
-            this.Loaded += (s, e) =>
-            {
-                this.knob = this.ToggleSwitchButton.Template.FindName("Knob", this.ToggleSwitchButton) as Ellipse;
-                this.track = this.ToggleSwitchButton.Template.FindName("Track", ToggleSwitchButton) as Border;
-                this.knobTransform = this.knob.RenderTransform as TranslateTransform;
-
-                // I need to clone the brush because the original is frozen.
-                this.track.Background = this.TrackBackgroundBrush.Clone();
-
-                // Set initial value
-                VisualStateManager.GoToState(this, this.Value ? "Checked" : "Unchecked", false);
-                this.AnimateKnob(this.Value);
-            };
+            this.Loaded += this.ToggleSwitch_Loaded;
         }
 
         #endregion
 
-        #region Behavior Properties
-
-        public double KnobSize
-        {
-            get => (double)GetValue(KnobSizeProperty);
-            set => SetValue(KnobSizeProperty, value);
-        }
+        #region Properties
 
         public bool Value
         {
             get => (bool)GetValue(ValueProperty);
             set => SetValue(ValueProperty, value);
+        }
+
+        #region Behavior Appearance
+
+        public double KnobSize
+        {
+            get => (double)GetValue(KnobSizeProperty);
+            set => SetValue(KnobSizeProperty, value);
         }
 
         public double TrackCornerRadius
@@ -130,9 +129,21 @@ namespace CascadePass.CPAPExporter
             set => SetValue(TrackCornerRadiusProperty, value);
         }
 
+        public double TrackBorderThickness
+        {
+            get => (double)GetValue(TrackBorderThicknessProperty);
+            set => SetValue(TrackBorderThicknessProperty, value);
+        }
+
+        public double KnobMargin
+        {
+            get => (double)GetValue(KnobMarginProperty);
+            set => SetValue(KnobMarginProperty, value);
+        }
+
         #endregion
 
-        #region Animation Properties
+        #region Animation
 
         public bool IsSlideEnabled
         {
@@ -140,10 +151,10 @@ namespace CascadePass.CPAPExporter
             set => SetValue(IsSlideEnabledProperty, value);
         }
 
-        public bool IsBouceEnabled
+        public bool IsBounceEnabled
         {
-            get => (bool)GetValue(IsBouceEnabledProperty);
-            set => SetValue(IsBouceEnabledProperty, value);
+            get => (bool)GetValue(IsBounceEnabledProperty);
+            set => SetValue(IsBounceEnabledProperty, value);
         }
 
         public bool IsFadeEnabled
@@ -161,6 +172,12 @@ namespace CascadePass.CPAPExporter
         #endregion
 
         #region Brushes
+
+        public Brush KnobForegroundBrush
+        {
+            get => (Brush)GetValue(KnobForegroundBrushProperty);
+            set => SetValue(KnobForegroundBrushProperty, value);
+        }
 
         public Brush TrackBorderBrush
         {
@@ -192,29 +209,13 @@ namespace CascadePass.CPAPExporter
             set => SetValue(KnobDisabledBackgroundBrushProperty, value);
         }
 
-        public Brush TrackHoverShadowBrush
-        {
-            get => (Brush)GetValue(TrackHoverShadowBrushProperty);
-            set => SetValue(TrackHoverShadowBrushProperty, value);
-        }
+        #endregion
 
         #endregion
 
-        private static void OnValueChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
-        {
-            var control = (ToggleSwitch)d;
-            bool isChecked = (bool)e.NewValue;
+        #region Methods
 
-            VisualStateManager.GoToState(control, isChecked ? "Checked" : "Unchecked", true);
-        }
-
-        private void ToggleButton_ToggleChanged(object sender, RoutedEventArgs e)
-        {
-            this.Dispatcher.BeginInvoke(new Action(() =>
-            {
-                this.AnimateKnob(this.Value);
-            }), System.Windows.Threading.DispatcherPriority.Render);
-        }
+        internal string GetStateName(bool isChecked) => isChecked ? "Checked" : "Unchecked";
 
         private void AnimateKnob(bool isChecked)
         {
@@ -234,7 +235,7 @@ namespace CascadePass.CPAPExporter
             }
 
 
-            if (this.IsBouceEnabled)
+            if (this.IsBounceEnabled)
             {
                 var bounce = new DoubleAnimation
                 {
@@ -276,5 +277,82 @@ namespace CascadePass.CPAPExporter
                 ToggleSwitchButton.BeginAnimation(UIElement.OpacityProperty, fade);
             }
         }
+
+        internal void AutoSizeKnob()
+        {
+            if (!this.autoSizeKnob)
+            {
+                return;
+            }
+
+            var margin = this.knob.Margin.Top + this.knob.Margin.Bottom;
+            this.KnobSize = this.ActualHeight - margin;
+        }
+
+        internal void AutoRoundBorderCorners()
+        {
+            if (!this.autoRoundCorners)
+            {
+                return;
+            }
+
+            this.TrackCornerRadius = Math.Min(this.ActualHeight, this.ActualWidth) / 2;
+        }
+
+        private static void OnValueChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
+        {
+            var control = (ToggleSwitch)d;
+            bool isChecked = (bool)e.NewValue;
+
+            VisualStateManager.GoToState(control, control.GetStateName(isChecked), true);
+        }
+
+        private void ToggleButton_ToggleChanged(object sender, RoutedEventArgs e)
+        {
+            this.Dispatcher.BeginInvoke(new Action(() =>
+            {
+                this.AnimateKnob(this.Value);
+            }), System.Windows.Threading.DispatcherPriority.Render);
+        }
+
+        private void ToggleSwitch_SizeChanged(object sender, SizeChangedEventArgs e)
+        {
+            this.AutoSizeKnob();
+            this.AutoRoundBorderCorners();
+        }
+
+        private void ToggleSwitch_Loaded(object sender, RoutedEventArgs e)
+        {
+            // Acquire references to needed parts of the control
+            this.knob = this.ToggleSwitchButton.Template.FindName("Knob", this.ToggleSwitchButton) as Ellipse;
+            this.track = this.ToggleSwitchButton.Template.FindName("Track", ToggleSwitchButton) as Border;
+            this.knobTransform = this.knob.RenderTransform as TranslateTransform;
+
+
+            // I need to clone the brush because the original is frozen.
+            this.track.Background = this.TrackBackgroundBrush.Clone();
+
+
+            // Save values telling me whether to resize things
+            this.autoSizeKnob = this.KnobSize == 0;
+            this.autoRoundCorners = this.TrackCornerRadius == 0;
+
+
+            // Now act on sizing, if necessary
+            if (this.autoSizeKnob || this.autoRoundCorners)
+            {
+                this.SizeChanged += this.ToggleSwitch_SizeChanged;
+
+                // The event won't be called at this point, do it manually:
+                this.AutoSizeKnob();
+                this.AutoRoundBorderCorners();
+            }
+
+            // Set initial value
+            VisualStateManager.GoToState(this, this.GetStateName(this.Value), false);
+            this.AnimateKnob(this.Value);
+        }
+
+        #endregion
     }
 }
