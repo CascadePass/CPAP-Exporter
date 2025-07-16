@@ -13,11 +13,13 @@
     <SolidColorBrush x:Key="Navigation.MouseOver.Background" Color="Aqua" />
     <SolidColorBrush x:Key="Navigation.MouseOver.Shadow" Color="LightBlue" />
 
-    <SolidColorBrush x:Key="OpenFiles.FlowReductionPanel.Border" Color="Blue" />
+    <SolidColorBrush x:Key="OpenFiles.FlowReductionPanel.Border" Color="DarkGreen" />
     <LinearGradientBrush x:Key="OpenFiles.FlowReductionPanel.Background" StartPoint="0,0" EndPoint="0,1">
         <GradientStop Color="Transparent" Offset="0.0" />
         <GradientStop Color="Transparent" Offset="0.6" />
         <GradientStop Color="Transparent" Offset="1.0" />
     </LinearGradientBrush>
-    <SolidColorBrush x:Key="OpenFiles.FlowReductionImage.Border" Color="#333333" />
+    <SolidColorBrush x:Key="OpenFiles.FlowReductionImage.Border" Color="White" />
+    <SolidColorBrush x:Key="OpenFiles.OpenButton.MouseOver.Border" Color="SkyBlue" />
+    <SolidColorBrush x:Key="OpenFiles.OpenButton.Pressed.Border" Color="DodgerBlue" />
 </ResourceDictionary>

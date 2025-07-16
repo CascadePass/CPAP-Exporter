@@ -19,7 +19,8 @@
     <None Remove="Images\Delete.png" />
     <None Remove="Images\Document.png" />
     <None Remove="Images\Export.png" />
-    <None Remove="Images\FlowReduction.png" />
+    <None Remove="Images\FlowReduction.Dark.png" />
+    <None Remove="Images\FlowReduction.Light.png" />
     <None Remove="Images\HelpTableOfContents.png" />
     <None Remove="Images\KeyVertical.png" />
     <None Remove="Images\mask.png" />
@@ -65,7 +66,8 @@
     <Resource Include="Images\Delete.png" />
     <Resource Include="Images\Document.png" />
     <Resource Include="Images\Export.png" />
-    <Resource Include="Images\FlowReduction.png" />
+    <Resource Include="Images\FlowReduction.Dark.png" />
+    <Resource Include="Images\FlowReduction.Light.png" />
     <Resource Include="Images\HelpTableOfContents.png" />
     <Resource Include="Images\KeyVertical.png" />
     <Resource Include="Images\mask.png" />

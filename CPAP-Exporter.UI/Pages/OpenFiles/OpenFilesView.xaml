@@ -9,16 +9,32 @@
              x:Name="OpenFilesControl"
              >
     <StackPanel>
-        <Border BorderBrush="{DynamicResource OpenFiles.FlowReductionPanel.Border}" BorderThickness="1" CornerRadius="6" Margin="10" Padding="10" Background="{DynamicResource OpenFiles.FlowReductionPanel.Background}">
-            <Expander IsExpanded="{Binding IsFlowReductionDescriptionExpanded}">
+        <Border BorderBrush="{Binding FlowReductionBorderBrush}" BorderThickness="1" CornerRadius="6" Margin="10" Padding="10" Background="{DynamicResource OpenFiles.FlowReductionPanel.Background}">
+            <Expander x:Name="FlowReductionExpander" IsExpanded="{Binding IsFlowReductionDescriptionExpanded}">
                 <Expander.Header>
-                    <CheckBox IsChecked="{Binding ExportParameters.UserPreferences.GenerateFlowEvents}" Margin="10">
-                        <TextBlock
-                            Text="{x:Static local:Resources.GenerateCustomEvents}"
-                            Foreground="{DynamicResource Text.Foreground}"
-                            FontWeight="Bold"
-                            />
-                    </CheckBox>
+                    <ContentControl HorizontalAlignment="Stretch">
+                        <Grid HorizontalAlignment="Stretch">
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="*" />
+                                <ColumnDefinition Width="Auto" />
+                            </Grid.ColumnDefinitions>
+                            <TextBlock
+                                Text="{x:Static local:Resources.GenerateCustomEvents}"
+                                Foreground="{DynamicResource Text.Foreground}"
+                                FontWeight="Bold"
+                                Margin="0,0,16,0"
+                                />
+
+                            <local:ToggleSwitch
+                                Grid.Column="1"
+                                Value="{Binding CreateCustomEvents, Mode=TwoWay}"
+                                TrackBackgroundBrush="{DynamicResource OpenFiles.FlowReductionPanel.Unchecked.Border}"
+                                TrackCheckedBackgroundBrush="{DynamicResource OpenFiles.FlowReductionPanel.Checked.Border}"
+                                KnobForegroundBrush="Aqua"
+                                KnobMargin="3"
+                                Height="20" Width="40" />
+                        </Grid>
+                    </ContentControl>
                 </Expander.Header>
 
                 <DockPanel LastChildFill="True">
@@ -50,7 +66,7 @@
                     </StackPanel>
 
                     <Border BorderBrush="{DynamicResource OpenFiles.FlowReductionImage.Border}" Background="{DynamicResource OpenFiles.FlowReductionImage.Border}" CornerRadius="12" Padding="8">
-                        <Image Source="/Images/FlowReduction.png" />
+                        <Image Source="{Binding FlowReductionImageUri}" />
                     </Border>
                 </DockPanel>
             </Expander>
@@ -63,39 +79,27 @@
                     <RowDefinition />
                 </Grid.RowDefinitions>
 
-                <Border Grid.Row="0" BorderBrush="{DynamicResource Default.Border}" BorderThickness="1" CornerRadius="4" Margin="10">
-                    <Button BorderBrush="Transparent" Command="{Binding BrowseCommand}" MinHeight="{Binding ButtonMinimumHeight, Mode=OneTime}">
-                        <Button.Background>
-                            <ImageBrush ImageSource="/Images/BrowseButtonBackground.png" Stretch="Fill" />
-                        </Button.Background>
-                        <Border BorderBrush="Black" BorderThickness=".5" CornerRadius="6" Background="Black" Opacity=".4" Padding="4">
-                            <TextBlock
-                                Text="{x:Static local:Resources.Browse}"
-                                Foreground="{DynamicResource Text.Foreground}"
-                                Margin="8"
-                                FontWeight="Bold"
-                                VerticalAlignment="Center"
-                                />
-                        </Border>
+                <Border Grid.Row="0" Style="{DynamicResource OpenButtonBorderStyle}" Margin="10">
+                    <Button Style="{DynamicResource OpenButtonStyle}" Command="{Binding BrowseCommand}">
+                        <TextBlock
+                            Text="{x:Static local:Resources.Browse}"
+                            Style="{DynamicResource OpenButtonLabelStyle}"
+                            />
                     </Button>
                 </Border>
 
                 <ItemsControl Grid.Row="1" ItemsSource="{Binding Folders}" Margin="10">
                     <ItemsControl.ItemTemplate>
                         <DataTemplate>
-                            <Border BorderBrush="{DynamicResource Default.Border}" BorderThickness="1" CornerRadius="4" Width="Auto" Margin="0,5,0,5">
+                            <Border Style="{DynamicResource OpenButtonBorderStyle}" Width="Auto" Margin="0,5,0,5">
                                 <Button
-                                    BorderBrush="Transparent"
-                                    MinHeight="{Binding ElementName=OpenFilesControl, Path=DataContext.ButtonMinimumHeight, Mode=OneTime}"
+                                    Style="{DynamicResource OpenButtonStyle}"
+                                    MinHeight="{Binding ElementName=OpenFilesControl, Path=DataContext.ButtonMinimumHeight}"
                                     Command="{Binding ElementName=OpenFilesControl, Path=DataContext.OpenCommand}"
                                     CommandParameter="{Binding .}">
-                                    <Button.Background>
-                                        <ImageBrush ImageSource="/Images/BrowseButtonBackground.png" Stretch="Fill" />
-                                    </Button.Background>
                                     <TextBlock
                                         Text="{Binding .}"
-                                        Foreground="{DynamicResource Text.Foreground}"
-                                        VerticalAlignment="Center"
+                                        Style="{DynamicResource OpenButtonLabelStyle}"
                                         />
                                 </Button>
                             </Border>

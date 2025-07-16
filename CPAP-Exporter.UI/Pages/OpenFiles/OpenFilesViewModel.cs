@@ -1,5 +1,7 @@
 ﻿using System.IO;
+using System.Windows;
 using System.Windows.Input;
+using System.Windows.Media;
 
 namespace CascadePass.CPAPExporter
 {
@@ -48,6 +50,43 @@ namespace CascadePass.CPAPExporter
                     this.ExportParameters.UserPreferences.IsFlowReductionDescriptionExpanded = value;
                     this.OnPropertyChanged(nameof(this.IsFlowReductionDescriptionExpanded));
                 }
+            }
+        }
+
+        public bool CreateCustomEvents
+        {
+            get => this.ExportParameters.UserPreferences.GenerateFlowEvents;
+            set
+            {
+                if (this.ExportParameters.UserPreferences.GenerateFlowEvents != value)
+                {
+                    this.ExportParameters.UserPreferences.GenerateFlowEvents = value;
+                    this.OnPropertyChanged(nameof(this.CreateCustomEvents));
+                    this.OnPropertyChanged(nameof(this.FlowReductionBorderBrush));
+                }
+            }
+        }
+
+        public Brush FlowReductionBorderBrush
+        {
+            get
+            {
+                return this.ExportParameters.UserPreferences.GenerateFlowEvents ? Application.Current.Resources["OpenFiles.FlowReductionPanel.Checked.Border"] as Brush : Application.Current.Resources["OpenFiles.FlowReductionPanel.Unchecked.Border"] as Brush;
+            }
+        }
+
+        public string FlowReductionImageUri
+        {
+            get
+            {
+                var theme = new CpapExporterThemeDetector().GetThemeType();
+
+                if (theme == ThemeType.Light)
+                {
+                    return "/Images/FlowReduction.Light.png";
+                }
+
+                return "/Images/FlowReduction.Dark.png";
             }
         }
 
