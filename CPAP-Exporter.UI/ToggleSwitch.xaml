@@ -6,6 +6,7 @@
              xmlns:local="clr-namespace:CascadePass.CPAPExporter"
              mc:Ignorable="d" 
              Width="60" Height="30"
+             x:Name="ToggleSwitchControlRoot"
              d:DesignHeight="450" d:DesignWidth="800">
 
     <UserControl.Resources>
@@ -22,15 +23,15 @@
                                 CornerRadius="{Binding TrackCornerRadius, RelativeSource={RelativeSource AncestorType=UserControl}}"
                                 Background="{Binding TrackBackgroundBrush, RelativeSource={RelativeSource AncestorType=UserControl}}"
                                 BorderBrush="{Binding TrackBorderBrush, RelativeSource={RelativeSource AncestorType=UserControl}}"
-                                BorderThickness="{TemplateBinding BorderThickness}"/>
+                                BorderThickness="{Binding TrackBorderThickness, RelativeSource={RelativeSource AncestorType=UserControl}}"/>
 
                             <!-- Knob -->
                             <Ellipse
                                 x:Name="Knob"
                                 Width="{Binding KnobSize, RelativeSource={RelativeSource AncestorType=UserControl}}"
                                 Height="{Binding KnobSize, RelativeSource={RelativeSource AncestorType=UserControl}}"
-                                Fill="White"
-                                Margin="2"
+                                Fill="{Binding KnobForegroundBrush, RelativeSource={RelativeSource AncestorType=UserControl}}"
+                                Margin="{Binding KnobMargin, RelativeSource={RelativeSource AncestorType=UserControl}}"
                                 HorizontalAlignment="Left"
                                 VerticalAlignment="Center">
                                 <Ellipse.RenderTransform>
@@ -61,7 +62,12 @@
                             <Trigger Property="IsMouseOver" Value="True">
                                 <Setter TargetName="Track" Property="Effect">
                                     <Setter.Value>
-                                        <DropShadowEffect Color="{Binding TrackHoverShadowBrush, RelativeSource={RelativeSource AncestorType=UserControl}}" BlurRadius="10" ShadowDepth="0" Opacity="0.6"/>
+                                        <DropShadowEffect Color="DarkSlateGray" BlurRadius="10" ShadowDepth="0" Opacity="0.6"/>
+                                    </Setter.Value>
+                                </Setter>
+                                <Setter TargetName="Knob" Property="Effect">
+                                    <Setter.Value>
+                                        <DropShadowEffect Color="DarkSlateGray" BlurRadius="10" ShadowDepth="0" Opacity="0.6"/>
                                     </Setter.Value>
                                 </Setter>
                             </Trigger>
@@ -76,7 +82,7 @@
         x:Name="ToggleSwitchButton"
         Focusable="True"
         Style="{StaticResource ModernToggleSwitch}"
-        IsChecked="{Binding Value, RelativeSource={RelativeSource AncestorType=UserControl}}"
+        IsChecked="{Binding Value, RelativeSource={RelativeSource AncestorType=UserControl}, Mode=TwoWay}"
         Checked="ToggleButton_ToggleChanged"
         Unchecked="ToggleButton_ToggleChanged"
         />
