@@ -36,6 +36,67 @@
         <Setter Property="TextWrapping" Value="Wrap" />
     </Style>
 
+    <Style x:Key="OpenButtonBorderStyle" TargetType="Border">
+        <Setter Property="BorderBrush" Value="{DynamicResource Default.Border}" />
+        <Setter Property="BorderThickness" Value="1" />
+        <Setter Property="CornerRadius" Value="4" />
+    </Style>
+
+    <Style x:Key="OpenButtonLabelStyle" TargetType="TextBlock">
+        <Setter Property="FontSize" Value="{DynamicResource FontSize.Large}" />
+        <Setter Property="Foreground" Value="{DynamicResource Text.Foreground}" />
+        <Setter Property="FontWeight" Value="Bold" />
+        <Setter Property="VerticalAlignment" Value="Center" />
+    </Style>
+
+    <Style x:Key="OpenButtonStyle" TargetType="Button">
+        <Setter Property="Background">
+            <Setter.Value>
+                <ImageBrush ImageSource="/Images/BrowseButtonBackground.png" Stretch="Fill"/>
+            </Setter.Value>
+        </Setter>
+        <Setter Property="MinHeight" Value="{Binding ButtonMinimumHeight, Mode=OneTime}"/>
+        <Setter Property="BorderThickness" Value="3"/>
+        <Setter Property="BorderBrush" Value="Transparent"/>
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="Button">
+                    <Grid>
+                        <Border x:Name="Border"
+                              Background="{TemplateBinding Background}"
+                              BorderBrush="{TemplateBinding BorderBrush}"
+                              BorderThickness="{TemplateBinding BorderThickness}">
+                            <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                        </Border>
+                    </Grid>
+                    <ControlTemplate.Triggers>
+                        <Trigger Property="IsMouseOver" Value="True">
+                            <Setter TargetName="Border" Property="BorderBrush" Value="{DynamicResource OpenFiles.OpenButton.MouseOver.Border}"/>
+                            <Setter TargetName="Border" Property="BorderThickness" Value="3" />
+                            <Setter TargetName="Border" Property="Padding" Value="0" />
+                            <Setter TargetName="Border" Property="CornerRadius" Value="4" />
+                            <Setter TargetName="Border" Property="Opacity" Value="0.7" />
+                            <Setter TargetName="Border" Property="Effect">
+                                <Setter.Value>
+                                    <DropShadowEffect Color="SkyBlue" BlurRadius="10" ShadowDepth="0" Opacity="0.6"/>
+                                </Setter.Value>
+                            </Setter>
+                        </Trigger>
+                        <Trigger Property="IsPressed" Value="True">
+                            <Setter TargetName="Border" Property="BorderBrush" Value="{DynamicResource OpenFiles.OpenButton.Pressed.Border}"/>
+                            <Setter TargetName="Border" Property="Opacity" Value="0.9" />
+                            <Setter TargetName="Border" Property="Effect">
+                                <Setter.Value>
+                                    <DropShadowEffect Color="DodgerBlue" BlurRadius="6" ShadowDepth="2" Opacity="0.8"/>
+                                </Setter.Value>
+                            </Setter>
+                        </Trigger>
+                    </ControlTemplate.Triggers>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+
     <Style x:Key="WrittenFileDisplay" TargetType="Border">
         <Setter Property="BorderBrush" Value="LightGray" />
         <Setter Property="BorderThickness" Value="0.25" />
