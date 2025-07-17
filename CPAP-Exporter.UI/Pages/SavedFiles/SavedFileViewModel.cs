@@ -1,5 +1,8 @@
-﻿using System.IO;
+﻿using System.ComponentModel;
+using System.IO;
 using System.Windows.Input;
+using System.Windows.Media;
+using System.Windows.Media.Imaging;
 
 namespace CascadePass.CPAPExporter
 {
@@ -7,19 +10,39 @@ namespace CascadePass.CPAPExporter
     {
         private bool isDeleted;
         private string name, desc;
+        private Brush backgroundImageBrush;
+        private SavedFileType type;
         private DelegateCommand browseCommand, deleteCommand, launchCommand;
+
+        private static Brush fullFileBrush, eventsFileBrush;
 
         public event EventHandler<EventArgs> FileDeleted;
 
-        public SavedFileViewModel(string filename, string description)
+        public SavedFileViewModel(string filename, string description, SavedFileType fileType)
         {
             this.Filename = filename;
             this.Description = description;
+            this.FileType = fileType;
+
+            if (fileType == SavedFileType.FullExport)
+            {
+                this.BackgroundImageBrush = SavedFileViewModel.fullFileBrush;
+            }
+            else if(fileType == SavedFileType.EventsExport)
+            {
+                this.BackgroundImageBrush = SavedFileViewModel.eventsFileBrush;
+            }
 
             if (this.FileInfo is null || !this.FileInfo.Exists)
             {
                 throw new ArgumentOutOfRangeException(nameof(filename));
             }
+        }
+
+        static SavedFileViewModel()
+        {
+            SavedFileViewModel.fullFileBrush = SavedFileViewModel.CreateImageBrush("/Images/SavedFiles.RawFilePanel.Background.png");
+            SavedFileViewModel.eventsFileBrush = SavedFileViewModel.CreateImageBrush("/Images/SavedFiles.EventsFilePanel.Background.png");
         }
 
         public string Filename {
@@ -43,6 +66,18 @@ namespace CascadePass.CPAPExporter
         {
             get => this.isDeleted;
             set => this.SetPropertyValue(ref this.isDeleted, value, nameof(this.IsDeleted));
+        }
+
+        public SavedFileType FileType
+        {
+            get => this.type;
+            set => this.SetPropertyValue(ref this.type, value, nameof(this.FileType));
+        }
+
+        public Brush BackgroundImageBrush
+        {
+            get => this.backgroundImageBrush;
+            set => this.SetPropertyValue(ref this.backgroundImageBrush, value, nameof(this.BackgroundImageBrush));
         }
 
         public FileInfo FileInfo { get; set; }
@@ -90,6 +125,23 @@ namespace CascadePass.CPAPExporter
             }
 
             WindowsExplorerUtility.LaunchFile(this.Filename);
+        }
+
+
+        public static ImageBrush CreateImageBrush(string resourceRelativePath)
+        {
+            var uri = new Uri($"pack://application:,,,/{resourceRelativePath}", UriKind.Absolute);
+
+            var bitmap = new BitmapImage();
+            bitmap.BeginInit();
+            bitmap.UriSource = uri;
+            bitmap.CacheOption = BitmapCacheOption.OnLoad;
+            bitmap.EndInit();
+
+            return new ImageBrush(bitmap)
+            {
+                Stretch = Stretch.Fill,
+            };
         }
 
         protected void OnFileDeleted(object sender, EventArgs e)

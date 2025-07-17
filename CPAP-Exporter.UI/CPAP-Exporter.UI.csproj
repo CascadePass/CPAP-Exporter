@@ -49,6 +49,10 @@
     <None Remove="Images\RunTestDialog.png" />
     <None Remove="Images\SamplesFolder.png" />
     <None Remove="Images\Save.png" />
+    <None Remove="Images\SavedFiles.Background.Dark.png" />
+    <None Remove="Images\SavedFiles.Background.Light.png" />
+    <None Remove="Images\SavedFiles.EventsFilePanel.Background.png" />
+    <None Remove="Images\SavedFiles.RawFilePanel.Background.png" />
     <None Remove="Images\TraceTransferInto.png" />
   </ItemGroup>
 
@@ -86,6 +90,10 @@
     </Resource>
     <Resource Include="Images\RunTestDialog.png" />
     <Resource Include="Images\SamplesFolder.png" />
+    <Resource Include="Images\SavedFiles.Background.Dark.png" />
+    <Resource Include="Images\SavedFiles.Background.Light.png" />
+    <Resource Include="Images\SavedFiles.EventsFilePanel.Background.png" />
+    <Resource Include="Images\SavedFiles.RawFilePanel.Background.png" />
     <Resource Include="Images\TraceTransferInto.png" />
   </ItemGroup>
 
