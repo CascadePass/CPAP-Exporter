@@ -94,7 +94,6 @@
                             <Border Style="{DynamicResource OpenButtonBorderStyle}" Width="Auto" Margin="0,5,0,5">
                                 <Button
                                     Style="{DynamicResource OpenButtonStyle}"
-                                    MinHeight="{Binding ElementName=OpenFilesControl, Path=DataContext.ButtonMinimumHeight}"
                                     Command="{Binding ElementName=OpenFilesControl, Path=DataContext.OpenCommand}"
                                     CommandParameter="{Binding .}">
                                     <TextBlock

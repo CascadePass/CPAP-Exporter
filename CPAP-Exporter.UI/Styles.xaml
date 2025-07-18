@@ -57,6 +57,7 @@
         </Setter>
         <Setter Property="MinHeight" Value="{Binding ButtonMinimumHeight, Mode=OneTime}"/>
         <Setter Property="BorderThickness" Value="3"/>
+        <Setter Property="MinHeight" Value="100"/>
         <Setter Property="BorderBrush" Value="Transparent"/>
         <Setter Property="Template">
             <Setter.Value>
