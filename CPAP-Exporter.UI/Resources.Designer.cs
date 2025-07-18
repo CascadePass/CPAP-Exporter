@@ -286,6 +286,15 @@ namespace CascadePass.CPAPExporter {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to CPAP Exporter v1.1 – Facelift Edition.
+        /// </summary>
+        public static string Label_CurrentVersion {
+            get {
+                return ResourceManager.GetString("Label_CurrentVersion", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to File handling.
         /// </summary>
         public static string Label_FileHandlingRule {
@@ -588,6 +597,15 @@ namespace CascadePass.CPAPExporter {
         public static string ReadyToExport {
             get {
                 return ResourceManager.GetString("ReadyToExport", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to https://github.com/CascadePass/CPAP-Exporter/releases/tag/v1.0.0.
+        /// </summary>
+        public static string ReleaseNotesUri {
+            get {
+                return ResourceManager.GetString("ReleaseNotesUri", resourceCulture);
             }
         }
         
