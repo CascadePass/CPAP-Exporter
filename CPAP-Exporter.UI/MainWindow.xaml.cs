@@ -19,7 +19,6 @@ namespace CascadePass.CPAPExporter
             this.userSettings = navigationViewModel.ExportParameters.UserPreferences;
 
             this.PageViewer.DataContext = navigationViewModel;
-            this.StatusStrip.DataContext = new StatusBarViewModel() { MainWindow = this, NavigationViewModel = navigationViewModel };
 
             navigationViewModel.PropertyChanged += NavigationViewModel_PropertyChanged;
 
@@ -56,10 +55,8 @@ namespace CascadePass.CPAPExporter
         private void NavigationViewModel_PropertyChanged(object sender, PropertyChangedEventArgs e)
         {
             //if (string.Equals(e.PropertyName, nameof(NavigationViewModel.CurrentView)))
-            {
-                var statusStripBinding = BindingOperations.GetBindingExpression(this.StatusStrip, DataContextProperty);
-                statusStripBinding?.UpdateTarget();
-            }
+            //{
+            //}
 
             //if (string.Equals(e.PropertyName, nameof(PageViewModel.IsBusy)))
             //{
