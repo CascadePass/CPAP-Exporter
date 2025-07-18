@@ -6,7 +6,7 @@
         xmlns:local="clr-namespace:CascadePass.CPAPExporter"
         mc:Ignorable="d"
         Icon="pack://application:,,,/Images/mask.png"
-        Background="{DynamicResource Window.Background}"
+        Background="{DynamicResource SavedFiles.Background}"
         Title="{x:Static local:Resources.Window_Title}">
 
     <DockPanel>
@@ -20,7 +20,12 @@
             DockPanel.Dock="Left"
             x:Name="NavBar"
             />
-        
-        <local:PageView x:Name="PageViewer" />
+
+        <Border
+            BorderBrush="Transparent"
+            BorderThickness="1"
+            CornerRadius="4">
+            <local:PageView x:Name="PageViewer" />
+        </Border>
     </DockPanel>
 </Window>
