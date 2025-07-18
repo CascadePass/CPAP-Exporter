@@ -1,4 +1,6 @@
-﻿using System.Windows;
+﻿using System;
+using System.Diagnostics;
+using System.Windows;
 
 namespace CascadePass.CPAPExporter
 {
@@ -10,7 +12,7 @@ namespace CascadePass.CPAPExporter
         private FrameworkElement currentView;
         private NavigationStep currentPage;
         private ExportParameters exportParameters;
-        private DelegateCommand openFilesCommand, selectNightsCommand, selectSignalsCommand, showExportSettingsCommand, exportCommand;
+        private DelegateCommand openFilesCommand, selectNightsCommand, selectSignalsCommand, showExportSettingsCommand, exportCommand, viewReleaseNotes;
 
         #endregion
 
@@ -154,6 +156,8 @@ namespace CascadePass.CPAPExporter
 
         public DelegateCommand ExportCommand => this.exportCommand ??= new DelegateCommand(this.Export);
 
+        public DelegateCommand ShowReleaseNotesCommand => this.viewReleaseNotes ??= new DelegateCommand(this.ShowReleaseNotes);
+
         #endregion
 
         #endregion
@@ -246,6 +250,34 @@ namespace CascadePass.CPAPExporter
             };
 
             host.ShowDialog();
+        }
+
+        public void ShowReleaseNotes()
+        {
+            if (!Uri.IsWellFormedUriString(Resources.ReleaseNotesUri, UriKind.Absolute))
+            {
+                Debug.WriteLine("Invalid ReleaseNotesUri. Make sure it's set correctly in Resources.");
+                Debugger.Break();
+                return;
+            }
+
+            try
+            {
+                var uri = Resources.ReleaseNotesUri;
+
+                var psi = new ProcessStartInfo
+                {
+                    FileName = uri,
+                    UseShellExecute = true
+                };
+
+                Process.Start(psi);
+            }
+            catch (Exception ex)
+            {
+                Debug.WriteLine($"Error opening release notes: {ex.Message}");
+                Debugger.Break();
+            }
         }
 
         #region Helper methods

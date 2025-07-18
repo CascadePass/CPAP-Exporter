@@ -16,6 +16,7 @@
     <None Remove="Images\catpap.png" />
     <None Remove="Images\catpap2.png" />
     <None Remove="Images\catpap3.png" />
+    <None Remove="Images\CPAP-Exporter.VersionEmblem.1.1.0.png" />
     <None Remove="Images\Delete.png" />
     <None Remove="Images\Document.png" />
     <None Remove="Images\Export.png" />
@@ -67,6 +68,7 @@
   <ItemGroup>
     <Resource Include="Images\AboutBox.png" />
     <Resource Include="Images\BrowseButtonBackground.png" />
+    <Resource Include="Images\CPAP-Exporter.VersionEmblem.1.1.0.png" />
     <Resource Include="Images\Delete.png" />
     <Resource Include="Images\Document.png" />
     <Resource Include="Images\Export.png" />
