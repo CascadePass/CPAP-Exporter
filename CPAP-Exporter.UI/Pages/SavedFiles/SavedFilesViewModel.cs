@@ -44,25 +44,25 @@ namespace CascadePass.CPAPExporter
 
         #region Methods
 
-        public SavedFileViewModel AddFile(string filename, string fileDescription)
+        public SavedFileViewModel AddFile(string filename, string fileDescription, SavedFileType fileType)
         {
             if (this.Dispatcher?.CheckAccess() ?? true)
             {
                 // Already on the UI thread, or there is no dispatcher meaning this is a unit test.
-                return AddFileInternal(filename, fileDescription);
+                return this.AddFileInternal(filename, fileDescription, fileType);
             }
             else
             {
                 // On a background thread, so marshal the call to the UI thread
-                return this.Dispatcher.Invoke(() => AddFileInternal(filename, fileDescription));
+                return this.Dispatcher.Invoke(() => this.AddFileInternal(filename, fileDescription, fileType));
             }
         }
 
-        private SavedFileViewModel AddFileInternal(string filename, string fileDescription)
+        private SavedFileViewModel AddFileInternal(string filename, string fileDescription, SavedFileType fileType)
         {
             if (File.Exists(filename))
             {
-                SavedFileViewModel fileViewModel = new(filename, fileDescription);
+                SavedFileViewModel fileViewModel = new(filename, fileDescription, fileType);
                 this.Files.Add(fileViewModel);
 
                 fileViewModel.PropertyChanged += this.FileViewModel_PropertyChanged;
@@ -103,8 +103,8 @@ namespace CascadePass.CPAPExporter
                     exporter.ExportToFile(Path.Combine(folder, csvSettings.Filenames.First()));
                     exporter.ExportFlaggedEventsToFile(Path.Combine(folder, csvSettings.EventFilenames.First()));
 
-                    this.AddFile(Path.Combine(folder, csvSettings.Filenames.First()), Resources.FilesLabel_FullExport);
-                    this.AddFile(Path.Combine(folder, csvSettings.EventFilenames.First()), Resources.FilesLabel_EventsExport);
+                    this.AddFile(Path.Combine(folder, csvSettings.Filenames.First()), Resources.FilesLabel_FullExport, SavedFileType.FullExport);
+                    this.AddFile(Path.Combine(folder, csvSettings.EventFilenames.First()), Resources.FilesLabel_EventsExport, SavedFileType.EventsExport);
                 }
                 else
                 {
@@ -118,8 +118,8 @@ namespace CascadePass.CPAPExporter
                         exporter.ExportToFile(Path.Combine(folder, csvSettings.Filenames[i]));
                         exporter.ExportFlaggedEventsToFile(Path.Combine(folder, csvSettings.EventFilenames[i]));
 
-                        this.AddFile(Path.Combine(folder, csvSettings.Filenames[i]), Resources.FilesLabel_FullExport);
-                        this.AddFile(Path.Combine(folder, csvSettings.EventFilenames[i]), Resources.FilesLabel_EventsExport);
+                        this.AddFile(Path.Combine(folder, csvSettings.Filenames[i]), Resources.FilesLabel_FullExport, SavedFileType.FullExport);
+                        this.AddFile(Path.Combine(folder, csvSettings.EventFilenames[i]), Resources.FilesLabel_EventsExport, SavedFileType.EventsExport);
                     }
                 }
             }
@@ -201,5 +201,12 @@ namespace CascadePass.CPAPExporter
         #endregion
 
         #endregion
+    }
+
+    public enum SavedFileType
+    {
+        None,
+        FullExport,
+        EventsExport,
     }
 }

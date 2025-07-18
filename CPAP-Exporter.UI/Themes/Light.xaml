@@ -22,4 +22,6 @@
     <SolidColorBrush x:Key="OpenFiles.FlowReductionImage.Border" Color="White" />
     <SolidColorBrush x:Key="OpenFiles.OpenButton.MouseOver.Border" Color="SkyBlue" />
     <SolidColorBrush x:Key="OpenFiles.OpenButton.Pressed.Border" Color="DodgerBlue" />
+
+    <ImageBrush x:Key="SavedFiles.Background" ImageSource="/Images/SavedFiles.Background.Light.png" Stretch="Fill" />
 </ResourceDictionary>

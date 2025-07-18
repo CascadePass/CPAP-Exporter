@@ -5,6 +5,7 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:local="clr-namespace:CascadePass.CPAPExporter"
              mc:Ignorable="d" 
+             Background="{DynamicResource SavedFiles.Background}"
              d:DesignHeight="450" d:DesignWidth="800">
     <UserControl.DataContext>
         <local:SavedFilesViewModel />

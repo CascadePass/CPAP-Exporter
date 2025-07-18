@@ -9,7 +9,7 @@ namespace CascadePass.CPAPExporter.UI.Tests
         [ExpectedException(typeof(ArgumentOutOfRangeException))]
         public void Constructor_NonExistantFile()
         {
-            var savedFileViewModel = new SavedFileViewModel(Guid.NewGuid().ToString(), "Test File");
+            var savedFileViewModel = new SavedFileViewModel(Guid.NewGuid().ToString(), "Test File", SavedFileType.FullExport);
         }
 
         [TestMethod]
@@ -17,7 +17,7 @@ namespace CascadePass.CPAPExporter.UI.Tests
         {
             string description = "Test File";
             string filename = Directory.GetFiles(".").First();
-            var savedFileViewModel = new SavedFileViewModel(filename, description);
+            var savedFileViewModel = new SavedFileViewModel(filename, description, SavedFileType.FullExport);
 
             Assert.AreEqual(filename, savedFileViewModel.Filename);
             Assert.AreEqual(description, savedFileViewModel.Description);
@@ -30,7 +30,7 @@ namespace CascadePass.CPAPExporter.UI.Tests
 
             File.WriteAllText(filename, filename);
 
-            SavedFileViewModel savedFileViewModel = new(filename, "Test File");
+            SavedFileViewModel savedFileViewModel = new(filename, "Test File", SavedFileType.FullExport);
 
             savedFileViewModel.DeleteCommand.Execute(null);
 

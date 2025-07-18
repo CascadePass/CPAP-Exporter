@@ -106,10 +106,10 @@
         <Setter Property="Margin" Value="10,5,10,5" />
         <Setter Property="Padding" Value="8" />
         <Setter Property="BorderBrush" Value="LightGray" />
-
+        
         <Style.Triggers>
             <DataTrigger Binding="{Binding IsDeleted}" Value="True">
-                <Setter Property="BorderBrush" Value="DarkGray" />
+                <Setter Property="BorderBrush" Value="Red" />
                 <Setter Property="Background" Value="LightGray" />
             </DataTrigger>
         </Style.Triggers>
