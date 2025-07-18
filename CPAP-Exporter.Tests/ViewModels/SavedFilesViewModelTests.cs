@@ -36,7 +36,7 @@ namespace CascadePass.CPAPExporter.UI.Tests
             var vm = new SavedFilesViewModel();
 
             string badFilename = Guid.NewGuid().ToString();
-            vm.AddFile(badFilename, "Test File");
+            vm.AddFile(badFilename, "Test File", SavedFileType.FullExport);
 
             Assert.IsFalse(vm.Files.Any(f => f.Filename.Contains(badFilename)));
         }
@@ -47,7 +47,7 @@ namespace CascadePass.CPAPExporter.UI.Tests
             var vm = new SavedFilesViewModel();
 
             string filename = Directory.GetFiles(Environment.CurrentDirectory).First();
-            vm.AddFile(filename, "Test File");
+            vm.AddFile(filename, "Test File", SavedFileType.FullExport);
 
             Assert.IsTrue(vm.Files.Any(f => f.Filename.Contains(filename)));
         }
@@ -61,7 +61,7 @@ namespace CascadePass.CPAPExporter.UI.Tests
 
             var vm = new SavedFilesViewModel();
 
-            SavedFileViewModel deletedFile = vm.AddFile(filename, "Test File");
+            SavedFileViewModel deletedFile = vm.AddFile(filename, "Test File", SavedFileType.FullExport);
 
             deletedFile.DeleteFile();
 
