@@ -1,4 +1,5 @@
 ﻿using System.IO;
+using System.Windows;
 using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
@@ -15,7 +16,8 @@ namespace CascadePass.CPAPExporter
         private SavedFileType type;
         private DelegateCommand browseCommand, deleteCommand, launchCommand;
 
-        private static Brush fullFileBrush, eventsFileBrush;
+        private static readonly Brush fullFileBrush;
+        private static Brush eventsFileBrush;
 
         #endregion
 
@@ -45,10 +47,26 @@ namespace CascadePass.CPAPExporter
         /// It is automatically invoked before any static members of the class are accessed.</remarks>
         static SavedFileViewModel()
         {
-            // Cache image brushes which will be reused for each file CPAP-Exporter generates.
+            // Test whether there is a valid WPF Application context before trying to load resources.
 
-            SavedFileViewModel.fullFileBrush = SavedFileViewModel.CreateImageBrush("/Images/SavedFiles.RawFilePanel.Background.png");
-            SavedFileViewModel.eventsFileBrush = SavedFileViewModel.CreateImageBrush("/Images/SavedFiles.EventsFilePanel.Background.png");
+            if (Application.Current is not null)
+            {
+                // Cache image brushes which will be reused for each file CPAP-Exporter generates.
+
+                SavedFileViewModel.fullFileBrush = SavedFileViewModel.CreateImageBrush("/Images/SavedFiles.RawFilePanel.Background.png");
+                SavedFileViewModel.eventsFileBrush = SavedFileViewModel.CreateImageBrush("/Images/SavedFiles.EventsFilePanel.Background.png");
+            }
+            else
+            {
+                // If Application.Current is null, we are likely in a unit test or non-UI context.
+                // We can still create the brushes, but they won't be used in the UI.  These are
+                // being created to avoid destabilizing downstream code with null references.
+
+                SavedFileViewModel.fullFileBrush = new SolidColorBrush(Colors.Red);
+                SavedFileViewModel.eventsFileBrush = new SolidColorBrush(Colors.Red);
+
+                // Hopefully red brushes will make this obvious, if somehow this comes up in a UI context.
+            }
         }
 
         #endregion

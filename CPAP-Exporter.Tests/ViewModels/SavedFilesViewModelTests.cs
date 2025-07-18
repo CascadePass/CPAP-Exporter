@@ -31,7 +31,7 @@ namespace CascadePass.CPAPExporter.UI.Tests
         }
 
         [TestMethod]
-        public void AddFile_NonExistant()
+        public void AddFile_NonExistent()
         {
             var vm = new SavedFilesViewModel();
 
@@ -46,17 +46,19 @@ namespace CascadePass.CPAPExporter.UI.Tests
         {
             var vm = new SavedFilesViewModel();
 
-            string filename = Directory.GetFiles(Environment.CurrentDirectory).First();
+            string filename = Guid.NewGuid().ToString();
+            File.WriteAllText(filename, filename);
+
             vm.AddFile(filename, "Test File", SavedFileType.FullExport);
 
             Assert.IsTrue(vm.Files.Any(f => f.Filename.Contains(filename)));
+            File.Delete(filename);
         }
 
         [TestMethod]
         public void RemovesDeletedFile()
         {
             string filename = Guid.NewGuid().ToString();
-
             File.WriteAllText(filename, filename);
 
             var vm = new SavedFilesViewModel();
