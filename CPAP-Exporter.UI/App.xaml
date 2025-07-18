@@ -9,6 +9,7 @@
                 <ResourceDictionary Source="pack://application:,,,/Themes/Dark.xaml" />
                 <ResourceDictionary Source="pack://application:,,,/Fonts.xaml" />
                 <ResourceDictionary Source="pack://application:,,,/Styles.xaml" />
+                <ResourceDictionary Source="pack://application:,,,/PresentationFramework.Fluent;component/Themes/Fluent.xaml" />
             </ResourceDictionary.MergedDictionaries>
 
             <BooleanToVisibilityConverter x:Key="BoolToVisibilityConverter" />
