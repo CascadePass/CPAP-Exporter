@@ -10,12 +10,6 @@
         Title="{x:Static local:Resources.Window_Title}">
 
     <DockPanel>
-        <local:StatusStrip
-            DockPanel.Dock="Bottom"
-            x:Name="StatusStrip"
-            DataContext="{Binding ElementName=PageViewer, Path=DataContext.CurrentView.DataContext}"
-            />
-        
         <local:NavigationBar
             DockPanel.Dock="Left"
             x:Name="NavBar"
