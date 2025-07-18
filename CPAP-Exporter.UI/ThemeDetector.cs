@@ -113,15 +113,17 @@ namespace CascadePass.CPAPExporter
             var currentTheme = this.GetThemeType();
             if (currentTheme == ThemeType.Dark)
             {
-                Application.Current.Resources.MergedDictionaries.Add(new() { Source = new Uri($"/Themes/Dark.xaml", UriKind.Relative) });
+                Application.Current.Resources.MergedDictionaries.Add(new() { Source = new Uri("/Themes/Dark.xaml", UriKind.Relative) });
             }
             else if (currentTheme == ThemeType.Light)
             {
-                Application.Current.Resources.MergedDictionaries.Add(new() { Source = new Uri($"/Themes/Light.xaml", UriKind.Relative) });
+                Application.Current.Resources.MergedDictionaries.Add(new() { Source = new Uri("/Themes/Light.xaml", UriKind.Relative) });
             }
 
-            Application.Current.Resources.MergedDictionaries.Add(new() { Source = new Uri($"/Fonts.xaml", UriKind.Relative) });
-            Application.Current.Resources.MergedDictionaries.Add(new() { Source = new Uri($"/Styles.xaml", UriKind.Relative) });
+            Application.Current.Resources.MergedDictionaries.Add(new() { Source = new Uri("/Fonts.xaml", UriKind.Relative) });
+            Application.Current.Resources.MergedDictionaries.Add(new() { Source = new Uri("/Styles.xaml", UriKind.Relative) });
+
+            Application.Current.Resources.MergedDictionaries.Add(new() { Source = new Uri("pack://application:,,,/PresentationFramework.Fluent;component/Themes/Fluent.xaml", UriKind.Absolute) });
             //base.ThemeChanged?.Invoke(this, EventArgs.Empty);
 
             return true;

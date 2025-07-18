@@ -1,5 +1,4 @@
-﻿using System.ComponentModel;
-using System.IO;
+﻿using System.IO;
 using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
@@ -8,6 +7,8 @@ namespace CascadePass.CPAPExporter
 {
     public class SavedFileViewModel : ViewModel
     {
+        #region Private fields
+
         private bool isDeleted;
         private string name, desc;
         private Brush backgroundImageBrush;
@@ -16,7 +17,11 @@ namespace CascadePass.CPAPExporter
 
         private static Brush fullFileBrush, eventsFileBrush;
 
+        #endregion
+
         public event EventHandler<EventArgs> FileDeleted;
+
+        #region Constructors
 
         public SavedFileViewModel(string filename, string description, SavedFileType fileType)
         {
@@ -24,26 +29,31 @@ namespace CascadePass.CPAPExporter
             this.Description = description;
             this.FileType = fileType;
 
-            if (fileType == SavedFileType.FullExport)
-            {
-                this.BackgroundImageBrush = SavedFileViewModel.fullFileBrush;
-            }
-            else if(fileType == SavedFileType.EventsExport)
-            {
-                this.BackgroundImageBrush = SavedFileViewModel.eventsFileBrush;
-            }
+            this.AssignBrush();
 
+            // FileInfo is created when Filename is assigned.
             if (this.FileInfo is null || !this.FileInfo.Exists)
             {
                 throw new ArgumentOutOfRangeException(nameof(filename));
             }
         }
 
+        /// <summary>
+        /// Initializes static members of the <see cref="SavedFileViewModel"/> class.
+        /// </summary>
+        /// <remarks>This static constructor sets up the default image brushes used for the file panels.
+        /// It is automatically invoked before any static members of the class are accessed.</remarks>
         static SavedFileViewModel()
         {
+            // Cache image brushes which will be reused for each file CPAP-Exporter generates.
+
             SavedFileViewModel.fullFileBrush = SavedFileViewModel.CreateImageBrush("/Images/SavedFiles.RawFilePanel.Background.png");
             SavedFileViewModel.eventsFileBrush = SavedFileViewModel.CreateImageBrush("/Images/SavedFiles.EventsFilePanel.Background.png");
         }
+
+        #endregion
+
+        #region Properties
 
         public string Filename {
             get => this.name;
@@ -86,6 +96,8 @@ namespace CascadePass.CPAPExporter
         public ICommand DeleteCommand => this.deleteCommand ??= new(this.DeleteFile);
         public ICommand LaunchCommand => this.launchCommand ??= new(this.LaunchFile);
 
+        #endregion
+
         public void BrowseToFile()
         {
             if(this.isDeleted && this.FileInfo.Exists)
@@ -127,10 +139,21 @@ namespace CascadePass.CPAPExporter
             WindowsExplorerUtility.LaunchFile(this.Filename);
         }
 
+        internal void AssignBrush()
+        {
+            if (this.FileType == SavedFileType.FullExport)
+            {
+                this.BackgroundImageBrush = SavedFileViewModel.fullFileBrush;
+            }
+            else if (this.FileType == SavedFileType.EventsExport)
+            {
+                this.BackgroundImageBrush = SavedFileViewModel.eventsFileBrush;
+            }
+        }
 
         public static ImageBrush CreateImageBrush(string resourceRelativePath)
         {
-            var uri = new Uri($"pack://application:,,,/{resourceRelativePath}", UriKind.Absolute);
+            var uri = new Uri($"pack://application:,,,{resourceRelativePath}", UriKind.Absolute);
 
             var bitmap = new BitmapImage();
             bitmap.BeginInit();
@@ -141,6 +164,7 @@ namespace CascadePass.CPAPExporter
             return new ImageBrush(bitmap)
             {
                 Stretch = Stretch.Fill,
+                Opacity = 0.5,
             };
         }
 
