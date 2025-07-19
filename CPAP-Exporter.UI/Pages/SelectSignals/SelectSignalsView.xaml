@@ -9,7 +9,7 @@
 
     <DataGrid
         ItemsSource="{Binding Signals}"
-        Background="Transparent"
+        Background="{DynamicResource Legibility.Background}"
         CanUserAddRows="False" CanUserDeleteRows="False"
         AutoGenerateColumns="False" HeadersVisibility="Column"
         EnableRowVirtualization="True" EnableColumnVirtualization="True"

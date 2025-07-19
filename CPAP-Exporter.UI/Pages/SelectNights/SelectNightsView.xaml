@@ -32,7 +32,7 @@
             HeadersVisibility="Column"
             AutoGenerateColumns="False"
             CanUserAddRows="False" CanUserDeleteRows="False"
-            Background="Transparent"
+            Background="{DynamicResource Legibility.Background}"
             EnableRowVirtualization="True" EnableColumnVirtualization="True"
             VerticalScrollBarVisibility="Auto"
             HorizontalScrollBarVisibility="Auto"
