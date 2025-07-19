@@ -3,16 +3,22 @@
 
     <SolidColorBrush x:Key="Window.Background" Color="Black" />
     <SolidColorBrush x:Key="Text.Foreground" Color="#E0E0E0" />
-    <SolidColorBrush x:Key="PageTitle.Foreground" Color="#2B7A78" />
     <SolidColorBrush x:Key="PageDescription.Foreground" Color="#3FA7A7" />
+
+    <LinearGradientBrush x:Key="PageTitle.Foreground" StartPoint="0,0" EndPoint="1,1">
+        <GradientStop Color="#FF4EB5AD" Offset="0.0"/>
+        <GradientStop Color="#FFAFEFEF" Offset="1.0"/>
+    </LinearGradientBrush>
 
     <SolidColorBrush x:Key="Default.Border" Color="#202528" />
 
     <SolidColorBrush x:Key="Navigation.Drawer.Background" Color="#111111" />
-    <SolidColorBrush x:Key="Navigation.SelectedIndicator.Foreground" Color="Red" />
-    <SolidColorBrush x:Key="Navigation.MouseOver.Background" Color="#F9A03F" />
-    <SolidColorBrush x:Key="Navigation.MouseOver.Shadow" Color="Yellow" />
+    <SolidColorBrush x:Key="Navigation.SelectedIndicator.Foreground" Color="Green" />
+    <SolidColorBrush x:Key="Navigation.MouseOver.Background" Color="LightGreen" />
+    <SolidColorBrush x:Key="Navigation.MouseOver.Shadow" Color="LawnGreen" />
 
+    <SolidColorBrush x:Key="Legibility.Background" Color="#AA1E1E2F" />
+    
     <SolidColorBrush x:Key="OpenFiles.FlowReductionPanel.Checked.Border" Color="DarkGreen" />
     <SolidColorBrush x:Key="OpenFiles.FlowReductionPanel.Unchecked.Border" Color="Red" />
     <LinearGradientBrush x:Key="OpenFiles.FlowReductionPanel.Background" StartPoint="0,0" EndPoint="0,1">
