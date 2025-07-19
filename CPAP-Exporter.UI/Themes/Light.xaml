@@ -13,6 +13,8 @@
     <SolidColorBrush x:Key="Navigation.MouseOver.Background" Color="Aqua" />
     <SolidColorBrush x:Key="Navigation.MouseOver.Shadow" Color="LightBlue" />
 
+    <SolidColorBrush x:Key="Legibility.Background" Color="#99F0" />
+
     <SolidColorBrush x:Key="OpenFiles.FlowReductionPanel.Border" Color="DarkGreen" />
     <LinearGradientBrush x:Key="OpenFiles.FlowReductionPanel.Background" StartPoint="0,0" EndPoint="0,1">
         <GradientStop Color="Transparent" Offset="0.0" />
