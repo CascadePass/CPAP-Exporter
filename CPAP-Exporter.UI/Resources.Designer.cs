@@ -214,7 +214,7 @@ namespace CascadePass.CPAPExporter {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Generate FL and FR events (Examine the flow rate wave form and identify times when breathing was too shallow).
+        ///   Looks up a localized string similar to Generate Flow Limitation and Flow Reduction Events.
         /// </summary>
         public static string GenerateCustomEvents {
             get {
@@ -313,7 +313,7 @@ namespace CascadePass.CPAPExporter {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Your machine flags apneas (10+ second pauses in breathing), hypopneas (30% or more reduction in air flow for 10 seconds or longer) and may flag RERAs (raspatory effort related arousals) but won&apos;t flag more subtle times when you were breathing, but not enough.  OSCAR is great at identifying &quot;sub threshold events&quot; when you stopped breathing for 7 or 8 seconds, not long enough to count as an apnea.  CPAP Exporter can find &quot;flow reduction&quot; events when you were breathing more shallowly than normal.  Check the bo [rest of string was truncated]&quot;;.
+        ///   Looks up a localized string similar to Most CPAP machines detect and record breathing abnormalities like apneas and hypopneas — but only those that match specific definitions and thresholds. This means your machine might overlook subtle periods of under-breathing that don’t meet those criteria. When enabled, CPAP Exporter goes a step further by analyzing the flow rate waveform (how much air you&apos;re breathing with each breath) to detect custom events. These highlight periods where your breathing may have been reduced or insufficient, even if your  [rest of string was truncated]&quot;;.
         /// </summary>
         public static string Label_FlowReductionExplaination {
             get {
