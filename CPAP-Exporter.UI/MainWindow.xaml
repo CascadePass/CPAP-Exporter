@@ -7,6 +7,7 @@
         mc:Ignorable="d"
         Icon="pack://application:,,,/Images/mask.png"
         Background="{DynamicResource SavedFiles.Background}"
+        ThemeMode="System"
         Title="{x:Static local:Resources.Window_Title}">
 
     <DockPanel>
