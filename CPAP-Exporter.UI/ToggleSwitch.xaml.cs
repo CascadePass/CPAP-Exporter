@@ -1,4 +1,5 @@
-﻿using System.Windows;
+﻿using System.Runtime.CompilerServices;
+using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Media;
 using System.Windows.Media.Animation;
@@ -62,6 +63,10 @@ namespace CascadePass.CPAPExporter
         public static readonly DependencyProperty KnobForegroundBrushProperty =
             DependencyProperty.Register(nameof(KnobForegroundBrush), typeof(Brush), typeof(ToggleSwitch),
                 new PropertyMetadata(Brushes.White, null));
+
+        public static readonly DependencyProperty KnobUnselectedForegroundBrushProperty =
+            DependencyProperty.Register(nameof(KnobUnselectedForegroundBrush), typeof(Brush), typeof(ToggleSwitch),
+                new PropertyMetadata(Brushes.DarkGray, null));
 
         public static readonly DependencyProperty TrackBorderBrushProperty =
             DependencyProperty.Register(nameof(TrackBorderBrush), typeof(Brush), typeof(ToggleSwitch),
@@ -177,6 +182,12 @@ namespace CascadePass.CPAPExporter
         {
             get => (Brush)GetValue(KnobForegroundBrushProperty);
             set => SetValue(KnobForegroundBrushProperty, value);
+        }
+
+        public Brush KnobUnselectedForegroundBrush
+        {
+            get => (Brush)GetValue(KnobUnselectedForegroundBrushProperty);
+            set => SetValue(KnobUnselectedForegroundBrushProperty, value);
         }
 
         public Brush TrackBorderBrush
@@ -303,6 +314,11 @@ namespace CascadePass.CPAPExporter
         {
             var control = (ToggleSwitch)d;
             bool isChecked = (bool)e.NewValue;
+
+            if (control?.knob is not null)
+            {
+                control.knob.Fill = isChecked ? control.KnobForegroundBrush : control.KnobUnselectedForegroundBrush;
+            }
 
             VisualStateManager.GoToState(control, control.GetStateName(isChecked), true);
         }
