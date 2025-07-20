@@ -50,3 +50,5 @@ CPAP Exporter is designed with user control, privacy, and transparency in mind. 
 We believe privacy and simplicity go hand-in-hand. CPAP Exporter was developed with the ethos of “no surprises”: what you see is what you get, and everything that happens is in your control.
 
 For questions, contributions, or suggestions, feel free to [open an issue](https://github.com/YourRepoLink/issues) or explore the repository.
+
+![Data Flow Diagram](CPAP-Exporter-Data-Flow-Diagram.png)
