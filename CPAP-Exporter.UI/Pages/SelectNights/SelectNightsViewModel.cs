@@ -2,6 +2,8 @@
 using System.Collections.ObjectModel;
 using System.ComponentModel;
 using System.IO;
+using System.Windows;
+using System.Windows.Controls;
 using System.Windows.Input;
 using System.Windows.Threading;
 
@@ -152,6 +154,7 @@ namespace CascadePass.CPAPExporter
             #endregion
 
             this.IsBusy = true;
+            this.ShowBusyStatus();
             this.ExportParameters.SourcePath = folder;
             ApplicationComponentProvider.Status.StatusText = string.Format(Resources.ReadingFolder, folder);
 
@@ -162,6 +165,7 @@ namespace CascadePass.CPAPExporter
             {
                 // This is where the files are loaded from disc
                 reports = loader.LoadFromFolder(folder, null, null, new() { FlagFlowLimits = this.ExportParameters.UserPreferences.GenerateFlowEvents });
+                this.StatusContent = null;
             }
             catch (Exception ex)
             {
@@ -268,13 +272,25 @@ namespace CascadePass.CPAPExporter
             return string.Join(',', SelectNightsViewModel.loadedFolders.Keys);
         }
 
-        public void ShowDefaultStatusMessage()
+        internal void ShowDefaultStatusMessage()
         {
-            ApplicationComponentProvider.Status.StatusText = string.Format(
+            this.StatusContent = string.Format(
                 Resources.ReportsSelected,
                 this.ExportParameters.Reports.Count(report => report.IsSelected),
                 this.ExportParameters.Reports.Count
             );
+        }
+
+        internal void ShowBusyStatus()
+        {
+            Application.Current.Dispatcher.Invoke(() =>
+            {
+                this.StatusContent = new ProgressBar()
+                {
+                    Height = 24,
+                    IsIndeterminate = true,
+                };
+            });
         }
 
         private void ReportViewModel_PropertyChanged(object sender, PropertyChangedEventArgs e)
