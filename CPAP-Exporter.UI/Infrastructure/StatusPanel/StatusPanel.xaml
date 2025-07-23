@@ -1,0 +1,82 @@
+﻿<UserControl x:Class="CascadePass.CPAPExporter.StatusPanel"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:local="clr-namespace:CascadePass.CPAPExporter"
+             mc:Ignorable="d"
+             d:DesignHeight="450" d:DesignWidth="800"
+             x:Name="Root">
+
+    <UserControl.Resources>
+        <DataTemplate x:Key="InfoTemplate">
+            <ContentPresenter Content="{Binding MessageContent}" />
+        </DataTemplate>
+
+        <DataTemplate x:Key="WarningTemplate">
+            <ContentPresenter Content="{Binding MessageContent}" />
+        </DataTemplate>
+
+        <DataTemplate x:Key="ErrorTemplate">
+            <ContentPresenter Content="{Binding MessageContent}" />
+        </DataTemplate>
+
+        <DataTemplate x:Key="DefaultTemplate">
+            <ContentPresenter Content="{Binding MessageContent}" />
+        </DataTemplate>
+
+        <local:StatusMessageTemplateSelector x:Key="StatusMessageSelector"
+            InfoTemplate="{StaticResource InfoTemplate}"
+            WarningTemplate="{StaticResource WarningTemplate}"
+            ErrorTemplate="{StaticResource ErrorTemplate}"
+            DefaultTemplate="{StaticResource DefaultTemplate}" />
+    </UserControl.Resources>
+
+    <Border
+        x:Name="StatusPanelBorder"
+        Visibility="{Binding StatusMessage, ElementName=Root, Converter={StaticResource NullableObjectToVisibilityConverter}}"
+        Background="{Binding BackgroundBrush, ElementName=Root}"
+        BorderBrush="{Binding BorderBrush, ElementName=Root}"
+        BorderThickness="{Binding MessageBorderThickness, ElementName=Root}"
+        CornerRadius="{Binding CornerRadius, ElementName=Root}"
+        Padding="0"
+        Margin="0,0,0,4">
+
+        <Border.Style>
+            <Style TargetType="Border">
+                <Style.Triggers>
+                    <DataTrigger Binding="{Binding ShowShadow, ElementName=Root}" Value="True">
+                        <Setter Property="Effect">
+                            <Setter.Value>
+                                <DropShadowEffect Color="Black" BlurRadius="4" ShadowDepth="1" Opacity="0.5" />
+                            </Setter.Value>
+                        </Setter>
+                    </DataTrigger>
+                </Style.Triggers>
+            </Style>
+        </Border.Style>
+
+        <Grid>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="{Binding AttentionStripeWidth, ElementName=Root}"/>
+                <ColumnDefinition Width="*" />
+            </Grid.ColumnDefinitions>
+
+            <!-- Accent stripe -->
+            <Rectangle
+                x:Name="AttentionStripe"
+                Grid.Column="0"
+                Fill="{Binding AttentionStripeBrush, ElementName=Root}"
+                RadiusX="2" RadiusY="2"
+                VerticalAlignment="Stretch" />
+
+            <!-- Message content -->
+            <ContentPresenter
+                x:Name="MessageContentPresenter"
+                Grid.Column="1"
+                Content="{Binding StatusMessage, ElementName=Root}"
+                ContentTemplateSelector="{StaticResource StatusMessageSelector}"
+                Margin="8" />
+        </Grid>
+    </Border>
+</UserControl>

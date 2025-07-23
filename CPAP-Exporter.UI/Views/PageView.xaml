@@ -50,8 +50,11 @@
             <local:StatusPanel
                 x:Name="StatusHost"
                 Grid.Column="0" Grid.ColumnSpan="2" Grid.Row="2"
-                BorderBrush="{DynamicResource Default.Border}"
-                StatusBackgroundBrush="{DynamicResource StatusPanel.Background}"
+                CornerRadius="6"
+                ShowShadow="False"
+                AttentionStripeWidth="6"
+                BorderBrush="Gold"
+                BackgroundBrush="{DynamicResource StatusPanel.Background}"
                 StatusMessage="{Binding CurrentView.DataContext.StatusContent}" />
         </Grid>
 

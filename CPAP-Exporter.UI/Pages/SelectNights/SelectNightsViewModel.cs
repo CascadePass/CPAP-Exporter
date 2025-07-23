@@ -274,11 +274,28 @@ namespace CascadePass.CPAPExporter
 
         internal void ShowDefaultStatusMessage()
         {
-            this.StatusContent = string.Format(
-                Resources.ReportsSelected,
-                this.ExportParameters.Reports.Count(report => report.IsSelected),
-                this.ExportParameters.Reports.Count
-            );
+            var selectedReportCount = this.ExportParameters.Reports.Count(report => report.IsSelected);
+
+            if (selectedReportCount == 0)
+            {
+                this.StatusContent = new WarningStatusMessage(
+                    Resources.Validation_NoNightsSelected
+                )
+                {
+                    AttentionStripeBrush = System.Windows.Media.Brushes.Red,
+                    BorderBrush = System.Windows.Media.Brushes.Red,
+                    PulseBorder = true,
+                };
+            }
+            else
+            {
+                this.StatusContent = new InfoStatusMessage(
+                    string.Format(
+                        Resources.ReportsSelected,
+                        selectedReportCount,
+                        this.ExportParameters.Reports.Count
+                    ));
+            }
         }
 
         internal void ShowBusyStatus()

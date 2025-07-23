@@ -330,4 +330,7 @@
   <data name="ReleaseNotesUri" xml:space="preserve">
     <value>https://github.com/CascadePass/CPAP-Exporter/releases/tag/v1.0.0</value>
   </data>
+  <data name="Validation_NoNightsSelected" xml:space="preserve">
+    <value>You must select at least one night to export in order to proceed.</value>
+  </data>
 </root>
