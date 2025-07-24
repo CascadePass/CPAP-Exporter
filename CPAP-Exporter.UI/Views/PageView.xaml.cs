@@ -60,7 +60,7 @@ namespace CascadePass.CPAPExporter
                 for (int i = 0; i < VisualTreeHelper.GetChildrenCount(obj); i++)
                 {
                     DependencyObject child = VisualTreeHelper.GetChild(obj, i);
-                    UpdateBindings(child);
+                    this.UpdateBindings(child);
                 }
 
                 var localValues = obj.GetLocalValueEnumerator();
@@ -77,7 +77,7 @@ namespace CascadePass.CPAPExporter
             else
             {
                 // Invoke the dispatcher to run the logic on the UI thread
-                obj.Dispatcher.Invoke(() => UpdateBindings(obj));
+                obj.Dispatcher.Invoke(() => this.UpdateBindings(obj));
             }
         }
 
@@ -85,21 +85,30 @@ namespace CascadePass.CPAPExporter
         {
             if (this.Dispatcher.CheckAccess())
             {
-                var busyProgressBarVisibilityBinding = BindingOperations.GetBindingExpression(this.BusyProgressBar, VisibilityProperty);
-                busyProgressBarVisibilityBinding?.UpdateTarget();
+
             }
             else
             {
                 // Invoke the dispatcher to run the logic on the UI thread
-                this.Dispatcher.Invoke(() => UpdateProgressBarVisibility());
+                this.Dispatcher.Invoke(() => this.UpdateProgressBarVisibility());
             }
         }
 
         private void PageViewModel_PropertyChanged(object sender, PropertyChangedEventArgs e)
         {
-            if (e.PropertyName == nameof(PageViewModel.IsBusy))
+            if (e.PropertyName == nameof(PageViewModel.StatusContent))
             {
-                this.UpdateProgressBarVisibility();
+                if (this.Dispatcher.CheckAccess())
+                {
+                    this.UpdateProgressBarVisibility();
+                }
+                else
+                {
+                    Dispatcher.Invoke(() =>
+                    {
+                        this.UpdateProgressBarVisibility();
+                    });
+                }
             }
         }
     }

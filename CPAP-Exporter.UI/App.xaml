@@ -16,6 +16,7 @@
             <local:InverseBooleanConverter x:Key="InverseBool" />
             <local:StringToVisibilityConverter x:Key="StringToVisibilityConverter" />
             <local:EnumToBooleanConverter x:Key="EnumToBooleanConverter" />
+            <local:NullableObjectToVisibilityConverter x:Key="NullableObjectToVisibilityConverter" />
         </ResourceDictionary>
     </Application.Resources>
 </Application>

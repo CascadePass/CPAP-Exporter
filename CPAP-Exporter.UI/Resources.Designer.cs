@@ -682,6 +682,15 @@ namespace CascadePass.CPAPExporter {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to You must select at least one night to export in order to proceed..
+        /// </summary>
+        public static string Validation_NoNightsSelected {
+            get {
+                return ResourceManager.GetString("Validation_NoNightsSelected", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to CPAP Exporter.
         /// </summary>
         public static string Window_Title {
