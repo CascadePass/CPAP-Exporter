@@ -328,13 +328,10 @@ namespace CascadePass.CPAPExporter
             };
         }
 
-        public override void OnApplyTemplate()
+        private void DiscoverXamlProperties()
         {
-            base.OnApplyTemplate();
-
             var properties = new[]
             {
-                StatusPanel.BorderBrushProperty,
                 StatusPanel.MessageBorderBrushProperty,
                 StatusPanel.PulseStartColorProperty,
                 StatusPanel.PulseEndColorProperty,
@@ -355,10 +352,8 @@ namespace CascadePass.CPAPExporter
             }
         }
 
-        protected override void OnInitialized(EventArgs e)
+        private void ScaleAttentionStripeForDpi()
         {
-            base.OnInitialized(e);
-
             bool hasLocalValue = this.xamlSetProperties.Contains(AttentionStripeWidthProperty);
 
             if (!hasLocalValue)
@@ -366,6 +361,14 @@ namespace CascadePass.CPAPExporter
                 var dpi = VisualTreeHelper.GetDpi(this);
                 this.AttentionStripeWidth = dpi.DpiScaleX >= 2.0 ? 6.0 : 4.0;
             }
+        }
+
+        public override void OnApplyTemplate()
+        {
+            base.OnApplyTemplate();
+
+            this.DiscoverXamlProperties();
+            this.ScaleAttentionStripeForDpi();
         }
 
         private static void OnStatusMessageChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)

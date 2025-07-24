@@ -157,7 +157,7 @@ namespace CascadePass.CPAPExporter
                 _ => 0,
             };
 
-            return baseWidth * dpiScale;
+            return Math.Min(baseWidth * dpiScale, 10.0);
         }
 
         public virtual double GetCornerRadius(IStatusMessage message)
