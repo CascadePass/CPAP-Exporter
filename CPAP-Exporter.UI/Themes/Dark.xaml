@@ -19,6 +19,7 @@
 
     <SolidColorBrush x:Key="Legibility.Background" Color="#AA1E1E2F" />
     <SolidColorBrush x:Key="StatusPanel.Background" Color="#B0FFF1A3" />
+    <SolidColorBrush x:Key="StatusPanel.MessageBorderBrush" Color="Gold" />
     
     <SolidColorBrush x:Key="OpenFiles.FlowReductionPanel.Checked.Border" Color="DarkGreen" />
     <SolidColorBrush x:Key="OpenFiles.FlowReductionPanel.Unchecked.Border" Color="Red" />

@@ -15,6 +15,7 @@
 
     <SolidColorBrush x:Key="Legibility.Background" Color="#99F0" />
     <SolidColorBrush x:Key="StatusPanel.Background" Color="#99FAFAFA" />
+    <SolidColorBrush x:Key="StatusPanel.MessageBorderBrush" Color="Gold" />
 
     <SolidColorBrush x:Key="OpenFiles.FlowReductionPanel.Border" Color="DarkGreen" />
     <LinearGradientBrush x:Key="OpenFiles.FlowReductionPanel.Background" StartPoint="0,0" EndPoint="0,1">

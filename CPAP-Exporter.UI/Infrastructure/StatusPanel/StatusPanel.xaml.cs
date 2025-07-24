@@ -13,6 +13,8 @@ namespace CascadePass.CPAPExporter
     /// </summary>
     public partial class StatusPanel : UserControl
     {
+        private readonly HashSet<DependencyProperty> xamlSetProperties;
+
         #region Dependency Properties
 
         public static readonly DependencyProperty StatusMessageProperty =
@@ -23,9 +25,13 @@ namespace CascadePass.CPAPExporter
             DependencyProperty.Register(nameof(MessageBorderThickness), typeof(Thickness), typeof(StatusPanel),
                 new PropertyMetadata(new Thickness(1.5)));
 
-        public static readonly DependencyProperty ShowShadowProperty =
+        public static readonly DependencyProperty MessageBorderBrushProperty =
+            DependencyProperty.Register(nameof(MessageBorderBrush), typeof(Brush), typeof(StatusPanel),
+                new PropertyMetadata(Brushes.Gold));
+
+        public static readonly DependencyProperty ShowDropShadowProperty =
             DependencyProperty.Register(
-                nameof(ShowShadow),
+                nameof(ShowDropShadow),
                 typeof(bool),
                 typeof(StatusPanel),
                 new PropertyMetadata(true));
@@ -36,7 +42,7 @@ namespace CascadePass.CPAPExporter
 
         public static readonly DependencyProperty AttentionStripeWidthProperty =
             DependencyProperty.Register(nameof(AttentionStripeWidth), typeof(double), typeof(StatusPanel),
-                new PropertyMetadata(4.0));
+                new FrameworkPropertyMetadata(4.0, FrameworkPropertyMetadataOptions.AffectsRender));
 
         public static readonly DependencyProperty AttentionStripeBrushProperty =
             DependencyProperty.Register(nameof(AttentionStripeBrush), typeof(Brush), typeof(StatusPanel),
@@ -54,14 +60,29 @@ namespace CascadePass.CPAPExporter
             DependencyProperty.Register(nameof(PulseEndColor), typeof(Color), typeof(StatusPanel),
                 new PropertyMetadata((Color)ColorConverter.ConvertFromString("#FFD971")));
 
+        public static readonly DependencyProperty StatusMessageStyleProviderProperty =
+            DependencyProperty.Register(nameof(StatusMessageStyleProvider), typeof(IStatusMessageStyleProvider), typeof(StatusPanel),
+                new PropertyMetadata(new DefaultStatusMessageStyleProvider()));
+
+        public static readonly DependencyProperty OverrideBehaviorProperty =
+            DependencyProperty.Register(
+                nameof(OverrideBehavior),
+                typeof(MessageOverrideBehavior),
+                typeof(StatusPanel),
+                new PropertyMetadata(MessageOverrideBehavior.PreferLocalValues)
+            );
+
         #endregion
 
         public StatusPanel()
         {
+            this.xamlSetProperties = [];
             this.InitializeComponent();
         }
 
-        private static readonly LinearGradientBrush DefaultStatusBackgroundBrush = new LinearGradientBrush
+        #region Properties
+
+        private static readonly LinearGradientBrush DefaultStatusBackgroundBrush = new()
         {
             StartPoint = new Point(0, 0),
             EndPoint = new Point(0, 1),
@@ -72,10 +93,18 @@ namespace CascadePass.CPAPExporter
             ]
         };
 
+        #region Dependency Properties
+
         public object StatusMessage
         {
             get => GetValue(StatusMessageProperty);
             set => SetValue(StatusMessageProperty, value);
+        }
+
+        public Brush MessageBorderBrush
+        {
+            get => (Brush)GetValue(MessageBorderBrushProperty);
+            set => SetValue(MessageBorderBrushProperty, value);
         }
 
         public Brush BackgroundBrush
@@ -96,10 +125,10 @@ namespace CascadePass.CPAPExporter
             set => SetValue(AttentionStripeWidthProperty, value);
         }
 
-        public bool ShowShadow
+        public bool ShowDropShadow
         {
-            get => (bool)GetValue(ShowShadowProperty);
-            set => SetValue(ShowShadowProperty, value);
+            get => (bool)GetValue(ShowDropShadowProperty);
+            set => SetValue(ShowDropShadowProperty, value);
         }
 
         public double CornerRadius
@@ -125,6 +154,22 @@ namespace CascadePass.CPAPExporter
             get => (Color)GetValue(PulseEndColorProperty);
             set => SetValue(PulseEndColorProperty, value);
         }
+
+        public IStatusMessageStyleProvider StatusMessageStyleProvider
+        {
+            get => (IStatusMessageStyleProvider)GetValue(StatusMessageStyleProviderProperty);
+            set => SetValue(StatusMessageStyleProviderProperty, value);
+        }
+
+        public MessageOverrideBehavior OverrideBehavior
+        {
+            get => (MessageOverrideBehavior)GetValue(OverrideBehaviorProperty);
+            set => SetValue(OverrideBehaviorProperty, value);
+        }
+
+        #endregion
+
+        #endregion
 
         public void FadeIn()
         {
@@ -196,39 +241,130 @@ namespace CascadePass.CPAPExporter
         {
             if (message == null)
             {
-                this.StatusPanelBorder.Visibility = Visibility.Collapsed;
                 return;
             }
 
-            this.StatusPanelBorder.Visibility = Visibility.Visible;
-
             // Set properties from the message
-            this.Foreground = message.ForegroundBrush ?? this.Foreground;
-            this.BorderBrush = message.BorderBrush ?? this.BorderBrush;
-            this.StatusPanelBorder.BorderBrush = message.BorderBrush ?? this.StatusPanelBorder.BorderBrush;
-            this.BackgroundBrush = message.BackgroundBrush ?? this.BackgroundBrush;
-            this.AttentionStripeBrush = message.AttentionStripeBrush ?? this.AttentionStripeBrush;
-            this.AttentionStripeWidth = message.AttentionStripeWidth ?? this.AttentionStripeWidth;
-            this.ShowShadow = message.ShowShadow ?? this.ShowShadow;
-            this.CornerRadius = message.CornerRadius ?? this.CornerRadius;
-            this.BorderThickness = message.BorderThickness ?? this.BorderThickness;
+            this.SetVisualProperties(message);
 
             // Handle fade in/out and pulse border
-            if (message.FadeMessageIn == true)
-            {
-                this.FadeIn();
-            }
-            else
+            if (!message.FadeMessageIn.HasValue || !message.FadeMessageIn.Value)
             {
                 this.ForceShowMessage();
             }
 
             if (message.PulseBorder == true)
             {
-                this.PulseBorderColor(
-                    fromColor: message.PulseStartColor ?? this.PulseStartColor,
-                    toColor: message.PulseEndColor ?? this.PulseEndColor,
-                    duration: TimeSpan.FromMilliseconds(400));
+                this.PulseBorderColor(this.PulseStartColor, this.PulseEndColor, TimeSpan.FromMilliseconds(400));
+            }
+        }
+
+        private void SetVisualProperties(IStatusMessage message)
+        {
+            this.Foreground = this.ResolveValue(
+                StatusPanel.ForegroundProperty,
+                message?.ForegroundBrush,
+                () => this.StatusMessageStyleProvider.GetForegroundBrush(message)
+            );
+
+            this.BackgroundBrush = this.ResolveValue(
+                StatusPanel.BackgroundBrushProperty,
+                message?.BackgroundBrush,
+                () => this.StatusMessageStyleProvider.GetBackgroundBrush(message)
+            );
+
+            this.MessageBorderBrush = this.ResolveValue(
+                StatusPanel.MessageBorderBrushProperty,
+                message?.BorderBrush,
+                () => this.StatusMessageStyleProvider.GetStatusPanelBorderBrush(message)
+            );
+
+            this.AttentionStripeBrush = this.ResolveValue(
+                StatusPanel.AttentionStripeBrushProperty,
+                message?.AttentionStripeBrush,
+                () => this.StatusMessageStyleProvider.GetAttentionStripeBrush(message)
+            );
+
+            this.AttentionStripeWidth = (double)this.ResolveValue(
+                StatusPanel.AttentionStripeWidthProperty,
+                message?.AttentionStripeWidth,
+                () => this.StatusMessageStyleProvider.GetAttentionStripeWidth(message)
+            );
+
+            this.ShowDropShadow = (bool)this.ResolveValue(
+                StatusPanel.ShowDropShadowProperty,
+                message?.ShowDropShadow,
+                () => this.StatusMessageStyleProvider.GetShowDropShadow(message)
+            );
+
+            this.CornerRadius = (double)this.ResolveValue(
+                StatusPanel.CornerRadiusProperty,
+                message?.CornerRadius,
+                () => this.StatusMessageStyleProvider.GetCornerRadius(message)
+            );
+
+            this.BorderThickness = (Thickness)this.ResolveValue(
+                StatusPanel.BorderThicknessProperty,
+                message?.BorderThickness,
+                () => this.StatusMessageStyleProvider.GetBorderThickness(message)
+            );
+        }
+
+        private T ResolveValue<T>(DependencyProperty property, T messageValue, Func<T> styleProviderValue)
+        {
+            bool hasLocalValue = this.xamlSetProperties.Contains(property);
+
+            return this.OverrideBehavior switch
+            {
+                MessageOverrideBehavior.PreferLocalValues => hasLocalValue
+                                        ? (T)GetValue(property)
+                                        : messageValue ?? styleProviderValue(),
+
+                MessageOverrideBehavior.PreferMessageValues => messageValue ?? (hasLocalValue ? (T)GetValue(property) : styleProviderValue()),
+
+                _ => hasLocalValue
+                                        ? (T)GetValue(property)
+                                        : messageValue ?? styleProviderValue(),
+            };
+        }
+
+        public override void OnApplyTemplate()
+        {
+            base.OnApplyTemplate();
+
+            var properties = new[]
+            {
+                StatusPanel.BorderBrushProperty,
+                StatusPanel.MessageBorderBrushProperty,
+                StatusPanel.PulseStartColorProperty,
+                StatusPanel.PulseEndColorProperty,
+                StatusPanel.BackgroundBrushProperty,
+                StatusPanel.AttentionStripeBrushProperty,
+                StatusPanel.AttentionStripeWidthProperty,
+                StatusPanel.ShowDropShadowProperty,
+                StatusPanel.CornerRadiusProperty,
+                StatusPanel.MessageBorderThicknessProperty
+            };
+
+            foreach (var prop in properties)
+            {
+                if (this.ReadLocalValue(prop) != DependencyProperty.UnsetValue)
+                {
+                    this.xamlSetProperties.Add(prop);
+                }
+            }
+        }
+
+        protected override void OnInitialized(EventArgs e)
+        {
+            base.OnInitialized(e);
+
+            bool hasLocalValue = this.xamlSetProperties.Contains(AttentionStripeWidthProperty);
+
+            if (!hasLocalValue)
+            {
+                var dpi = VisualTreeHelper.GetDpi(this);
+                this.AttentionStripeWidth = dpi.DpiScaleX >= 2.0 ? 6.0 : 4.0;
             }
         }
 
@@ -239,29 +375,23 @@ namespace CascadePass.CPAPExporter
                 return;
             }
 
-            if (e.NewValue is IStatusMessage message)
+            var oldMessage = e.OldValue as IStatusMessage;
+            var newMessage = e.NewValue as IStatusMessage;
+
+            if (newMessage is not null)
             {
-                panel.DisplayStatusMessage(message);
-                return;
+                panel.DisplayStatusMessage(newMessage);
+            }
+            else
+            {
+                panel.SetVisualProperties(null);
             }
 
-            if (e.OldValue == null && e.NewValue != null)
-            {
-                panel.FadeIn();
-            }
-            else if (e.OldValue != null && e.NewValue == null)
-            {
-                panel.FadeOut();
-            }
+            bool shouldFadeOut = oldMessage?.FadeMessageOut == true || (e.OldValue != null && e.NewValue == null);
+            bool shouldFadeIn = e.OldValue == null && e.NewValue != null;
 
-            if (e.NewValue != null)
-            {
-                // Pulse the border color for attention
-                panel.PulseBorderColor(
-                    fromColor: panel.PulseStartColor,
-                    toColor: panel.PulseEndColor,
-                    duration: TimeSpan.FromMilliseconds(400));
-            }
+            if (shouldFadeOut) panel.FadeOut();
+            if (shouldFadeIn) panel.FadeIn();
         }
 
         private static void OnAttentionStripeBrushChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
@@ -276,98 +406,5 @@ namespace CascadePass.CPAPExporter
 
             panel.AnimateAttentionStripeColor(panel, oldBrush, newBrush);
         }
-    }
-
-    public interface IStatusMessage
-    {
-        StatusMessageType MessageType { get; }
-
-        object MessageContent { get; set; }
-
-        #region Panel
-
-        Brush BorderBrush { get; set; }
-        Brush ForegroundBrush { get; set; }
-        Brush BackgroundBrush { get; set; }
-        Brush AttentionStripeBrush { get; set; }
-
-        Color? PulseStartColor { get; set; }
-        Color? PulseEndColor { get; set; }
-        
-        double? AttentionStripeWidth { get; set; }
-
-        bool? ShowShadow { get; set; }
-
-        double? CornerRadius { get; set; }
-        Thickness? BorderThickness { get; set; }
-
-        #endregion
-
-        #region Message
-
-        bool? FadeMessageIn { get; set; }
-        bool? FadeMessageOut { get; set; }
-        bool? PulseBorder { get; set; }
-
-        #endregion
-    }
-
-    public class StatusPanelMessage : IStatusMessage
-    {
-        public StatusPanelMessage() { }
-
-        public StatusPanelMessage(object messageContent) {
-            this.MessageContent = messageContent;
-        }
-
-        public StatusPanelMessage(object messageContent, StatusMessageType messageType)
-        {
-            this.MessageContent = messageContent;
-            this.MessageType = messageType;
-        }
-
-        public StatusMessageType MessageType { get; set; }
-        public object MessageContent { get; set; }
-
-        #region Panel Properties
-
-        public Brush BorderBrush { get; set; }
-        public Brush ForegroundBrush { get; set; }
-        public Brush BackgroundBrush { get; set; }
-
-        public Color? PulseStartColor { get; set; }
-        public Color? PulseEndColor { get; set; }
-        
-
-        public Brush AttentionStripeBrush { get; set; }
-        public double? AttentionStripeWidth { get; set; }
-
-        public bool? ShowShadow { get; set; }
-        public double? CornerRadius { get; set; }
-        public Thickness? BorderThickness { get; set; }
-
-        #endregion
-
-        #region Animation Control Properties
-
-        public bool? FadeMessageIn { get; set; }
-        public bool? FadeMessageOut { get; set; }
-        public bool? PulseBorder { get; set; }
-
-        #endregion
-    }
-
-    public class InfoStatusMessage : StatusPanelMessage
-    {
-        public InfoStatusMessage() : base(null, StatusMessageType.Info) { }
-
-        public InfoStatusMessage(object messageContent) : base(messageContent, StatusMessageType.Info) { }
-    }
-
-    public class WarningStatusMessage : StatusPanelMessage
-    {
-        public WarningStatusMessage() : base(null, StatusMessageType.Warning) { }
-
-        public WarningStatusMessage(object messageContent) : base(messageContent, StatusMessageType.Warning) { }
     }
 }

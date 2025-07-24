@@ -302,11 +302,7 @@ namespace CascadePass.CPAPExporter
         {
             Application.Current.Dispatcher.Invoke(() =>
             {
-                this.StatusContent = new ProgressBar()
-                {
-                    Height = 24,
-                    IsIndeterminate = true,
-                };
+                this.StatusContent = new StatusBusyMessage();
             });
         }
 

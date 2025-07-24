@@ -51,11 +51,12 @@
                 x:Name="StatusHost"
                 Grid.Column="0" Grid.ColumnSpan="2" Grid.Row="2"
                 CornerRadius="6"
-                ShowShadow="False"
-                AttentionStripeWidth="6"
-                BorderBrush="Gold"
-                BackgroundBrush="{DynamicResource StatusPanel.Background}"
-                StatusMessage="{Binding CurrentView.DataContext.StatusContent}" />
+                Visibility="{Binding CurrentView.DataContext.StatusContent, Converter={StaticResource NullableObjectToVisibilityConverter}}"
+                StatusMessage="{Binding CurrentView.DataContext.StatusContent}">
+                <local:StatusPanel.StatusMessageStyleProvider>
+                    <local:CpapExporterStatusMessageStyleProvider />
+                </local:StatusPanel.StatusMessageStyleProvider>
+            </local:StatusPanel>
         </Grid>
 
         <ContentPresenter

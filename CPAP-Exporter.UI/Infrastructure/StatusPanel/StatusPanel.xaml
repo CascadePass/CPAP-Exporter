@@ -4,6 +4,7 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
              xmlns:local="clr-namespace:CascadePass.CPAPExporter"
+             BorderBrush="Transparent"
              mc:Ignorable="d"
              d:DesignHeight="450" d:DesignWidth="800"
              x:Name="Root">
@@ -36,7 +37,7 @@
         x:Name="StatusPanelBorder"
         Visibility="{Binding StatusMessage, ElementName=Root, Converter={StaticResource NullableObjectToVisibilityConverter}}"
         Background="{Binding BackgroundBrush, ElementName=Root}"
-        BorderBrush="{Binding BorderBrush, ElementName=Root}"
+        BorderBrush="{Binding MessageBorderBrush, ElementName=Root}"
         BorderThickness="{Binding MessageBorderThickness, ElementName=Root}"
         CornerRadius="{Binding CornerRadius, ElementName=Root}"
         Padding="0"
@@ -45,7 +46,7 @@
         <Border.Style>
             <Style TargetType="Border">
                 <Style.Triggers>
-                    <DataTrigger Binding="{Binding ShowShadow, ElementName=Root}" Value="True">
+                    <DataTrigger Binding="{Binding ShowDropShadow, ElementName=Root}" Value="True">
                         <Setter Property="Effect">
                             <Setter.Value>
                                 <DropShadowEffect Color="Black" BlurRadius="4" ShadowDepth="1" Opacity="0.5" />
