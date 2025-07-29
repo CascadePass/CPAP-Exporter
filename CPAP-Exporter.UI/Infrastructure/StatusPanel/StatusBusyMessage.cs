@@ -5,7 +5,7 @@ namespace CascadePass.CPAPExporter
 {
     public class StatusBusyMessage : StatusPanelMessage
     {
-        public StatusBusyMessage() : base(null, StatusMessageType.None) {
+        public StatusBusyMessage() : base(null, StatusMessageType.Busy) {
             this.ProgressBar = this.CreateProgressBar();
             this.MessageContent = this.ProgressBar;
             this.AttentionStripeWidth = 0;

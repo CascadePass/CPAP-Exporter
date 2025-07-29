@@ -50,7 +50,6 @@
             <local:MessagePresenter
                 x:Name="StatusHost"
                 Grid.Column="0" Grid.ColumnSpan="2" Grid.Row="2"
-                CornerRadius="6"
                 Visibility="{Binding CurrentView.DataContext.StatusContent, Converter={StaticResource NullableObjectToVisibilityConverter}}"
                 Content="{Binding CurrentView.DataContext.StatusContent}">
                 <local:MessagePresenter.StatusMessageStyleProvider>

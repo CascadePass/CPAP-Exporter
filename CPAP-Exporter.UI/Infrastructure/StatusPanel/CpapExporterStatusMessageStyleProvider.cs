@@ -11,6 +11,8 @@ namespace CascadePass.CPAPExporter
                 StatusMessageType.Info => ResourceLocator.GetResource<Brush>("StatusPanel.InfoMessage.MessageBorderBrush"),
                 StatusMessageType.Warning => ResourceLocator.GetResource<Brush>("StatusPanel.WarningMessage.MessageBorderBrush"),
                 StatusMessageType.Error => ResourceLocator.GetResource<Brush>("StatusPanel.ErrorMessage.MessageBorderBrush"),
+                StatusMessageType.Busy => ResourceLocator.GetResource<Brush>("ControlElevationBorderBrush"),
+                StatusMessageType.Custom => Brushes.Transparent,
                 _ => base.GetStatusPanelBorderBrush(message), // Fallback to base implementation
             };
         }
@@ -22,7 +24,9 @@ namespace CascadePass.CPAPExporter
                 StatusMessageType.Info => ResourceLocator.GetResource<Brush>("StatusPanel.InfoMessage.Background"),
                 StatusMessageType.Warning => ResourceLocator.GetResource<Brush>("StatusPanel.WarningMessage.Background"),
                 StatusMessageType.Error => ResourceLocator.GetResource<Brush>("StatusPanel.ErrorMessage.Background"),
-                _ => base.GetStatusPanelBorderBrush(message), // Fallback to base implementation
+                StatusMessageType.Busy => ResourceLocator.GetResource<Brush>("Legibility.Background"),
+                StatusMessageType.Custom => ResourceLocator.GetResource<Brush>("Legibility.Background"),
+                _ => ResourceLocator.GetResource<Brush>("Legibility.Background")
             };
         }
 

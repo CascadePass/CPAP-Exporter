@@ -23,6 +23,8 @@ namespace CascadePass.CPAPExporter
                 StatusMessageType.Warning => Brushes.DarkGoldenrod,
                 StatusMessageType.Error => Brushes.Firebrick,
                 StatusMessageType.None => Brushes.Black,
+                StatusMessageType.Busy => Brushes.Black,
+                StatusMessageType.Custom => Brushes.Black,
                 _ => Brushes.Black,
             };
         }
@@ -42,6 +44,8 @@ namespace CascadePass.CPAPExporter
                 StatusMessageType.Info => new SolidColorBrush(Color.FromRgb(230, 245, 255)),   // Soft blue tint
                 StatusMessageType.Warning => new SolidColorBrush(Color.FromRgb(255, 248, 220)), // Pale gold
                 StatusMessageType.Error => new SolidColorBrush(Color.FromRgb(255, 235, 238)),   // Gentle red-pink
+                StatusMessageType.Busy => new SolidColorBrush(Color.FromRgb(230, 245, 255)),   // Soft blue tint
+                StatusMessageType.Custom => new SolidColorBrush(Color.FromRgb(230, 245, 255)),   // Soft blue tint
                 _ => Brushes.Transparent,
             };
         }
@@ -61,6 +65,8 @@ namespace CascadePass.CPAPExporter
                 StatusMessageType.Info => new SolidColorBrush(Color.FromRgb(99, 130, 156)),      // Muted steel blue
                 StatusMessageType.Warning => new SolidColorBrush(Color.FromRgb(198, 138, 0)),    // Goldenrod—attention-grabbing, not shouting
                 StatusMessageType.Error => new SolidColorBrush(Color.FromRgb(165, 42, 42)),      // Deep brick red—serious but readable
+                StatusMessageType.Busy => new SolidColorBrush(Color.FromRgb(99, 130, 156)),      // Muted steel blue
+                StatusMessageType.Custom => new SolidColorBrush(Color.FromRgb(99, 130, 156)),      // Muted steel blue
                 _ => Brushes.Gray,
             };
         }
@@ -80,6 +86,8 @@ namespace CascadePass.CPAPExporter
                 StatusMessageType.Info => new SolidColorBrush(Color.FromRgb(96, 153, 186)),     // Cool blue stripe for calm focus
                 StatusMessageType.Warning => new SolidColorBrush(Color.FromRgb(255, 175, 0)),    // Vivid amber for urgency
                 StatusMessageType.Error => new SolidColorBrush(Color.FromRgb(204, 0, 0)),        // Strong red for critical error
+                StatusMessageType.Busy => new SolidColorBrush(Color.FromRgb(96, 153, 186)),     // Cool blue stripe for calm focus
+                StatusMessageType.Custom => new SolidColorBrush(Color.FromRgb(96, 153, 186)),     // Cool blue stripe for calm focus
                 _ => Brushes.Transparent,
             };
         }
@@ -100,6 +108,8 @@ namespace CascadePass.CPAPExporter
                 StatusMessageType.Info => Color.FromRgb(99, 130, 156),        // Matches steel blue border
                 StatusMessageType.Warning => Color.FromRgb(198, 138, 0),      // Goldenrod
                 StatusMessageType.Error => Color.FromRgb(165, 42, 42),        // Brick red
+                StatusMessageType.Busy => Color.FromRgb(99, 130, 156),        // Matches steel blue border
+                StatusMessageType.Custom => Color.FromRgb(99, 130, 156),        // Matches steel blue border
                 _ => Colors.Gray,
             };
         }
@@ -121,6 +131,8 @@ namespace CascadePass.CPAPExporter
                 StatusMessageType.Info => Color.FromRgb(135, 170, 200),       // Brighter steel blue
                 StatusMessageType.Warning => Color.FromRgb(255, 191, 60),     // Warm amber
                 StatusMessageType.Error => Color.FromRgb(220, 30, 30),        // Vivid red
+                StatusMessageType.Busy => Color.FromRgb(135, 170, 200),       // Brighter steel blue
+                StatusMessageType.Custom => Color.FromRgb(135, 170, 200),       // Brighter steel blue
                 _ => Colors.DarkGray,
             };
         }
@@ -154,6 +166,8 @@ namespace CascadePass.CPAPExporter
                 StatusMessageType.Info => 2,
                 StatusMessageType.Warning => 4,
                 StatusMessageType.Error => 6,
+                StatusMessageType.Busy => 2,
+                StatusMessageType.Custom => 2,
                 _ => 0,
             };
 
@@ -176,6 +190,8 @@ namespace CascadePass.CPAPExporter
                 StatusMessageType.Info => 4,
                 StatusMessageType.Warning => 6,
                 StatusMessageType.Error => 8,
+                StatusMessageType.Busy => 4,
+                StatusMessageType.Custom => 4,
                 _ => 0,
             };
         }
@@ -196,6 +212,8 @@ namespace CascadePass.CPAPExporter
                 StatusMessageType.Info => new Thickness(1),
                 StatusMessageType.Warning => new Thickness(2),
                 StatusMessageType.Error => new Thickness(2),
+                StatusMessageType.Busy => new Thickness(1),
+                StatusMessageType.Custom => new Thickness(1),
                 _ => new Thickness(1),
             };
         }
@@ -216,6 +234,8 @@ namespace CascadePass.CPAPExporter
                 StatusMessageType.Info => false,
                 StatusMessageType.Warning => true,
                 StatusMessageType.Error => true,
+                StatusMessageType.Busy => true,
+                StatusMessageType.Custom => false,
                 _ => false,
             };
         }
@@ -240,6 +260,8 @@ namespace CascadePass.CPAPExporter
                 StatusMessageType.Info => true,          // Calm, informative tone
                 StatusMessageType.Warning => true,       // Gives it presence without alarm
                 StatusMessageType.Error => false,        // Immediate visibility—no delay
+                StatusMessageType.Busy => true,          // Calm, informative tone
+                StatusMessageType.Custom => true,          // Calm, informative tone
                 _ => false,
             };
         }
@@ -260,6 +282,8 @@ namespace CascadePass.CPAPExporter
                 StatusMessageType.Info => true,
                 StatusMessageType.Warning => true,
                 StatusMessageType.Error => false,
+                StatusMessageType.Busy => true,
+                StatusMessageType.Custom => true,
                 _ => false,
             };
         }
@@ -280,6 +304,8 @@ namespace CascadePass.CPAPExporter
                 StatusMessageType.Info => false,
                 StatusMessageType.Warning => true,    // Subtle urgency
                 StatusMessageType.Error => true,      // Strong emphasis
+                StatusMessageType.Busy => true,
+                StatusMessageType.Custom => false,
                 _ => false,
             };
         }
