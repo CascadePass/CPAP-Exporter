@@ -35,7 +35,7 @@
 
     <Border
         x:Name="StatusPanelBorder"
-        Visibility="{Binding StatusMessage, ElementName=Root, Converter={StaticResource NullableObjectToVisibilityConverter}}"
+        Visibility="{Binding Content, ElementName=Root, Converter={StaticResource NullableObjectToVisibilityConverter}}"
         Background="{Binding BackgroundBrush, ElementName=Root}"
         BorderBrush="{Binding MessageBorderBrush, ElementName=Root}"
         BorderThickness="{Binding MessageBorderThickness, ElementName=Root}"
@@ -75,7 +75,7 @@
             <ContentPresenter
                 x:Name="MessageContentPresenter"
                 Grid.Column="1"
-                Content="{Binding StatusMessage, ElementName=Root}"
+                Content="{Binding Content, ElementName=Root}"
                 ContentTemplateSelector="{StaticResource StatusMessageSelector}"
                 Margin="8" />
         </Grid>

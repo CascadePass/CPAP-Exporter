@@ -26,9 +26,9 @@ namespace CascadePass.CPAPExporter
 
         #region Dependency Properties
 
-        public static readonly DependencyProperty StatusMessageProperty =
-            DependencyProperty.Register(nameof(StatusMessage), typeof(object), typeof(MessagePresenter),
-                new PropertyMetadata(null, OnStatusMessageChanged));
+        public static new readonly DependencyProperty ContentProperty =
+            DependencyProperty.Register(nameof(Content), typeof(object), typeof(MessagePresenter),
+                new PropertyMetadata(null, OnContentChanged));
 
         public static readonly DependencyProperty MessageBorderThicknessProperty =
             DependencyProperty.Register(nameof(MessageBorderThickness), typeof(Thickness), typeof(MessagePresenter),
@@ -122,10 +122,10 @@ namespace CascadePass.CPAPExporter
         /// <summary>
         /// Gets or sets the status message displayed by the control.
         /// </summary>
-        public object StatusMessage
+        public new object Content
         {
-            get => GetValue(StatusMessageProperty);
-            set => SetValue(StatusMessageProperty, value);
+            get => GetValue(ContentProperty);
+            set => SetValue(ContentProperty, value);
         }
 
         /// <summary>
@@ -437,7 +437,7 @@ namespace CascadePass.CPAPExporter
             this.ScaleAttentionStripeForDpi();
         }
 
-        private static void OnStatusMessageChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
+        private static void OnContentChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
         {
             if (d is not MessagePresenter panel)
             {
