@@ -280,12 +280,7 @@ namespace CascadePass.CPAPExporter
             {
                 this.StatusContent = new WarningStatusMessage(
                     Resources.Validation_NoNightsSelected
-                )
-                {
-                    AttentionStripeBrush = System.Windows.Media.Brushes.Red,
-                    BorderBrush = System.Windows.Media.Brushes.Red,
-                    PulseBorder = true,
-                };
+                );
             }
             else
             {

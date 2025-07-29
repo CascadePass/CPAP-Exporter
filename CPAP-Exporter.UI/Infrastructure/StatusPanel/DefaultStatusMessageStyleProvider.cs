@@ -286,25 +286,4 @@ namespace CascadePass.CPAPExporter
 
         #endregion
     }
-
-    public class CpapExporterStatusMessageStyleProvider : DefaultStatusMessageStyleProvider
-    {
-        // This class can be used to override any specific styles or behaviors for CPAP Exporter status messages.
-
-        public override Brush GetStatusPanelBorderBrush(IStatusMessage message)
-        {
-            return message?.MessageType switch
-            {
-                StatusMessageType.Info => Brushes.DarkBlue, // Custom color for info messages
-                StatusMessageType.Warning => Brushes.DarkOrange, // Custom color for warning messages
-                StatusMessageType.Error => Brushes.DarkRed, // Custom color for error messages
-                _ => base.GetStatusPanelBorderBrush(message), // Fallback to base implementation
-            };
-        }
-
-        public override Brush GetBackgroundBrush(IStatusMessage message)
-        {
-            return this.GetStatusPanelBorderBrush(message);
-        }
-    }
 }
