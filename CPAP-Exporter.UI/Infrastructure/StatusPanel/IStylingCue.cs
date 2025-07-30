@@ -5,7 +5,7 @@ namespace CascadePass.CPAPExporter
 {
     public interface IStylingCue
     {
-        StatusMessageType MessageType { get; }
+        CuedContentType ContentType { get; }
 
         object Content { get; set; }
 

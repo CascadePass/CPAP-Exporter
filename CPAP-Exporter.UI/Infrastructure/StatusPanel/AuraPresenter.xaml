@@ -18,27 +18,34 @@
             Opacity="{Binding ShadowOpacity, ElementName=Root}"
             />
 
-        
-        <DataTemplate x:Key="InfoTemplate">
-            <ContentPresenter Content="{Binding Content}" />
-        </DataTemplate>
-
-        <DataTemplate x:Key="WarningTemplate">
-            <ContentPresenter Content="{Binding Content}" />
-        </DataTemplate>
-
-        <DataTemplate x:Key="ErrorTemplate">
-            <ContentPresenter Content="{Binding Content}" />
+        <DataTemplate x:Key="IconCueElement">
+            <DockPanel LastChildFill="True">
+                <Image
+                    DockPanel.Dock="{Binding IconPlacement}"
+                    Source="{Binding IconSource}"
+                    Height="{Binding IconSize}" Width="{Binding IconSize}"
+                    Margin="{Binding IconMargin}"
+                    Stretch="{Binding Stretch}"
+                    VerticalAlignment="Center"
+                    HorizontalAlignment="Center"
+                    Visibility="{Binding IconSource, Converter={StaticResource NullableObjectToVisibilityConverter}}"
+                    />
+                
+                <ContentPresenter
+                    Content="{Binding Content}"
+                    />
+            </DockPanel>
         </DataTemplate>
 
         <DataTemplate x:Key="DefaultTemplate">
-            <ContentPresenter Content="{Binding Content}" />
+            <ContentPresenter
+                Content="{Binding Content}"
+                />
         </DataTemplate>
 
-        <local:StatusMessageTemplateSelector x:Key="StatusMessageSelector"
-            InfoTemplate="{StaticResource InfoTemplate}"
-            WarningTemplate="{StaticResource WarningTemplate}"
-            ErrorTemplate="{StaticResource ErrorTemplate}"
+        <local:AuraTemplateSelector
+            x:Key="StatusMessageSelector"
+            IconCueElement="{StaticResource IconCueElement}"
             DefaultTemplate="{StaticResource DefaultTemplate}" />
     </UserControl.Resources>
 

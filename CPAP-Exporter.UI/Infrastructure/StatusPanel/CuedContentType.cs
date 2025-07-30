@@ -3,7 +3,7 @@
     /// <summary>
     /// Represents the semantic classification of a status message, guiding its visual and behavioral presentation.
     /// </summary>
-    public enum StatusMessageType
+    public enum CuedContentType
     {
         /// <summary>
         /// Indicates that no classification has been explicitly set.

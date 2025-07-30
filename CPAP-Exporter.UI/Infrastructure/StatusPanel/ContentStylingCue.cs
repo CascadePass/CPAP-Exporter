@@ -3,7 +3,7 @@ using System.Windows.Media;
 
 namespace CascadePass.CPAPExporter
 {
-    public class ContentStylingCue : IStylingCue
+    public class ContentStylingCue : Observable, IStylingCue
     {
         public ContentStylingCue() { }
 
@@ -11,13 +11,14 @@ namespace CascadePass.CPAPExporter
             this.Content = messageContent;
         }
 
-        public ContentStylingCue(object messageContent, StatusMessageType messageType)
+        public ContentStylingCue(object messageContent, CuedContentType messageType)
         {
             this.Content = messageContent;
-            this.MessageType = messageType;
+            this.ContentType = messageType;
         }
 
-        public StatusMessageType MessageType { get; set; }
+        public CuedContentType ContentType { get; set; }
+
         public object Content { get; set; }
 
         #region Panel Properties
@@ -48,7 +49,6 @@ namespace CascadePass.CPAPExporter
         public TimeSpan? DisplayDuration { get; set; }
 
         #endregion
-
 
         #region Shadow Properties
 

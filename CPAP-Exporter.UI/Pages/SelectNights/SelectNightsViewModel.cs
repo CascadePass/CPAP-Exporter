@@ -5,6 +5,8 @@ using System.IO;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Input;
+using System.Windows.Media;
+using System.Windows.Media.Imaging;
 using System.Windows.Threading;
 
 namespace CascadePass.CPAPExporter
@@ -274,24 +276,30 @@ namespace CascadePass.CPAPExporter
 
         internal void ShowDefaultStatusMessage()
         {
-            var selectedReportCount = this.ExportParameters.Reports.Count(report => report.IsSelected);
+            Application.Current.Dispatcher.Invoke(() =>
+            {
+                var selectedReportCount = this.ExportParameters.Reports.Count(report => report.IsSelected);
 
-            if (selectedReportCount == 0)
-            {
-                this.StatusContent = new WarningCueElement(
-                    Resources.Validation_NoNightsSelected
-                );
-            }
-            else
-            {
-                this.StatusContent = new InfoCueElement(
-                    string.Format(
-                        Resources.ReportsSelected,
-                        selectedReportCount,
-                        this.ExportParameters.Reports.Count
-                    ))
-                { DisplayDuration = TimeSpan.FromSeconds(8) };
-            }
+                if (selectedReportCount == 0)
+                {
+                    this.StatusContent = new WarningCueElement(
+                        Resources.Validation_NoNightsSelected
+                    );
+                }
+                else
+                {
+                    this.StatusContent = new InfoCueElement(
+                        string.Format(
+                            Resources.ReportsSelected,
+                            selectedReportCount,
+                            this.ExportParameters.Reports.Count
+                        ))
+                    {
+                        DisplayDuration = TimeSpan.FromSeconds(8),
+                        IconSource = new BitmapImage(new Uri("pack://application:,,,/Images/CPAP-Exporter.VersionEmblem.1.1.0.png")),
+                    };
+                }
+            });
         }
 
         internal void ShowBusyStatus()

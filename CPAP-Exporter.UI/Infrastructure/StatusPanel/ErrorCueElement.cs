@@ -1,9 +1,13 @@
-﻿namespace CascadePass.CPAPExporter
-{
-    public class ErrorCueElement : ContentStylingCue
-    {
-        public ErrorCueElement() : base(null, StatusMessageType.Error) { }
+﻿using System.Windows.Media;
 
-        public ErrorCueElement(object messageContent) : base(messageContent, StatusMessageType.Error) { }
+namespace CascadePass.CPAPExporter
+{
+    public class ErrorCueElement : IconCueElement
+    {
+        public ErrorCueElement() : base(null, CuedContentType.Error) { }
+
+        public ErrorCueElement(object messageContent) : base(messageContent, CuedContentType.Error) { }
+
+        public ErrorCueElement(object messageContent, CuedContentType cuedContentType, ImageSource iconSource) : base(messageContent, cuedContentType, iconSource) { }
     }
 }

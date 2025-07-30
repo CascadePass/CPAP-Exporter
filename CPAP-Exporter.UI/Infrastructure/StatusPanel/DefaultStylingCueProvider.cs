@@ -17,14 +17,14 @@ namespace CascadePass.CPAPExporter
                 return Brushes.Black;
             }
 
-            return message.MessageType switch
+            return message.ContentType switch
             {
-                StatusMessageType.Info => Brushes.DarkSlateGray,
-                StatusMessageType.Warning => Brushes.DarkGoldenrod,
-                StatusMessageType.Error => Brushes.Firebrick,
-                StatusMessageType.None => Brushes.Black,
-                StatusMessageType.Busy => Brushes.Black,
-                StatusMessageType.Custom => Brushes.Black,
+                CuedContentType.Info => Brushes.DarkSlateGray,
+                CuedContentType.Warning => Brushes.DarkGoldenrod,
+                CuedContentType.Error => Brushes.Firebrick,
+                CuedContentType.None => Brushes.Black,
+                CuedContentType.Busy => Brushes.Black,
+                CuedContentType.Custom => Brushes.Black,
                 _ => Brushes.Black,
             };
         }
@@ -38,14 +38,14 @@ namespace CascadePass.CPAPExporter
                 return Brushes.Transparent;
             }
 
-            return message.MessageType switch
+            return message.ContentType switch
             {
-                StatusMessageType.None => Brushes.Transparent,
-                StatusMessageType.Info => new SolidColorBrush(Color.FromRgb(230, 245, 255)),   // Soft blue tint
-                StatusMessageType.Warning => new SolidColorBrush(Color.FromRgb(255, 248, 220)), // Pale gold
-                StatusMessageType.Error => new SolidColorBrush(Color.FromRgb(255, 235, 238)),   // Gentle red-pink
-                StatusMessageType.Busy => new SolidColorBrush(Color.FromRgb(230, 245, 255)),   // Soft blue tint
-                StatusMessageType.Custom => new SolidColorBrush(Color.FromRgb(230, 245, 255)),   // Soft blue tint
+                CuedContentType.None => Brushes.Transparent,
+                CuedContentType.Info => new SolidColorBrush(Color.FromRgb(230, 245, 255)),   // Soft blue tint
+                CuedContentType.Warning => new SolidColorBrush(Color.FromRgb(255, 248, 220)), // Pale gold
+                CuedContentType.Error => new SolidColorBrush(Color.FromRgb(255, 235, 238)),   // Gentle red-pink
+                CuedContentType.Busy => new SolidColorBrush(Color.FromRgb(230, 245, 255)),   // Soft blue tint
+                CuedContentType.Custom => new SolidColorBrush(Color.FromRgb(230, 245, 255)),   // Soft blue tint
                 _ => Brushes.Transparent,
             };
         }
@@ -59,14 +59,14 @@ namespace CascadePass.CPAPExporter
                 return Brushes.Transparent;
             }
 
-            return message.MessageType switch
+            return message.ContentType switch
             {
-                StatusMessageType.None => Brushes.Gray,                         // Neutral fallback
-                StatusMessageType.Info => new SolidColorBrush(Color.FromRgb(99, 130, 156)),      // Muted steel blue
-                StatusMessageType.Warning => new SolidColorBrush(Color.FromRgb(198, 138, 0)),    // Goldenrod—attention-grabbing, not shouting
-                StatusMessageType.Error => new SolidColorBrush(Color.FromRgb(165, 42, 42)),      // Deep brick red—serious but readable
-                StatusMessageType.Busy => new SolidColorBrush(Color.FromRgb(99, 130, 156)),      // Muted steel blue
-                StatusMessageType.Custom => new SolidColorBrush(Color.FromRgb(99, 130, 156)),      // Muted steel blue
+                CuedContentType.None => Brushes.Gray,                         // Neutral fallback
+                CuedContentType.Info => new SolidColorBrush(Color.FromRgb(99, 130, 156)),      // Muted steel blue
+                CuedContentType.Warning => new SolidColorBrush(Color.FromRgb(198, 138, 0)),    // Goldenrod—attention-grabbing, not shouting
+                CuedContentType.Error => new SolidColorBrush(Color.FromRgb(165, 42, 42)),      // Deep brick red—serious but readable
+                CuedContentType.Busy => new SolidColorBrush(Color.FromRgb(99, 130, 156)),      // Muted steel blue
+                CuedContentType.Custom => new SolidColorBrush(Color.FromRgb(99, 130, 156)),      // Muted steel blue
                 _ => Brushes.Gray,
             };
         }
@@ -80,14 +80,14 @@ namespace CascadePass.CPAPExporter
                 return Brushes.Transparent;
             }
 
-            return message.MessageType switch
+            return message.ContentType switch
             {
-                StatusMessageType.None => Brushes.Transparent,
-                StatusMessageType.Info => new SolidColorBrush(Color.FromRgb(96, 153, 186)),     // Cool blue stripe for calm focus
-                StatusMessageType.Warning => new SolidColorBrush(Color.FromRgb(255, 175, 0)),    // Vivid amber for urgency
-                StatusMessageType.Error => new SolidColorBrush(Color.FromRgb(204, 0, 0)),        // Strong red for critical error
-                StatusMessageType.Busy => new SolidColorBrush(Color.FromRgb(96, 153, 186)),     // Cool blue stripe for calm focus
-                StatusMessageType.Custom => new SolidColorBrush(Color.FromRgb(96, 153, 186)),     // Cool blue stripe for calm focus
+                CuedContentType.None => Brushes.Transparent,
+                CuedContentType.Info => new SolidColorBrush(Color.FromRgb(96, 153, 186)),     // Cool blue stripe for calm focus
+                CuedContentType.Warning => new SolidColorBrush(Color.FromRgb(255, 175, 0)),    // Vivid amber for urgency
+                CuedContentType.Error => new SolidColorBrush(Color.FromRgb(204, 0, 0)),        // Strong red for critical error
+                CuedContentType.Busy => new SolidColorBrush(Color.FromRgb(96, 153, 186)),     // Cool blue stripe for calm focus
+                CuedContentType.Custom => new SolidColorBrush(Color.FromRgb(96, 153, 186)),     // Cool blue stripe for calm focus
                 _ => Brushes.Transparent,
             };
         }
@@ -102,14 +102,14 @@ namespace CascadePass.CPAPExporter
                 return Colors.Gray;
             }
 
-            return message.MessageType switch
+            return message.ContentType switch
             {
-                StatusMessageType.None => Colors.Gray,
-                StatusMessageType.Info => Color.FromRgb(99, 130, 156),        // Matches steel blue border
-                StatusMessageType.Warning => Color.FromRgb(198, 138, 0),      // Goldenrod
-                StatusMessageType.Error => Color.FromRgb(165, 42, 42),        // Brick red
-                StatusMessageType.Busy => Color.FromRgb(99, 130, 156),        // Matches steel blue border
-                StatusMessageType.Custom => Color.FromRgb(99, 130, 156),        // Matches steel blue border
+                CuedContentType.None => Colors.Gray,
+                CuedContentType.Info => Color.FromRgb(99, 130, 156),        // Matches steel blue border
+                CuedContentType.Warning => Color.FromRgb(198, 138, 0),      // Goldenrod
+                CuedContentType.Error => Color.FromRgb(165, 42, 42),        // Brick red
+                CuedContentType.Busy => Color.FromRgb(99, 130, 156),        // Matches steel blue border
+                CuedContentType.Custom => Color.FromRgb(99, 130, 156),        // Matches steel blue border
                 _ => Colors.Gray,
             };
         }
@@ -125,14 +125,14 @@ namespace CascadePass.CPAPExporter
             }
 
 
-            return message.MessageType switch
+            return message.ContentType switch
             {
-                StatusMessageType.None => Colors.DarkGray,
-                StatusMessageType.Info => Color.FromRgb(135, 170, 200),       // Brighter steel blue
-                StatusMessageType.Warning => Color.FromRgb(255, 191, 60),     // Warm amber
-                StatusMessageType.Error => Color.FromRgb(220, 30, 30),        // Vivid red
-                StatusMessageType.Busy => Color.FromRgb(135, 170, 200),       // Brighter steel blue
-                StatusMessageType.Custom => Color.FromRgb(135, 170, 200),       // Brighter steel blue
+                CuedContentType.None => Colors.DarkGray,
+                CuedContentType.Info => Color.FromRgb(135, 170, 200),       // Brighter steel blue
+                CuedContentType.Warning => Color.FromRgb(255, 191, 60),     // Warm amber
+                CuedContentType.Error => Color.FromRgb(220, 30, 30),        // Vivid red
+                CuedContentType.Busy => Color.FromRgb(135, 170, 200),       // Brighter steel blue
+                CuedContentType.Custom => Color.FromRgb(135, 170, 200),       // Brighter steel blue
                 _ => Colors.DarkGray,
             };
         }
@@ -160,14 +160,14 @@ namespace CascadePass.CPAPExporter
                 dpiScale = dpiInfo.DpiScaleX;
             }
 
-            double baseWidth = message.MessageType switch
+            double baseWidth = message.ContentType switch
             {
-                StatusMessageType.None => 0,
-                StatusMessageType.Info => 2,
-                StatusMessageType.Warning => 4,
-                StatusMessageType.Error => 6,
-                StatusMessageType.Busy => 2,
-                StatusMessageType.Custom => 2,
+                CuedContentType.None => 0,
+                CuedContentType.Info => 2,
+                CuedContentType.Warning => 4,
+                CuedContentType.Error => 6,
+                CuedContentType.Busy => 2,
+                CuedContentType.Custom => 2,
                 _ => 0,
             };
 
@@ -184,14 +184,14 @@ namespace CascadePass.CPAPExporter
                 return 0;
             }
 
-            return message.MessageType switch
+            return message.ContentType switch
             {
-                StatusMessageType.None => 0,
-                StatusMessageType.Info => 4,
-                StatusMessageType.Warning => 6,
-                StatusMessageType.Error => 8,
-                StatusMessageType.Busy => 4,
-                StatusMessageType.Custom => 4,
+                CuedContentType.None => 0,
+                CuedContentType.Info => 4,
+                CuedContentType.Warning => 6,
+                CuedContentType.Error => 8,
+                CuedContentType.Busy => 4,
+                CuedContentType.Custom => 4,
                 _ => 0,
             };
         }
@@ -206,14 +206,14 @@ namespace CascadePass.CPAPExporter
                 return new Thickness(1);
             }
 
-            return message.MessageType switch
+            return message.ContentType switch
             {
-                StatusMessageType.None => new Thickness(1),
-                StatusMessageType.Info => new Thickness(1),
-                StatusMessageType.Warning => new Thickness(2),
-                StatusMessageType.Error => new Thickness(2),
-                StatusMessageType.Busy => new Thickness(1),
-                StatusMessageType.Custom => new Thickness(1),
+                CuedContentType.None => new Thickness(1),
+                CuedContentType.Info => new Thickness(1),
+                CuedContentType.Warning => new Thickness(2),
+                CuedContentType.Error => new Thickness(2),
+                CuedContentType.Busy => new Thickness(1),
+                CuedContentType.Custom => new Thickness(1),
                 _ => new Thickness(1),
             };
         }
@@ -228,14 +228,14 @@ namespace CascadePass.CPAPExporter
                 return false;
             }
 
-            return message.MessageType switch
+            return message.ContentType switch
             {
-                StatusMessageType.None => false,
-                StatusMessageType.Info => false,
-                StatusMessageType.Warning => true,
-                StatusMessageType.Error => true,
-                StatusMessageType.Busy => true,
-                StatusMessageType.Custom => false,
+                CuedContentType.None => false,
+                CuedContentType.Info => false,
+                CuedContentType.Warning => true,
+                CuedContentType.Error => true,
+                CuedContentType.Busy => true,
+                CuedContentType.Custom => false,
                 _ => false,
             };
         }
@@ -254,14 +254,14 @@ namespace CascadePass.CPAPExporter
                 return false;
             }
 
-            return message.MessageType switch
+            return message.ContentType switch
             {
-                StatusMessageType.None => false,         // Ambient or placeholder
-                StatusMessageType.Info => true,          // Calm, informative tone
-                StatusMessageType.Warning => true,       // Gives it presence without alarm
-                StatusMessageType.Error => false,        // Immediate visibility—no delay
-                StatusMessageType.Busy => true,          // Calm, informative tone
-                StatusMessageType.Custom => true,          // Calm, informative tone
+                CuedContentType.None => false,         // Ambient or placeholder
+                CuedContentType.Info => true,          // Calm, informative tone
+                CuedContentType.Warning => true,       // Gives it presence without alarm
+                CuedContentType.Error => false,        // Immediate visibility—no delay
+                CuedContentType.Busy => true,          // Calm, informative tone
+                CuedContentType.Custom => true,          // Calm, informative tone
                 _ => false,
             };
         }
@@ -276,14 +276,14 @@ namespace CascadePass.CPAPExporter
                 return false;
             }
 
-            return message.MessageType switch
+            return message.ContentType switch
             {
-                StatusMessageType.None => false,
-                StatusMessageType.Info => true,
-                StatusMessageType.Warning => true,
-                StatusMessageType.Error => false,
-                StatusMessageType.Busy => true,
-                StatusMessageType.Custom => true,
+                CuedContentType.None => false,
+                CuedContentType.Info => true,
+                CuedContentType.Warning => true,
+                CuedContentType.Error => false,
+                CuedContentType.Busy => true,
+                CuedContentType.Custom => true,
                 _ => false,
             };
         }
@@ -298,14 +298,14 @@ namespace CascadePass.CPAPExporter
                 return false;
             }
 
-            return message.MessageType switch
+            return message.ContentType switch
             {
-                StatusMessageType.None => false,
-                StatusMessageType.Info => false,
-                StatusMessageType.Warning => true,    // Subtle urgency
-                StatusMessageType.Error => true,      // Strong emphasis
-                StatusMessageType.Busy => true,
-                StatusMessageType.Custom => false,
+                CuedContentType.None => false,
+                CuedContentType.Info => false,
+                CuedContentType.Warning => true,    // Subtle urgency
+                CuedContentType.Error => true,      // Strong emphasis
+                CuedContentType.Busy => true,
+                CuedContentType.Custom => false,
                 _ => false,
             };
         }
@@ -322,14 +322,14 @@ namespace CascadePass.CPAPExporter
                 return null;
             }
 
-            return message.MessageType switch
+            return message.ContentType switch
             {
-                StatusMessageType.None => null,
-                StatusMessageType.Info => null,
-                StatusMessageType.Warning => null,
-                StatusMessageType.Error => null,
-                StatusMessageType.Busy => null,
-                StatusMessageType.Custom => null,
+                CuedContentType.None => null,
+                CuedContentType.Info => null,
+                CuedContentType.Warning => null,
+                CuedContentType.Error => null,
+                CuedContentType.Busy => null,
+                CuedContentType.Custom => null,
                 _ => null,
             };
         }

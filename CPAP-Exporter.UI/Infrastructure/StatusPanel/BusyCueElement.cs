@@ -5,7 +5,7 @@ namespace CascadePass.CPAPExporter
 {
     public class BusyCueElement : ContentStylingCue
     {
-        public BusyCueElement() : base(null, StatusMessageType.Busy) {
+        public BusyCueElement() : base(null, CuedContentType.Busy) {
             this.ProgressBar = this.CreateProgressBar();
             this.Content = this.ProgressBar;
             this.AttentionStripeWidth = 0;
