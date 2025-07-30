@@ -19,6 +19,7 @@
 
     <SolidColorBrush x:Key="Legibility.Background" Color="#AA1E1E2F" />
 
+    <Color x:Key="StatusPanel.Shadow.Color">#444444</Color>
     <SolidColorBrush x:Key="StatusPanel.Foreground" Color="Black" />
     <SolidColorBrush x:Key="StatusPanel.Background" Color="#B0FFF1A3" />
     <SolidColorBrush x:Key="StatusPanel.MessageBorderBrush" Color="Gold" />

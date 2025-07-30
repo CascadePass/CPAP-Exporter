@@ -311,5 +311,51 @@ namespace CascadePass.CPAPExporter
         }
 
         #endregion
+
+        public TimeSpan? GetDisplayDuration(IStatusMessage message)
+        {
+            if (message is null)
+            {
+                // Fallback:
+                // The original message does not implement IStatusMessage, maybe it's a string or a control.
+
+                return null;
+            }
+
+            return message.MessageType switch
+            {
+                StatusMessageType.None => null,
+                StatusMessageType.Info => null,
+                StatusMessageType.Warning => null,
+                StatusMessageType.Error => null,
+                StatusMessageType.Busy => null,
+                StatusMessageType.Custom => null,
+                _ => null,
+            };
+        }
+
+        #region Control shadow properties
+
+        public virtual Color GetShadowColor(IStatusMessage message)
+        {
+            return Colors.Black;
+        }
+
+        public virtual double GetShadowOpacity(IStatusMessage message)
+        {
+            return 0.5;
+        }
+
+        public virtual double GetShadowBlurRadius(IStatusMessage message)
+        {
+            return 10.0; // Soft shadow
+        }
+
+        public virtual double GetShadowDepth(IStatusMessage message)
+        {
+            return 5.0; // Subtle depth
+        }
+
+        #endregion
     }
 }

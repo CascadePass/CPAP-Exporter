@@ -1,4 +1,5 @@
 ﻿using System.Windows;
+using System.Windows.Media;
 
 namespace CascadePass.CPAPExporter
 {
@@ -20,6 +21,31 @@ namespace CascadePass.CPAPExporter
             {
                 if (dictionary.Contains(key))
                     return dictionary[key] as T;
+            }
+
+            // TODO: Raise an event so this can be logged or handled
+            return null;
+        }
+
+        public static Color? GetColorResource(string key)
+        {
+            if (Application.Current == null)
+            {
+                throw new InvalidOperationException("Application.Current is null. Ensure WPF app is properly initialized.");
+            }
+
+            if (Application.Current.Resources.Contains(key) &&
+                Application.Current.Resources[key] is Color color)
+            {
+                return color;
+            }
+
+            foreach (var dictionary in Application.Current.Resources.MergedDictionaries)
+            {
+                if (dictionary.Contains(key) && dictionary[key] is Color mergedColor)
+                {
+                    return mergedColor;
+                }
             }
 
             // TODO: Raise an event so this can be logged or handled

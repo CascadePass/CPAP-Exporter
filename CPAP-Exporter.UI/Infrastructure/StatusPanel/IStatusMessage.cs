@@ -35,5 +35,16 @@ namespace CascadePass.CPAPExporter
         bool? PulseBorder { get; set; }
 
         #endregion
+
+        #region Shadow
+
+        Color? ShadowColor { get; set; }
+        double? ShadowOpacity { get; set; }
+        double? ShadowBlurRadius { get; set; }
+        double? ShadowDepth { get; set; }
+
+        #endregion
+
+        TimeSpan? DisplayDuration { get; set; }
     }
 }

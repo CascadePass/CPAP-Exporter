@@ -1,10 +1,9 @@
-﻿using System.Runtime.CompilerServices;
-using System.Windows;
-using System.Windows.Automation;
+﻿using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Media;
 using System.Windows.Media.Animation;
 using System.Windows.Shapes;
+using System.Windows.Threading;
 
 namespace CascadePass.CPAPExporter
 {
@@ -22,6 +21,8 @@ namespace CascadePass.CPAPExporter
         /// explicitly  set through XAML. It is used internally to manage and optimize property handling.</remarks>
         private readonly HashSet<DependencyProperty> xamlSetProperties;
 
+        private DispatcherTimer autoDismissMessageTimer;
+
         #endregion
 
         #region Dependency Properties
@@ -29,6 +30,12 @@ namespace CascadePass.CPAPExporter
         public static new readonly DependencyProperty ContentProperty =
             DependencyProperty.Register(nameof(Content), typeof(object), typeof(MessagePresenter),
                 new PropertyMetadata(null, OnContentChanged));
+
+        public static readonly DependencyProperty DisplayDurationProperty =
+            DependencyProperty.Register(nameof(DisplayDuration), typeof(TimeSpan), typeof(MessagePresenter),
+                new PropertyMetadata(TimeSpan.MaxValue));
+
+        #region Border
 
         public static readonly DependencyProperty MessageBorderThicknessProperty =
             DependencyProperty.Register(nameof(MessageBorderThickness), typeof(Thickness), typeof(MessagePresenter),
@@ -38,6 +45,10 @@ namespace CascadePass.CPAPExporter
             DependencyProperty.Register(nameof(MessageBorderBrush), typeof(Brush), typeof(MessagePresenter),
                 new PropertyMetadata(Brushes.Gold));
 
+        #endregion
+
+        #region Shadow
+
         public static readonly DependencyProperty ShowDropShadowProperty =
             DependencyProperty.Register(
                 nameof(ShowDropShadow),
@@ -45,9 +56,29 @@ namespace CascadePass.CPAPExporter
                 typeof(MessagePresenter),
                 new PropertyMetadata(true));
 
+        public static readonly DependencyProperty ShadowColorProperty =
+            DependencyProperty.Register(nameof(ShadowColor), typeof(Color), typeof(MessagePresenter),
+                new PropertyMetadata(Colors.Black));
+
+        public static readonly DependencyProperty ShadowBlurRadiusProperty =
+            DependencyProperty.Register(nameof(ShadowBlurRadius), typeof(double), typeof(MessagePresenter),
+                new PropertyMetadata(4.0));
+
+        public static readonly DependencyProperty ShadowDepthProperty =
+            DependencyProperty.Register(nameof(ShadowDepth), typeof(double), typeof(MessagePresenter),
+                new PropertyMetadata(8.0));
+
+        public static readonly DependencyProperty ShadowOpacityProperty =
+            DependencyProperty.Register(nameof(ShadowOpacity), typeof(double), typeof(MessagePresenter),
+                new PropertyMetadata(0.5));
+
+        #endregion
+
         public static readonly DependencyProperty CornerRadiusProperty =
             DependencyProperty.Register("CornerRadius", typeof(double), typeof(MessagePresenter),
                 new PropertyMetadata(4.0));
+
+        #region Attention Stripe
 
         public static readonly DependencyProperty AttentionStripeWidthProperty =
             DependencyProperty.Register(nameof(AttentionStripeWidth), typeof(double), typeof(MessagePresenter),
@@ -56,6 +87,8 @@ namespace CascadePass.CPAPExporter
         public static readonly DependencyProperty AttentionStripeBrushProperty =
             DependencyProperty.Register(nameof(AttentionStripeBrush), typeof(Brush), typeof(MessagePresenter),
                 new PropertyMetadata(new SolidColorBrush(Colors.Goldenrod), OnAttentionStripeBrushChanged));
+
+        #endregion
 
         public static readonly DependencyProperty BackgroundBrushProperty =
             DependencyProperty.Register(nameof(BackgroundBrush), typeof(Brush), typeof(MessagePresenter),
@@ -117,6 +150,12 @@ namespace CascadePass.CPAPExporter
             ]
         };
 
+        public DateTime? MessageBecameVisible { get; private set; }
+
+        public TimeSpan TimeVisible => this.MessageBecameVisible.HasValue
+            ? DateTime.Now - this.MessageBecameVisible.Value
+            : TimeSpan.Zero;
+
         #region Dependency Properties
 
         /// <summary>
@@ -126,6 +165,12 @@ namespace CascadePass.CPAPExporter
         {
             get => GetValue(ContentProperty);
             set => SetValue(ContentProperty, value);
+        }
+
+        public TimeSpan DisplayDuration
+        {
+            get => (TimeSpan)GetValue(DisplayDurationProperty);
+            set => SetValue(DisplayDurationProperty, value);
         }
 
         /// <summary>
@@ -164,6 +209,8 @@ namespace CascadePass.CPAPExporter
             set => SetValue(AttentionStripeWidthProperty, value);
         }
 
+        #region Shadow Properties
+
         /// <summary>
         /// Gets or sets a value indicating whether a drop shadow is displayed.
         /// </summary>
@@ -172,6 +219,44 @@ namespace CascadePass.CPAPExporter
             get => (bool)GetValue(ShowDropShadowProperty);
             set => SetValue(ShowDropShadowProperty, value);
         }
+
+        /// <summary>
+        /// Gets or sets a value indicating the color of the shadow.
+        /// </summary>
+        public Color ShadowColor
+        {
+            get => (Color)GetValue(ShadowColorProperty);
+            set => SetValue(ShadowColorProperty, value);
+        }
+
+        /// <summary>
+        /// Gets or sets a value indicating the blur radius of the shadow.
+        /// </summary>
+        public double ShadowBlurRadius
+        {
+            get => (double)GetValue(ShadowBlurRadiusProperty);
+            set => SetValue(ShadowBlurRadiusProperty, value);
+        }
+
+        /// <summary>
+        /// Gets or sets a value indicating the depth of the shadow.
+        /// </summary>
+        public double ShadowDepth
+        {
+            get => (double)GetValue(ShadowDepthProperty);
+            set => SetValue(ShadowDepthProperty, value);
+        }
+
+        /// <summary>
+        /// Gets or sets a value indicating the depth of the shadow.
+        /// </summary>
+        public double ShadowOpacity
+        {
+            get => (double)GetValue(ShadowOpacityProperty);
+            set => SetValue(ShadowOpacityProperty, value);
+        }
+
+        #endregion
 
         /// <summary>
         /// Gets or sets the radius of the corners for the element.
@@ -297,10 +382,45 @@ namespace CascadePass.CPAPExporter
 
         #endregion
 
+        public void Close()
+        {
+            var message = this.Content as IStatusMessage;
+
+            if (message != null && message.FadeMessageOut == true || this.StatusMessageStyleProvider.GetFadeOut(message) == true)
+            {
+                this.FadeOut();
+            }
+
+            this.Visibility = Visibility.Collapsed;
+        }
+
         private void ForceShowMessage()
         {
             var fadeIn = new DoubleAnimation(0, 1, TimeSpan.FromMilliseconds(0));
             this.BeginAnimation(OpacityProperty, fadeIn);
+        }
+
+        private void StartAutoCloseTimer()
+        {
+            this.autoDismissMessageTimer?.Stop();
+
+            if (this.DisplayDuration < TimeSpan.MaxValue)
+            {
+                this.autoDismissMessageTimer = new DispatcherTimer
+                {
+                    Interval = this.DisplayDuration
+                };
+
+                this.autoDismissMessageTimer.Tick += (s, e) =>
+                {
+                    this.autoDismissMessageTimer.Stop();
+                    this.autoDismissMessageTimer = null;
+
+                    this.Close();
+                };
+
+                this.autoDismissMessageTimer.Start();
+            }
         }
 
         private void DisplayStatusMessage(IStatusMessage message)
@@ -312,6 +432,7 @@ namespace CascadePass.CPAPExporter
 
             // Set properties from the message
             this.SetVisualProperties(message);
+            this.SetTemporalProperties(message);
 
             // Handle fade in/out and pulse border
             if (!message.FadeMessageIn.HasValue || !message.FadeMessageIn.Value)
@@ -374,6 +495,30 @@ namespace CascadePass.CPAPExporter
                 message?.BorderThickness,
                 () => this.StatusMessageStyleProvider.GetBorderThickness(message)
             );
+
+            this.ShadowColor = (Color)this.ResolveValue(
+                MessagePresenter.ShadowColorProperty,
+                message?.ShadowColor,
+                () => this.StatusMessageStyleProvider.GetShadowColor(message)
+            );
+        }
+
+        private void SetTemporalProperties(IStatusMessage message)
+        {
+            var displayDurationValue = (TimeSpan?)this.ResolveValue(
+                MessagePresenter.DisplayDurationProperty,
+                message?.DisplayDuration,
+                () => this.StatusMessageStyleProvider.GetDisplayDuration(message)
+            );
+
+            if (displayDurationValue.HasValue)
+            {
+                this.DisplayDuration = displayDurationValue.Value;
+            }
+            else
+            {
+                this.DisplayDuration = TimeSpan.MaxValue;
+            }
         }
 
         private T ResolveValue<T>(DependencyProperty property, T messageValue, Func<T> styleProviderValue)
@@ -439,13 +584,33 @@ namespace CascadePass.CPAPExporter
 
         private static void OnContentChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
         {
+            #region Sanity checks
+
             if (d is not MessagePresenter panel)
             {
                 return;
             }
 
+            if (MessagePresenter.Equals(e.OldValue, e.NewValue))
+            {
+                return;
+            }
+
+            #endregion
+
+            if (e.NewValue is null)
+            {
+                panel.MessageBecameVisible = null;
+                return;
+            }
+
             var oldMessage = e.OldValue as IStatusMessage;
             var newMessage = e.NewValue as IStatusMessage;
+
+            //bool shouldFadeOut = oldMessage?.FadeMessageOut == true || (e.OldValue != null && e.NewValue == null);
+            bool shouldFadeIn = e.OldValue == null && e.NewValue != null;
+
+            if (shouldFadeIn) panel.FadeIn();
 
             if (newMessage is not null)
             {
@@ -453,14 +618,15 @@ namespace CascadePass.CPAPExporter
             }
             else
             {
+                panel.SetTemporalProperties(null);
                 panel.SetVisualProperties(null);
             }
 
-            bool shouldFadeOut = oldMessage?.FadeMessageOut == true || (e.OldValue != null && e.NewValue == null);
-            bool shouldFadeIn = e.OldValue == null && e.NewValue != null;
+            panel.Visibility = Visibility.Visible;
+            panel.MessageBecameVisible = DateTime.Now;
+            panel.StartAutoCloseTimer();
 
-            if (shouldFadeOut) panel.FadeOut();
-            if (shouldFadeIn) panel.FadeIn();
+            //if (shouldFadeOut) panel.FadeOut();
         }
 
         private static void OnAttentionStripeBrushChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)

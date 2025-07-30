@@ -289,7 +289,8 @@ namespace CascadePass.CPAPExporter
                         Resources.ReportsSelected,
                         selectedReportCount,
                         this.ExportParameters.Reports.Count
-                    ));
+                    ))
+                { DisplayDuration = TimeSpan.FromSeconds(8) };
             }
         }
 

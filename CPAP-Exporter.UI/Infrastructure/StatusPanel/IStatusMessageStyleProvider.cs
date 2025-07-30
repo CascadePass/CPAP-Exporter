@@ -106,5 +106,16 @@ namespace CascadePass.CPAPExporter
         /// <param name="message">The status message for which the drop shadow visibility setting is to be determined.</param>
         /// <returns>The drop shadow visibility setting as a <see cref="bool"/>.</returns>
         bool GetShowDropShadow(IStatusMessage message);
+
+        #region Shadow Values
+
+        Color GetShadowColor(IStatusMessage message);
+        double GetShadowOpacity(IStatusMessage message);
+        double GetShadowBlurRadius(IStatusMessage message);
+        double GetShadowDepth(IStatusMessage message);
+
+        #endregion
+
+        public TimeSpan? GetDisplayDuration(IStatusMessage message);
     }
 }

@@ -37,6 +37,8 @@ namespace CascadePass.CPAPExporter
                 StatusMessageType.Info => ResourceLocator.GetResource<Brush>("StatusPanel.InfoMessage.Foreground"),
                 StatusMessageType.Warning => ResourceLocator.GetResource<Brush>("StatusPanel.WarningMessage.Foreground"),
                 StatusMessageType.Error => ResourceLocator.GetResource<Brush>("StatusPanel.ErrorMessage.Foreground"),
+                StatusMessageType.Busy => Brushes.Transparent,
+                StatusMessageType.Custom => Brushes.Transparent,
                 _ => base.GetStatusPanelBorderBrush(message), // Fallback to base implementation
             };
         }
@@ -48,8 +50,15 @@ namespace CascadePass.CPAPExporter
                 StatusMessageType.Info => ResourceLocator.GetResource<Brush>("StatusPanel.InfoMessage.AttentionStripeBrush"),
                 StatusMessageType.Warning => ResourceLocator.GetResource<Brush>("StatusPanel.WarningMessage.AttentionStripeBrush"),
                 StatusMessageType.Error => ResourceLocator.GetResource<Brush>("StatusPanel.ErrorMessage.AttentionStripeBrush"),
+                StatusMessageType.Busy => Brushes.Transparent,
+                StatusMessageType.Custom => Brushes.Transparent,
                 _ => base.GetStatusPanelBorderBrush(message), // Fallback to base implementation
             };
+        }
+
+        public override Color GetShadowColor(IStatusMessage message)
+        {
+            return (Color)ResourceLocator.GetColorResource("StatusPanel.Shadow.Color");
         }
     }
 }

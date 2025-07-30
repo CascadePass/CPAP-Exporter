@@ -10,6 +10,15 @@
              x:Name="Root">
 
     <UserControl.Resources>
+        <DropShadowEffect
+            x:Key="StatusPanelDropShadow"
+            Color="{Binding ShadowColor, ElementName=Root}"
+            BlurRadius="{Binding ShadowBlurRadius, ElementName=Root}"
+            ShadowDepth="{Binding ShadowDepth, ElementName=Root}"
+            Opacity="{Binding ShadowOpacity, ElementName=Root}"
+            />
+
+        
         <DataTemplate x:Key="InfoTemplate">
             <ContentPresenter Content="{Binding MessageContent}" />
         </DataTemplate>
@@ -47,11 +56,7 @@
             <Style TargetType="Border">
                 <Style.Triggers>
                     <DataTrigger Binding="{Binding ShowDropShadow, ElementName=Root}" Value="True">
-                        <Setter Property="Effect">
-                            <Setter.Value>
-                                <DropShadowEffect Color="Black" BlurRadius="4" ShadowDepth="1" Opacity="0.5" />
-                            </Setter.Value>
-                        </Setter>
+                        <Setter Property="Effect" Value="{StaticResource StatusPanelDropShadow}" />
                     </DataTrigger>
                 </Style.Triggers>
             </Style>
