@@ -3,7 +3,7 @@ using System.Windows.Media;
 
 namespace CascadePass.CPAPExporter
 {
-    public interface IStatusMessage
+    public interface IStylingCue
     {
         StatusMessageType MessageType { get; }
 

@@ -3,11 +3,11 @@ using System.Windows.Media;
 
 namespace CascadePass.CPAPExporter
 {
-    public class DefaultStatusMessageStyleProvider : IStatusMessageStyleProvider
+    public class DefaultStylingCueProvider : IStylingCueProvider
     {
         #region Brushes
 
-        public virtual Brush GetForegroundBrush(IStatusMessage message)
+        public virtual Brush GetForegroundBrush(IStylingCue message)
         {
             if (message is null)
             {
@@ -29,7 +29,7 @@ namespace CascadePass.CPAPExporter
             };
         }
 
-        public virtual Brush GetBackgroundBrush(IStatusMessage message)
+        public virtual Brush GetBackgroundBrush(IStylingCue message)
         {
             if (message is null)
             {
@@ -50,7 +50,7 @@ namespace CascadePass.CPAPExporter
             };
         }
 
-        public virtual Brush GetStatusPanelBorderBrush(IStatusMessage message)
+        public virtual Brush GetStatusPanelBorderBrush(IStylingCue message)
         {
             if (message is null)
             {
@@ -71,7 +71,7 @@ namespace CascadePass.CPAPExporter
             };
         }
 
-        public virtual Brush GetAttentionStripeBrush(IStatusMessage message)
+        public virtual Brush GetAttentionStripeBrush(IStylingCue message)
         {
             if (message is null)
             {
@@ -92,7 +92,7 @@ namespace CascadePass.CPAPExporter
             };
         }
 
-        public virtual Color GetPulseStartColor(IStatusMessage message)
+        public virtual Color GetPulseStartColor(IStylingCue message)
         {
             if (message is null)
             {
@@ -114,7 +114,7 @@ namespace CascadePass.CPAPExporter
             };
         }
 
-        public virtual Color GetPulseEndColor(IStatusMessage message)
+        public virtual Color GetPulseEndColor(IStylingCue message)
         {
             if (message is null)
             {
@@ -141,7 +141,7 @@ namespace CascadePass.CPAPExporter
 
         #region Control static appearance
 
-        public virtual double GetAttentionStripeWidth(IStatusMessage message)
+        public virtual double GetAttentionStripeWidth(IStylingCue message)
         {
             if (message is null)
             {
@@ -174,7 +174,7 @@ namespace CascadePass.CPAPExporter
             return Math.Min(baseWidth * dpiScale, 10.0);
         }
 
-        public virtual double GetCornerRadius(IStatusMessage message)
+        public virtual double GetCornerRadius(IStylingCue message)
         {
             if (message is null)
             {
@@ -196,7 +196,7 @@ namespace CascadePass.CPAPExporter
             };
         }
 
-        public virtual Thickness GetBorderThickness(IStatusMessage message)
+        public virtual Thickness GetBorderThickness(IStylingCue message)
         {
             if (message is null)
             {
@@ -218,7 +218,7 @@ namespace CascadePass.CPAPExporter
             };
         }
 
-        public virtual bool GetShowDropShadow(IStatusMessage message)
+        public virtual bool GetShowDropShadow(IStylingCue message)
         {
             if (message is null)
             {
@@ -244,7 +244,7 @@ namespace CascadePass.CPAPExporter
 
         #region Toggle animations
 
-        public virtual bool GetFadeIn(IStatusMessage message)
+        public virtual bool GetFadeIn(IStylingCue message)
         {
             if (message is null)
             {
@@ -266,7 +266,7 @@ namespace CascadePass.CPAPExporter
             };
         }
 
-        public virtual bool GetFadeOut(IStatusMessage message)
+        public virtual bool GetFadeOut(IStylingCue message)
         {
             if (message is null)
             {
@@ -288,7 +288,7 @@ namespace CascadePass.CPAPExporter
             };
         }
 
-        public virtual bool GetPulseBorder(IStatusMessage message)
+        public virtual bool GetPulseBorder(IStylingCue message)
         {
             if (message is null)
             {
@@ -312,7 +312,7 @@ namespace CascadePass.CPAPExporter
 
         #endregion
 
-        public TimeSpan? GetDisplayDuration(IStatusMessage message)
+        public TimeSpan? GetDisplayDuration(IStylingCue message)
         {
             if (message is null)
             {
@@ -336,22 +336,22 @@ namespace CascadePass.CPAPExporter
 
         #region Control shadow properties
 
-        public virtual Color GetShadowColor(IStatusMessage message)
+        public virtual Color GetShadowColor(IStylingCue message)
         {
             return Colors.Black;
         }
 
-        public virtual double GetShadowOpacity(IStatusMessage message)
+        public virtual double GetShadowOpacity(IStylingCue message)
         {
             return 0.5;
         }
 
-        public virtual double GetShadowBlurRadius(IStatusMessage message)
+        public virtual double GetShadowBlurRadius(IStylingCue message)
         {
             return 10.0; // Soft shadow
         }
 
-        public virtual double GetShadowDepth(IStatusMessage message)
+        public virtual double GetShadowDepth(IStylingCue message)
         {
             return 5.0; // Subtle depth
         }

@@ -3,15 +3,15 @@ using System.Windows.Media;
 
 namespace CascadePass.CPAPExporter
 {
-    public class StatusPanelMessage : IStatusMessage
+    public class ContentStylingCue : IStylingCue
     {
-        public StatusPanelMessage() { }
+        public ContentStylingCue() { }
 
-        public StatusPanelMessage(object messageContent) {
+        public ContentStylingCue(object messageContent) {
             this.MessageContent = messageContent;
         }
 
-        public StatusPanelMessage(object messageContent, StatusMessageType messageType)
+        public ContentStylingCue(object messageContent, StatusMessageType messageType)
         {
             this.MessageContent = messageContent;
             this.MessageType = messageType;

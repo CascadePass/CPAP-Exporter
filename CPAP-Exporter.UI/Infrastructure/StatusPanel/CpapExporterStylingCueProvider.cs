@@ -2,9 +2,9 @@
 
 namespace CascadePass.CPAPExporter
 {
-    public class CpapExporterStatusMessageStyleProvider : DefaultStatusMessageStyleProvider
+    public class CpapExporterStylingCueProvider : DefaultStylingCueProvider
     {
-        public override Brush GetStatusPanelBorderBrush(IStatusMessage message)
+        public override Brush GetStatusPanelBorderBrush(IStylingCue message)
         {
             return message?.MessageType switch
             {
@@ -17,7 +17,7 @@ namespace CascadePass.CPAPExporter
             };
         }
 
-        public override Brush GetBackgroundBrush(IStatusMessage message)
+        public override Brush GetBackgroundBrush(IStylingCue message)
         {
             return message?.MessageType switch
             {
@@ -30,7 +30,7 @@ namespace CascadePass.CPAPExporter
             };
         }
 
-        public override Brush GetForegroundBrush(IStatusMessage message)
+        public override Brush GetForegroundBrush(IStylingCue message)
         {
             return message?.MessageType switch
             {
@@ -43,7 +43,7 @@ namespace CascadePass.CPAPExporter
             };
         }
 
-        public override Brush GetAttentionStripeBrush(IStatusMessage message)
+        public override Brush GetAttentionStripeBrush(IStylingCue message)
         {
             return message?.MessageType switch
             {
@@ -56,7 +56,7 @@ namespace CascadePass.CPAPExporter
             };
         }
 
-        public override Color GetShadowColor(IStatusMessage message)
+        public override Color GetShadowColor(IStylingCue message)
         {
             return (Color)ResourceLocator.GetColorResource("StatusPanel.Shadow.Color");
         }

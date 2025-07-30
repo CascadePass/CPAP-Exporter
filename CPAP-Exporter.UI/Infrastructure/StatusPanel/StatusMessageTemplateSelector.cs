@@ -12,9 +12,9 @@ namespace CascadePass.CPAPExporter
 
         public override DataTemplate SelectTemplate(object item, DependencyObject container)
         {
-            if (item is StatusPanelMessage msg)
+            if (item is ContentStylingCue stylingCue)
             {
-                return msg.MessageType switch
+                return stylingCue.MessageType switch
                 {
                     StatusMessageType.Info => InfoTemplate,
                     StatusMessageType.Warning => WarningTemplate,

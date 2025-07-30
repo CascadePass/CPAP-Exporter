@@ -10,7 +10,7 @@ namespace CascadePass.CPAPExporter
     /// <summary>
     /// A flexible content control that can display user messages.
     /// </summary>
-    public partial class MessagePresenter : UserControl
+    public partial class AuraPresenter : UserControl
     {
         #region Private Fields
 
@@ -28,21 +28,21 @@ namespace CascadePass.CPAPExporter
         #region Dependency Properties
 
         public static new readonly DependencyProperty ContentProperty =
-            DependencyProperty.Register(nameof(Content), typeof(object), typeof(MessagePresenter),
+            DependencyProperty.Register(nameof(Content), typeof(object), typeof(AuraPresenter),
                 new PropertyMetadata(null, OnContentChanged));
 
         public static readonly DependencyProperty DisplayDurationProperty =
-            DependencyProperty.Register(nameof(DisplayDuration), typeof(TimeSpan), typeof(MessagePresenter),
+            DependencyProperty.Register(nameof(DisplayDuration), typeof(TimeSpan), typeof(AuraPresenter),
                 new PropertyMetadata(TimeSpan.MaxValue));
 
         #region Border
 
         public static readonly DependencyProperty MessageBorderThicknessProperty =
-            DependencyProperty.Register(nameof(MessageBorderThickness), typeof(Thickness), typeof(MessagePresenter),
+            DependencyProperty.Register(nameof(MessageBorderThickness), typeof(Thickness), typeof(AuraPresenter),
                 new PropertyMetadata(new Thickness(1.5)));
 
         public static readonly DependencyProperty MessageBorderBrushProperty =
-            DependencyProperty.Register(nameof(MessageBorderBrush), typeof(Brush), typeof(MessagePresenter),
+            DependencyProperty.Register(nameof(MessageBorderBrush), typeof(Brush), typeof(AuraPresenter),
                 new PropertyMetadata(Brushes.Gold));
 
         #endregion
@@ -53,65 +53,65 @@ namespace CascadePass.CPAPExporter
             DependencyProperty.Register(
                 nameof(ShowDropShadow),
                 typeof(bool),
-                typeof(MessagePresenter),
+                typeof(AuraPresenter),
                 new PropertyMetadata(true));
 
         public static readonly DependencyProperty ShadowColorProperty =
-            DependencyProperty.Register(nameof(ShadowColor), typeof(Color), typeof(MessagePresenter),
+            DependencyProperty.Register(nameof(ShadowColor), typeof(Color), typeof(AuraPresenter),
                 new PropertyMetadata(Colors.Black));
 
         public static readonly DependencyProperty ShadowBlurRadiusProperty =
-            DependencyProperty.Register(nameof(ShadowBlurRadius), typeof(double), typeof(MessagePresenter),
+            DependencyProperty.Register(nameof(ShadowBlurRadius), typeof(double), typeof(AuraPresenter),
                 new PropertyMetadata(4.0));
 
         public static readonly DependencyProperty ShadowDepthProperty =
-            DependencyProperty.Register(nameof(ShadowDepth), typeof(double), typeof(MessagePresenter),
+            DependencyProperty.Register(nameof(ShadowDepth), typeof(double), typeof(AuraPresenter),
                 new PropertyMetadata(8.0));
 
         public static readonly DependencyProperty ShadowOpacityProperty =
-            DependencyProperty.Register(nameof(ShadowOpacity), typeof(double), typeof(MessagePresenter),
+            DependencyProperty.Register(nameof(ShadowOpacity), typeof(double), typeof(AuraPresenter),
                 new PropertyMetadata(0.5));
 
         #endregion
 
         public static readonly DependencyProperty CornerRadiusProperty =
-            DependencyProperty.Register("CornerRadius", typeof(double), typeof(MessagePresenter),
+            DependencyProperty.Register("CornerRadius", typeof(double), typeof(AuraPresenter),
                 new PropertyMetadata(4.0));
 
         #region Attention Stripe
 
         public static readonly DependencyProperty AttentionStripeWidthProperty =
-            DependencyProperty.Register(nameof(AttentionStripeWidth), typeof(double), typeof(MessagePresenter),
+            DependencyProperty.Register(nameof(AttentionStripeWidth), typeof(double), typeof(AuraPresenter),
                 new FrameworkPropertyMetadata(4.0, FrameworkPropertyMetadataOptions.AffectsRender));
 
         public static readonly DependencyProperty AttentionStripeBrushProperty =
-            DependencyProperty.Register(nameof(AttentionStripeBrush), typeof(Brush), typeof(MessagePresenter),
+            DependencyProperty.Register(nameof(AttentionStripeBrush), typeof(Brush), typeof(AuraPresenter),
                 new PropertyMetadata(new SolidColorBrush(Colors.Goldenrod), OnAttentionStripeBrushChanged));
 
         #endregion
 
         public static readonly DependencyProperty BackgroundBrushProperty =
-            DependencyProperty.Register(nameof(BackgroundBrush), typeof(Brush), typeof(MessagePresenter),
-                new PropertyMetadata(MessagePresenter.DefaultStatusBackgroundBrush));
+            DependencyProperty.Register(nameof(BackgroundBrush), typeof(Brush), typeof(AuraPresenter),
+                new PropertyMetadata(AuraPresenter.DefaultStatusBackgroundBrush));
 
         public static readonly DependencyProperty PulseStartColorProperty =
-            DependencyProperty.Register(nameof(PulseStartColor), typeof(Color), typeof(MessagePresenter),
+            DependencyProperty.Register(nameof(PulseStartColor), typeof(Color), typeof(AuraPresenter),
                 new PropertyMetadata((Color)ColorConverter.ConvertFromString("#FFC891")));
 
         public static readonly DependencyProperty PulseEndColorProperty =
-            DependencyProperty.Register(nameof(PulseEndColor), typeof(Color), typeof(MessagePresenter),
+            DependencyProperty.Register(nameof(PulseEndColor), typeof(Color), typeof(AuraPresenter),
                 new PropertyMetadata((Color)ColorConverter.ConvertFromString("#FFD971")));
 
         public static readonly DependencyProperty StatusMessageStyleProviderProperty =
-            DependencyProperty.Register(nameof(StatusMessageStyleProvider), typeof(IStatusMessageStyleProvider), typeof(MessagePresenter),
-                new PropertyMetadata(new DefaultStatusMessageStyleProvider()));
+            DependencyProperty.Register(nameof(StatusMessageStyleProvider), typeof(IStylingCueProvider), typeof(AuraPresenter),
+                new PropertyMetadata(new DefaultStylingCueProvider()));
 
         public static readonly DependencyProperty OverrideBehaviorProperty =
             DependencyProperty.Register(
                 nameof(OverrideBehavior),
-                typeof(MessageOverrideBehavior),
-                typeof(MessagePresenter),
-                new PropertyMetadata(MessageOverrideBehavior.PreferLocalValues)
+                typeof(StylingCuePrecedence),
+                typeof(AuraPresenter),
+                new PropertyMetadata(StylingCuePrecedence.PreferLocalValues)
             );
 
         #endregion
@@ -119,11 +119,11 @@ namespace CascadePass.CPAPExporter
         #region Constructor
 
         /// <summary>
-        /// Initializes a new instance of the <see cref="MessagePresenter"/> class.
+        /// Initializes a new instance of the <see cref="AuraPresenter"/> class.
         /// </summary>
-        /// <remarks>This constructor sets up the initial state of the <see cref="MessagePresenter"/>
+        /// <remarks>This constructor sets up the initial state of the <see cref="AuraPresenter"/>
         /// instance. It initializes the internal properties and prepares the component for use.</remarks>
-        public MessagePresenter()
+        public AuraPresenter()
         {
             this.xamlSetProperties = [];
             this.InitializeComponent();
@@ -297,18 +297,18 @@ namespace CascadePass.CPAPExporter
         /// <summary>
         /// Gets or sets the provider responsible for determining the appearance of status messages.
         /// </summary>
-        public IStatusMessageStyleProvider StatusMessageStyleProvider
+        public IStylingCueProvider StatusMessageStyleProvider
         {
-            get => (IStatusMessageStyleProvider)GetValue(StatusMessageStyleProviderProperty);
+            get => (IStylingCueProvider)GetValue(StatusMessageStyleProviderProperty);
             set => SetValue(StatusMessageStyleProviderProperty, value);
         }
 
         /// <summary>
         /// Gets or sets the behavior that determines how message properties are applied.
         /// </summary>
-        public MessageOverrideBehavior OverrideBehavior
+        public StylingCuePrecedence OverrideBehavior
         {
-            get => (MessageOverrideBehavior)GetValue(OverrideBehaviorProperty);
+            get => (StylingCuePrecedence)GetValue(OverrideBehaviorProperty);
             set => SetValue(OverrideBehaviorProperty, value);
         }
 
@@ -352,7 +352,7 @@ namespace CascadePass.CPAPExporter
             }
         }
 
-        public void AnimateAttentionStripeColor(MessagePresenter panel, SolidColorBrush oldBrush, SolidColorBrush newBrush)
+        public void AnimateAttentionStripeColor(AuraPresenter panel, SolidColorBrush oldBrush, SolidColorBrush newBrush)
         {
             // Get the Rectangle that uses the brush (named in XAML or found via visual tree if needed)
             if (panel.FindName("AttentionStripe") is Rectangle stripe)
@@ -384,7 +384,7 @@ namespace CascadePass.CPAPExporter
 
         public void Close()
         {
-            var message = this.Content as IStatusMessage;
+            var message = this.Content as IStylingCue;
 
             if (message != null && message.FadeMessageOut == true || this.StatusMessageStyleProvider.GetFadeOut(message) == true)
             {
@@ -423,7 +423,7 @@ namespace CascadePass.CPAPExporter
             }
         }
 
-        private void DisplayStatusMessage(IStatusMessage message)
+        private void DisplayStatusMessage(IStylingCue message)
         {
             if (message == null)
             {
@@ -446,67 +446,67 @@ namespace CascadePass.CPAPExporter
             }
         }
 
-        private void SetVisualProperties(IStatusMessage message)
+        private void SetVisualProperties(IStylingCue message)
         {
             this.Foreground = this.ResolveValue(
-                MessagePresenter.ForegroundProperty,
+                AuraPresenter.ForegroundProperty,
                 message?.ForegroundBrush,
                 () => this.StatusMessageStyleProvider.GetForegroundBrush(message)
             );
 
             this.BackgroundBrush = this.ResolveValue(
-                MessagePresenter.BackgroundBrushProperty,
+                AuraPresenter.BackgroundBrushProperty,
                 message?.BackgroundBrush,
                 () => this.StatusMessageStyleProvider.GetBackgroundBrush(message)
             );
 
             this.MessageBorderBrush = this.ResolveValue(
-                MessagePresenter.MessageBorderBrushProperty,
+                AuraPresenter.MessageBorderBrushProperty,
                 message?.BorderBrush,
                 () => this.StatusMessageStyleProvider.GetStatusPanelBorderBrush(message)
             );
 
             this.AttentionStripeBrush = this.ResolveValue(
-                MessagePresenter.AttentionStripeBrushProperty,
+                AuraPresenter.AttentionStripeBrushProperty,
                 message?.AttentionStripeBrush,
                 () => this.StatusMessageStyleProvider.GetAttentionStripeBrush(message)
             );
 
             this.AttentionStripeWidth = (double)this.ResolveValue(
-                MessagePresenter.AttentionStripeWidthProperty,
+                AuraPresenter.AttentionStripeWidthProperty,
                 message?.AttentionStripeWidth,
                 () => this.StatusMessageStyleProvider.GetAttentionStripeWidth(message)
             );
 
             this.ShowDropShadow = (bool)this.ResolveValue(
-                MessagePresenter.ShowDropShadowProperty,
+                AuraPresenter.ShowDropShadowProperty,
                 message?.ShowDropShadow,
                 () => this.StatusMessageStyleProvider.GetShowDropShadow(message)
             );
 
             this.CornerRadius = (double)this.ResolveValue(
-                MessagePresenter.CornerRadiusProperty,
+                AuraPresenter.CornerRadiusProperty,
                 message?.CornerRadius,
                 () => this.StatusMessageStyleProvider.GetCornerRadius(message)
             );
 
             this.BorderThickness = (Thickness)this.ResolveValue(
-                MessagePresenter.BorderThicknessProperty,
+                AuraPresenter.BorderThicknessProperty,
                 message?.BorderThickness,
                 () => this.StatusMessageStyleProvider.GetBorderThickness(message)
             );
 
             this.ShadowColor = (Color)this.ResolveValue(
-                MessagePresenter.ShadowColorProperty,
+                AuraPresenter.ShadowColorProperty,
                 message?.ShadowColor,
                 () => this.StatusMessageStyleProvider.GetShadowColor(message)
             );
         }
 
-        private void SetTemporalProperties(IStatusMessage message)
+        private void SetTemporalProperties(IStylingCue message)
         {
             var displayDurationValue = (TimeSpan?)this.ResolveValue(
-                MessagePresenter.DisplayDurationProperty,
+                AuraPresenter.DisplayDurationProperty,
                 message?.DisplayDuration,
                 () => this.StatusMessageStyleProvider.GetDisplayDuration(message)
             );
@@ -527,11 +527,11 @@ namespace CascadePass.CPAPExporter
 
             return this.OverrideBehavior switch
             {
-                MessageOverrideBehavior.PreferLocalValues => hasLocalValue
+                StylingCuePrecedence.PreferLocalValues => hasLocalValue
                                         ? (T)GetValue(property)
                                         : messageValue ?? styleProviderValue(),
 
-                MessageOverrideBehavior.PreferMessageValues => messageValue ?? (hasLocalValue ? (T)GetValue(property) : styleProviderValue()),
+                StylingCuePrecedence.PreferMessageValues => messageValue ?? (hasLocalValue ? (T)GetValue(property) : styleProviderValue()),
 
                 _ => hasLocalValue
                                         ? (T)GetValue(property)
@@ -543,15 +543,15 @@ namespace CascadePass.CPAPExporter
         {
             var properties = new[]
             {
-                MessagePresenter.MessageBorderBrushProperty,
-                MessagePresenter.PulseStartColorProperty,
-                MessagePresenter.PulseEndColorProperty,
-                MessagePresenter.BackgroundBrushProperty,
-                MessagePresenter.AttentionStripeBrushProperty,
-                MessagePresenter.AttentionStripeWidthProperty,
-                MessagePresenter.ShowDropShadowProperty,
-                MessagePresenter.CornerRadiusProperty,
-                MessagePresenter.MessageBorderThicknessProperty
+                AuraPresenter.MessageBorderBrushProperty,
+                AuraPresenter.PulseStartColorProperty,
+                AuraPresenter.PulseEndColorProperty,
+                AuraPresenter.BackgroundBrushProperty,
+                AuraPresenter.AttentionStripeBrushProperty,
+                AuraPresenter.AttentionStripeWidthProperty,
+                AuraPresenter.ShowDropShadowProperty,
+                AuraPresenter.CornerRadiusProperty,
+                AuraPresenter.MessageBorderThicknessProperty
             };
 
             foreach (var prop in properties)
@@ -586,12 +586,12 @@ namespace CascadePass.CPAPExporter
         {
             #region Sanity checks
 
-            if (d is not MessagePresenter panel)
+            if (d is not AuraPresenter panel)
             {
                 return;
             }
 
-            if (MessagePresenter.Equals(e.OldValue, e.NewValue))
+            if (AuraPresenter.Equals(e.OldValue, e.NewValue))
             {
                 return;
             }
@@ -604,8 +604,8 @@ namespace CascadePass.CPAPExporter
                 return;
             }
 
-            var oldMessage = e.OldValue as IStatusMessage;
-            var newMessage = e.NewValue as IStatusMessage;
+            var oldMessage = e.OldValue as IStylingCue;
+            var newMessage = e.NewValue as IStylingCue;
 
             //bool shouldFadeOut = oldMessage?.FadeMessageOut == true || (e.OldValue != null && e.NewValue == null);
             bool shouldFadeIn = e.OldValue == null && e.NewValue != null;
@@ -631,7 +631,7 @@ namespace CascadePass.CPAPExporter
 
         private static void OnAttentionStripeBrushChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
         {
-            if (d is not MessagePresenter panel)
+            if (d is not AuraPresenter panel)
             {
                 return;
             }
