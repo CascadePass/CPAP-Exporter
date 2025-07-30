@@ -7,7 +7,7 @@ namespace CascadePass.CPAPExporter
     {
         public BusyCueElement() : base(null, StatusMessageType.Busy) {
             this.ProgressBar = this.CreateProgressBar();
-            this.MessageContent = this.ProgressBar;
+            this.Content = this.ProgressBar;
             this.AttentionStripeWidth = 0;
         }
 

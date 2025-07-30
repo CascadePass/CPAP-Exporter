@@ -7,7 +7,7 @@ namespace CascadePass.CPAPExporter
     {
         StatusMessageType MessageType { get; }
 
-        object MessageContent { get; set; }
+        object Content { get; set; }
 
         #region Panel
 

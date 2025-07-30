@@ -8,17 +8,17 @@ namespace CascadePass.CPAPExporter
         public ContentStylingCue() { }
 
         public ContentStylingCue(object messageContent) {
-            this.MessageContent = messageContent;
+            this.Content = messageContent;
         }
 
         public ContentStylingCue(object messageContent, StatusMessageType messageType)
         {
-            this.MessageContent = messageContent;
+            this.Content = messageContent;
             this.MessageType = messageType;
         }
 
         public StatusMessageType MessageType { get; set; }
-        public object MessageContent { get; set; }
+        public object Content { get; set; }
 
         #region Panel Properties
 

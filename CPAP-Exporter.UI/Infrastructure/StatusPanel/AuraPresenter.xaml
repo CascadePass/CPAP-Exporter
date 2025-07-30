@@ -20,19 +20,19 @@
 
         
         <DataTemplate x:Key="InfoTemplate">
-            <ContentPresenter Content="{Binding MessageContent}" />
+            <ContentPresenter Content="{Binding Content}" />
         </DataTemplate>
 
         <DataTemplate x:Key="WarningTemplate">
-            <ContentPresenter Content="{Binding MessageContent}" />
+            <ContentPresenter Content="{Binding Content}" />
         </DataTemplate>
 
         <DataTemplate x:Key="ErrorTemplate">
-            <ContentPresenter Content="{Binding MessageContent}" />
+            <ContentPresenter Content="{Binding Content}" />
         </DataTemplate>
 
         <DataTemplate x:Key="DefaultTemplate">
-            <ContentPresenter Content="{Binding MessageContent}" />
+            <ContentPresenter Content="{Binding Content}" />
         </DataTemplate>
 
         <local:StatusMessageTemplateSelector x:Key="StatusMessageSelector"
