@@ -9,9 +9,9 @@ namespace CascadePass.CPAPExporter
         {
             return message?.ContentType switch
             {
-                CuedContentType.Info => ResourceLocator.GetResource<Brush>("StatusPanel.InfoMessage.MessageBorderBrush"),
-                CuedContentType.Warning => ResourceLocator.GetResource<Brush>("StatusPanel.WarningMessage.MessageBorderBrush"),
-                CuedContentType.Error => ResourceLocator.GetResource<Brush>("StatusPanel.ErrorMessage.MessageBorderBrush"),
+                CuedContentType.Info => ResourceLocator.GetResource<Brush>("StatusPanel.InfoMessage.ContentBorderBrush"),
+                CuedContentType.Warning => ResourceLocator.GetResource<Brush>("StatusPanel.WarningMessage.ContentBorderBrush"),
+                CuedContentType.Error => ResourceLocator.GetResource<Brush>("StatusPanel.ErrorMessage.ContentBorderBrush"),
                 CuedContentType.Busy => ResourceLocator.GetResource<Brush>("ControlElevationBorderBrush"),
                 CuedContentType.Custom => Brushes.Transparent,
                 _ => base.GetStatusPanelBorderBrush(message), // Fallback to base implementation

@@ -18,29 +18,29 @@
     <Color x:Key="StatusPanel.Shadow.Color">#222222</Color>
     <SolidColorBrush x:Key="StatusPanel.Foreground" Color="Black" />
     <SolidColorBrush x:Key="StatusPanel.Background" Color="#99FAFAFA" />
-    <SolidColorBrush x:Key="StatusPanel.MessageBorderBrush" Color="Gold" />
+    <SolidColorBrush x:Key="StatusPanel.ContentBorderBrush" Color="Gold" />
     <SolidColorBrush x:Key="StatusPanel.AttentionStripeBrush" Color="Gold" />
     <SolidColorBrush x:Key="StatusPanel.InfoMessage.Foreground" Color="Black" />
     <SolidColorBrush x:Key="StatusPanel.InfoMessage.Background" Color="#B0FFF1A3" />
-    <SolidColorBrush x:Key="StatusPanel.InfoMessage.MessageBorderBrush" Color="#B0FFF1A3" />
+    <SolidColorBrush x:Key="StatusPanel.InfoMessage.ContentBorderBrush" Color="#B0FFF1A3" />
     <SolidColorBrush x:Key="StatusPanel.InfoMessage.AttentionStripeBrush" Color="#B0FFF1A3" />
 
     <!-- Warning Message Brushes -->
     <SolidColorBrush x:Key="StatusPanel.WarningMessage.Foreground" Color="#7A4F01" />
     <SolidColorBrush x:Key="StatusPanel.WarningMessage.Background" Color="#FFFFE0B2" />
-    <SolidColorBrush x:Key="StatusPanel.WarningMessage.MessageBorderBrush" Color="#FFF9A825" />
+    <SolidColorBrush x:Key="StatusPanel.WarningMessage.ContentBorderBrush" Color="#FFF9A825" />
     <SolidColorBrush x:Key="StatusPanel.WarningMessage.AttentionStripeBorderBrush" Color="#FFF57C00" />
 
     <!-- Error Message Brushes -->
     <SolidColorBrush x:Key="StatusPanel.ErrorMessage.Foreground" Color="#B71C1C" />
     <SolidColorBrush x:Key="StatusPanel.ErrorMessage.Background" Color="#FFFFCDD2" />
-    <SolidColorBrush x:Key="StatusPanel.ErrorMessage.MessageBorderBrush" Color="#FFD32F2F" />
+    <SolidColorBrush x:Key="StatusPanel.ErrorMessage.ContentBorderBrush" Color="#FFD32F2F" />
     <SolidColorBrush x:Key="StatusPanel.ErrorMessage.AttentionStripeBorderBrush" Color="#FFB71C1C" />
 
     <!-- Busy Message Brushes -->
     <SolidColorBrush x:Key="StatusPanel.BusyMessage.Foreground" Color="#0D47A1" />
     <SolidColorBrush x:Key="StatusPanel.BusyMessage.Background" Color="#FFBBDEFB" />
-    <SolidColorBrush x:Key="StatusPanel.BusyMessage.MessageBorderBrush" Color="#FF1976D2" />
+    <SolidColorBrush x:Key="StatusPanel.BusyMessage.ContentBorderBrush" Color="#FF1976D2" />
     <SolidColorBrush x:Key="StatusPanel.BusyMessage.AttentionStripeBorderBrush" Color="#FF64B5F6" />
 
     <SolidColorBrush x:Key="OpenFiles.FlowReductionPanel.Border" Color="DarkGreen" />

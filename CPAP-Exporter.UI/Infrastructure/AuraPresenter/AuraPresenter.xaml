@@ -63,8 +63,8 @@
         x:Name="StatusPanelBorder"
         Visibility="{Binding Content, ElementName=Root, Converter={StaticResource NullableObjectToVisibilityConverter}}"
         Background="{Binding BackgroundBrush, ElementName=Root}"
-        BorderBrush="{Binding MessageBorderBrush, ElementName=Root}"
-        BorderThickness="{Binding MessageBorderThickness, ElementName=Root}"
+        BorderBrush="{Binding ContentBorderBrush, ElementName=Root}"
+        BorderThickness="{Binding ContentBorderThickness, ElementName=Root}"
         CornerRadius="{Binding CornerRadius, ElementName=Root}"
         Padding="0"
         Margin="0,0,0,4">

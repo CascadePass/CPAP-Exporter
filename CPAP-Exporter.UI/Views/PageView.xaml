@@ -52,9 +52,9 @@
                 Grid.Column="0" Grid.ColumnSpan="2" Grid.Row="2"
                 Visibility="{Binding CurrentView.DataContext.StatusContent, Converter={StaticResource NullableObjectToVisibilityConverter}}"
                 Content="{Binding CurrentView.DataContext.StatusContent}">
-                <local:AuraPresenter.StatusMessageStyleProvider>
+                <local:AuraPresenter.StylingCueProvider>
                     <local:CpapExporterStylingCueProvider />
-                </local:AuraPresenter.StatusMessageStyleProvider>
+                </local:AuraPresenter.StylingCueProvider>
             </local:AuraPresenter>
         </Grid>
 

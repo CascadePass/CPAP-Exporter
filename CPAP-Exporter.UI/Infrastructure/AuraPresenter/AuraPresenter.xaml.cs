@@ -37,12 +37,12 @@ namespace CascadePass.CPAPExporter
 
         #region Border
 
-        public static readonly DependencyProperty MessageBorderThicknessProperty =
-            DependencyProperty.Register(nameof(MessageBorderThickness), typeof(Thickness), typeof(AuraPresenter),
+        public static readonly DependencyProperty ContentBorderThicknessProperty =
+            DependencyProperty.Register(nameof(ContentBorderThickness), typeof(Thickness), typeof(AuraPresenter),
                 new PropertyMetadata(new Thickness(1.5)));
 
-        public static readonly DependencyProperty MessageBorderBrushProperty =
-            DependencyProperty.Register(nameof(MessageBorderBrush), typeof(Brush), typeof(AuraPresenter),
+        public static readonly DependencyProperty ContentBorderBrushProperty =
+            DependencyProperty.Register(nameof(ContentBorderBrush), typeof(Brush), typeof(AuraPresenter),
                 new PropertyMetadata(Brushes.Gold));
 
         #endregion
@@ -102,8 +102,8 @@ namespace CascadePass.CPAPExporter
             DependencyProperty.Register(nameof(PulseEndColor), typeof(Color), typeof(AuraPresenter),
                 new PropertyMetadata((Color)ColorConverter.ConvertFromString("#FFD971")));
 
-        public static readonly DependencyProperty StatusMessageStyleProviderProperty =
-            DependencyProperty.Register(nameof(StatusMessageStyleProvider), typeof(IStylingCueProvider), typeof(AuraPresenter),
+        public static readonly DependencyProperty StylingCueProviderProperty =
+            DependencyProperty.Register(nameof(StylingCueProvider), typeof(IStylingCueProvider), typeof(AuraPresenter),
                 new PropertyMetadata(new DefaultStylingCueProvider()));
 
         public static readonly DependencyProperty OverrideBehaviorProperty =
@@ -176,10 +176,10 @@ namespace CascadePass.CPAPExporter
         /// <summary>
         /// Gets or sets the brush used to render the border of a message.
         /// </summary>
-        public Brush MessageBorderBrush
+        public Brush ContentBorderBrush
         {
-            get => (Brush)GetValue(MessageBorderBrushProperty);
-            set => SetValue(MessageBorderBrushProperty, value);
+            get => (Brush)GetValue(ContentBorderBrushProperty);
+            set => SetValue(ContentBorderBrushProperty, value);
         }
 
         /// <summary>
@@ -270,10 +270,10 @@ namespace CascadePass.CPAPExporter
         /// <summary>
         /// Gets or sets the thickness of the border surrounding the message.
         /// </summary>
-        public Thickness MessageBorderThickness
+        public Thickness ContentBorderThickness
         {
-            get => (Thickness)GetValue(MessageBorderThicknessProperty);
-            set => SetValue(MessageBorderThicknessProperty, value);
+            get => (Thickness)GetValue(ContentBorderThicknessProperty);
+            set => SetValue(ContentBorderThicknessProperty, value);
         }
 
         /// <summary>
@@ -297,10 +297,10 @@ namespace CascadePass.CPAPExporter
         /// <summary>
         /// Gets or sets the provider responsible for determining the appearance of status messages.
         /// </summary>
-        public IStylingCueProvider StatusMessageStyleProvider
+        public IStylingCueProvider StylingCueProvider
         {
-            get => (IStylingCueProvider)GetValue(StatusMessageStyleProviderProperty);
-            set => SetValue(StatusMessageStyleProviderProperty, value);
+            get => (IStylingCueProvider)GetValue(StylingCueProviderProperty);
+            set => SetValue(StylingCueProviderProperty, value);
         }
 
         /// <summary>
@@ -386,7 +386,7 @@ namespace CascadePass.CPAPExporter
         {
             var message = this.Content as IStylingCue;
 
-            if (message != null && message.FadeMessageOut == true || this.StatusMessageStyleProvider.GetFadeOut(message) == true)
+            if (message != null && message.FadeMessageOut == true || this.StylingCueProvider.GetFadeOut(message) == true)
             {
                 this.FadeOut();
             }
@@ -451,55 +451,55 @@ namespace CascadePass.CPAPExporter
             this.Foreground = this.ResolveValue(
                 AuraPresenter.ForegroundProperty,
                 message?.ForegroundBrush,
-                () => this.StatusMessageStyleProvider.GetForegroundBrush(message)
+                () => this.StylingCueProvider.GetForegroundBrush(message)
             );
 
             this.BackgroundBrush = this.ResolveValue(
                 AuraPresenter.BackgroundBrushProperty,
                 message?.BackgroundBrush,
-                () => this.StatusMessageStyleProvider.GetBackgroundBrush(message)
+                () => this.StylingCueProvider.GetBackgroundBrush(message)
             );
 
-            this.MessageBorderBrush = this.ResolveValue(
-                AuraPresenter.MessageBorderBrushProperty,
+            this.ContentBorderBrush = this.ResolveValue(
+                AuraPresenter.ContentBorderBrushProperty,
                 message?.BorderBrush,
-                () => this.StatusMessageStyleProvider.GetStatusPanelBorderBrush(message)
+                () => this.StylingCueProvider.GetStatusPanelBorderBrush(message)
             );
 
             this.AttentionStripeBrush = this.ResolveValue(
                 AuraPresenter.AttentionStripeBrushProperty,
                 message?.AttentionStripeBrush,
-                () => this.StatusMessageStyleProvider.GetAttentionStripeBrush(message)
+                () => this.StylingCueProvider.GetAttentionStripeBrush(message)
             );
 
             this.AttentionStripeWidth = (double)this.ResolveValue(
                 AuraPresenter.AttentionStripeWidthProperty,
                 message?.AttentionStripeWidth,
-                () => this.StatusMessageStyleProvider.GetAttentionStripeWidth(message)
+                () => this.StylingCueProvider.GetAttentionStripeWidth(message)
             );
 
             this.ShowDropShadow = (bool)this.ResolveValue(
                 AuraPresenter.ShowDropShadowProperty,
                 message?.ShowDropShadow,
-                () => this.StatusMessageStyleProvider.GetShowDropShadow(message)
+                () => this.StylingCueProvider.GetShowDropShadow(message)
             );
 
             this.CornerRadius = (double)this.ResolveValue(
                 AuraPresenter.CornerRadiusProperty,
                 message?.CornerRadius,
-                () => this.StatusMessageStyleProvider.GetCornerRadius(message)
+                () => this.StylingCueProvider.GetCornerRadius(message)
             );
 
-            this.MessageBorderThickness = (Thickness)this.ResolveValue(
+            this.ContentBorderThickness = (Thickness)this.ResolveValue(
                 AuraPresenter.BorderThicknessProperty,
                 message?.BorderThickness,
-                () => this.StatusMessageStyleProvider.GetBorderThickness(message)
+                () => this.StylingCueProvider.GetBorderThickness(message)
             );
 
             this.ShadowColor = (Color)this.ResolveValue(
                 AuraPresenter.ShadowColorProperty,
                 message?.ShadowColor,
-                () => this.StatusMessageStyleProvider.GetShadowColor(message)
+                () => this.StylingCueProvider.GetShadowColor(message)
             );
         }
 
@@ -508,7 +508,7 @@ namespace CascadePass.CPAPExporter
             var displayDurationValue = (TimeSpan?)this.ResolveValue(
                 AuraPresenter.DisplayDurationProperty,
                 message?.DisplayDuration,
-                () => this.StatusMessageStyleProvider.GetDisplayDuration(message)
+                () => this.StylingCueProvider.GetDisplayDuration(message)
             );
 
             if (displayDurationValue.HasValue)
@@ -543,7 +543,7 @@ namespace CascadePass.CPAPExporter
         {
             var properties = new[]
             {
-                AuraPresenter.MessageBorderBrushProperty,
+                AuraPresenter.ContentBorderBrushProperty,
                 AuraPresenter.PulseStartColorProperty,
                 AuraPresenter.PulseEndColorProperty,
                 AuraPresenter.BackgroundBrushProperty,
@@ -551,7 +551,7 @@ namespace CascadePass.CPAPExporter
                 AuraPresenter.AttentionStripeWidthProperty,
                 AuraPresenter.ShowDropShadowProperty,
                 AuraPresenter.CornerRadiusProperty,
-                AuraPresenter.MessageBorderThicknessProperty
+                AuraPresenter.ContentBorderThicknessProperty
             };
 
             foreach (var prop in properties)
