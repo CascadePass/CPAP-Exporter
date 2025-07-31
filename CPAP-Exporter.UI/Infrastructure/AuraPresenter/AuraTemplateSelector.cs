@@ -5,7 +5,9 @@ namespace CascadePass.CPAPExporter
 {
     public class AuraTemplateSelector : DataTemplateSelector
     {
-        public DataTemplate IconCueElement { get; set; }
+        public DataTemplate StringTemplate { get; set; }
+
+        public DataTemplate IconCueTemplate { get; set; }
 
         public DataTemplate DefaultTemplate { get; set; }
 
@@ -13,7 +15,12 @@ namespace CascadePass.CPAPExporter
         {
             if (item is IconCueElement)
             {
-                return this.IconCueElement;
+                return this.IconCueTemplate;
+            }
+
+            if(item is string)
+            {
+                return this.StringTemplate;
             }
 
             return this.DefaultTemplate;

@@ -5,6 +5,13 @@ namespace CascadePass.CPAPExporter
 {
     public class DefaultStylingCueProvider : IStylingCueProvider
     {
+        public DefaultStylingCueProvider()
+        {
+            this.AttentionStripeMaxWidth = 16.0;
+        }
+
+        public double AttentionStripeMaxWidth { get; set; }
+
         #region Brushes
 
         public virtual Brush GetForegroundBrush(IStylingCue message)
@@ -171,7 +178,7 @@ namespace CascadePass.CPAPExporter
                 _ => 0,
             };
 
-            return Math.Min(baseWidth * dpiScale, 10.0);
+            return Math.Min(baseWidth * dpiScale, this.AttentionStripeMaxWidth);
         }
 
         public virtual double GetCornerRadius(IStylingCue message)

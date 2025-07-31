@@ -18,7 +18,7 @@
             Opacity="{Binding ShadowOpacity, ElementName=Root}"
             />
 
-        <DataTemplate x:Key="IconCueElement">
+        <DataTemplate x:Key="IconCueTemplate">
             <DockPanel LastChildFill="True">
                 <Image
                     DockPanel.Dock="{Binding IconPlacement}"
@@ -30,11 +30,20 @@
                     HorizontalAlignment="Center"
                     Visibility="{Binding IconSource, Converter={StaticResource NullableObjectToVisibilityConverter}}"
                     />
-                
-                <ContentPresenter
-                    Content="{Binding Content}"
+
+                <TextBlock
+                    Text="{Binding Content}"
+                    VerticalAlignment="Center"
+                    Foreground="{Binding Foreground, ElementName=Root}"
                     />
             </DockPanel>
+        </DataTemplate>
+
+        <DataTemplate x:Key="StringTemplate">
+            <TextBlock
+                Text="{Binding Content}"
+                Foreground="{Binding Foreground, ElementName=Root}"
+                />
         </DataTemplate>
 
         <DataTemplate x:Key="DefaultTemplate">
@@ -45,7 +54,8 @@
 
         <local:AuraTemplateSelector
             x:Key="StatusMessageSelector"
-            IconCueElement="{StaticResource IconCueElement}"
+            StringTemplate="{StaticResource StringTemplate}"
+            IconCueTemplate="{StaticResource IconCueTemplate}"
             DefaultTemplate="{StaticResource DefaultTemplate}" />
     </UserControl.Resources>
 
@@ -71,7 +81,7 @@
 
         <Grid>
             <Grid.ColumnDefinitions>
-                <ColumnDefinition Width="{Binding AttentionStripeWidth, ElementName=Root}"/>
+                <ColumnDefinition Width="Auto" />
                 <ColumnDefinition Width="*" />
             </Grid.ColumnDefinitions>
 
@@ -79,8 +89,8 @@
             <Rectangle
                 x:Name="AttentionStripe"
                 Grid.Column="0"
+                Width="{Binding AttentionStripeWidth, ElementName=Root}"
                 Fill="{Binding AttentionStripeBrush, ElementName=Root}"
-                RadiusX="2" RadiusY="2"
                 VerticalAlignment="Stretch" />
 
             <!-- Message content -->

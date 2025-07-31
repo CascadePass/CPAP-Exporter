@@ -1,4 +1,5 @@
-﻿using System.Windows.Media;
+﻿using System.Windows;
+using System.Windows.Media;
 
 namespace CascadePass.CPAPExporter
 {
@@ -48,7 +49,7 @@ namespace CascadePass.CPAPExporter
             return message?.ContentType switch
             {
                 CuedContentType.Info => ResourceLocator.GetResource<Brush>("StatusPanel.InfoMessage.AttentionStripeBrush"),
-                CuedContentType.Warning => ResourceLocator.GetResource<Brush>("StatusPanel.WarningMessage.AttentionStripeBrush"),
+                CuedContentType.Warning => ResourceLocator.GetResource<Brush>("StatusPanel.WarningMessage.AttentionStripeBorderBrush"),
                 CuedContentType.Error => ResourceLocator.GetResource<Brush>("StatusPanel.ErrorMessage.AttentionStripeBrush"),
                 CuedContentType.Busy => Brushes.Transparent,
                 CuedContentType.Custom => Brushes.Transparent,
@@ -59,6 +60,11 @@ namespace CascadePass.CPAPExporter
         public override Color GetShadowColor(IStylingCue message)
         {
             return (Color)ResourceLocator.GetColorResource("StatusPanel.Shadow.Color");
+        }
+
+        public override Thickness GetBorderThickness(IStylingCue message)
+        {
+            return new Thickness(2);
         }
     }
 }

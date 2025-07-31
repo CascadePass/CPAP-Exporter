@@ -5,21 +5,26 @@ namespace CascadePass.CPAPExporter
 {
     public class ContentStylingCue : Observable, IStylingCue
     {
+        private object content;
+
         public ContentStylingCue() { }
 
-        public ContentStylingCue(object messageContent) {
-            this.Content = messageContent;
+        public ContentStylingCue(object displayContent) {
+            this.Content = displayContent;
         }
 
-        public ContentStylingCue(object messageContent, CuedContentType messageType)
+        public ContentStylingCue(object displayContent, CuedContentType messageType)
         {
-            this.Content = messageContent;
+            this.Content = displayContent;
             this.ContentType = messageType;
         }
 
         public CuedContentType ContentType { get; set; }
 
-        public object Content { get; set; }
+        public object Content {
+            get => this.content;
+            set => this.SetPropertyValue(ref this.content, value, nameof(this.content));
+        }
 
         #region Panel Properties
 

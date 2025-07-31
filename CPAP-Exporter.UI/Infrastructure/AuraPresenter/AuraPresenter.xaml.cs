@@ -490,7 +490,7 @@ namespace CascadePass.CPAPExporter
                 () => this.StatusMessageStyleProvider.GetCornerRadius(message)
             );
 
-            this.BorderThickness = (Thickness)this.ResolveValue(
+            this.MessageBorderThickness = (Thickness)this.ResolveValue(
                 AuraPresenter.BorderThicknessProperty,
                 message?.BorderThickness,
                 () => this.StatusMessageStyleProvider.GetBorderThickness(message)
