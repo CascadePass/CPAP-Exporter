@@ -47,8 +47,8 @@ namespace CascadePass.CPAPExporter
 
         #region Animation Control Properties
 
-        public bool? FadeMessageIn { get; set; }
-        public bool? FadeMessageOut { get; set; }
+        public bool? FadeContentIn { get; set; }
+        public bool? FadeContentOut { get; set; }
         public bool? PulseBorder { get; set; }
 
         public TimeSpan? DisplayDuration { get; set; }

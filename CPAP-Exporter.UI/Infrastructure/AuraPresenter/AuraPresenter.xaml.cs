@@ -386,7 +386,7 @@ namespace CascadePass.CPAPExporter
         {
             var message = this.Content as IStylingCue;
 
-            if (message != null && message.FadeMessageOut == true || this.StylingCueProvider.GetFadeOut(message) == true)
+            if (message != null && message.FadeContentOut == true || this.StylingCueProvider.GetFadeOut(message) == true)
             {
                 this.FadeOut();
             }
@@ -435,7 +435,7 @@ namespace CascadePass.CPAPExporter
             this.SetTemporalProperties(message);
 
             // Handle fade in/out and pulse border
-            if (!message.FadeMessageIn.HasValue || !message.FadeMessageIn.Value)
+            if (!message.FadeContentIn.HasValue || !message.FadeContentIn.Value)
             {
                 this.ForceShowMessage();
             }

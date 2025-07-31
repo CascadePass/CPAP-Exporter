@@ -28,10 +28,10 @@ namespace CascadePass.CPAPExporter
 
         #endregion
 
-        #region Message
+        #region Control Animations
 
-        bool? FadeMessageIn { get; set; }
-        bool? FadeMessageOut { get; set; }
+        bool? FadeContentIn { get; set; }
+        bool? FadeContentOut { get; set; }
         bool? PulseBorder { get; set; }
 
         #endregion
