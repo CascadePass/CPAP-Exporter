@@ -276,6 +276,20 @@ namespace CascadePass.CPAPExporter
 
         internal void ShowDefaultStatusMessage()
         {
+            if (Application.Current is null)
+            {
+                // Unit tests are running, or I'm in some unnatural context where the application
+                // hasn't been initialized.
+
+                this.StatusContent = string.Format(
+                    Resources.ReportsSelected,
+                    this.ExportParameters.Reports.Count(report => report.IsSelected),
+                    this.ExportParameters.Reports.Count
+                );
+
+                return;
+            }
+
             Application.Current.Dispatcher.Invoke(() =>
             {
                 var selectedReportCount = this.ExportParameters.Reports.Count(report => report.IsSelected);
