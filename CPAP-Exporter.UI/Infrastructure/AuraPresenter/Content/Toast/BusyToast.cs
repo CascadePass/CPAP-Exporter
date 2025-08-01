@@ -1,14 +1,19 @@
 ﻿using System.Windows;
 using System.Windows.Controls;
+using System.Windows.Media;
 
 namespace CascadePass.CPAPExporter
 {
-    public class BusyCueElement : ContentStylingCue
+    public class BusyToast : IconToast
     {
-        public BusyCueElement() : base(null, CuedContentType.Busy) {
-            this.ProgressBar = this.CreateProgressBar();
-            this.Content = this.ProgressBar;
-            this.AttentionStripeWidth = 0;
+        public BusyToast() : base(null, CuedContentType.Busy) {
+            this.Content = this.ProgressBar = this.CreateProgressBar();
+
+            // BusyToast is centered by default, an AttentionStripe ruins this effect.
+            this.AttentionStripeCue = new() {
+                Brush = Brushes.Transparent,
+                Width = 0
+            };
         }
 
         public ProgressBar ProgressBar { get; set; }

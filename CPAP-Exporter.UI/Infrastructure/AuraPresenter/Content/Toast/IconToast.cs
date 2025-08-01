@@ -3,7 +3,7 @@ using System.Windows.Media;
 
 namespace CascadePass.CPAPExporter
 {
-    public class IconCueElement : TextCueElement
+    public class IconToast : Toast
     {
         #region Private Fields
 
@@ -16,13 +16,13 @@ namespace CascadePass.CPAPExporter
 
         #region Constructors
 
-        public IconCueElement() : this(null, CuedContentType.Custom, null) { }
+        public IconToast() : this(null, CuedContentType.Custom, null) { }
 
-        public IconCueElement(object displayContent) : this(displayContent, CuedContentType.Custom, null) { }
+        public IconToast(object displayContent) : this(displayContent, CuedContentType.Custom, null) { }
 
-        public IconCueElement(object displayContent, CuedContentType cuedContentType) : this(displayContent, cuedContentType, null) { }
+        public IconToast(object displayContent, CuedContentType cuedContentType) : this(displayContent, cuedContentType, null) { }
 
-        public IconCueElement(object displayContent, CuedContentType cuedContentType, ImageSource iconSource)
+        public IconToast(object displayContent, CuedContentType cuedContentType, ImageSource iconSource)
             : base(displayContent, cuedContentType)
         {
             this.IconSource = iconSource;

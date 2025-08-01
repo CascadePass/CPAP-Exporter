@@ -384,9 +384,12 @@ namespace CascadePass.CPAPExporter
 
         public void Close()
         {
-            var message = this.Content as IStylingCue;
+            if (this.Content is not IStylingCue auraContent)
+            {
+                return;
+            }
 
-            if (message != null && message.FadeContentOut == true || this.StylingCueProvider.GetFadeOut(message) == true)
+            if (auraContent.AnimationCues?.Any(cue => cue is FadeOutCue) == true || this.StylingCueProvider?.GetFadeOut(auraContent) == true)
             {
                 this.FadeOut();
             }
@@ -423,92 +426,98 @@ namespace CascadePass.CPAPExporter
             }
         }
 
-        private void DisplayStatusMessage(IStylingCue message)
+        private void DisplayStatusMessage(IStylingCue auraContent)
         {
-            if (message == null)
+            if (auraContent == null)
             {
                 return;
             }
 
             // Set properties from the message
-            this.SetVisualProperties(message);
-            this.SetTemporalProperties(message);
+            this.SetVisualProperties(auraContent);
+            this.SetTemporalProperties(auraContent);
 
             // Handle fade in/out and pulse border
-            if (!message.FadeContentIn.HasValue || !message.FadeContentIn.Value)
+            if (!auraContent.AnimationCues?.Any(cue => cue is FadeInCue) ?? true)
             {
                 this.ForceShowMessage();
             }
 
-            if (message.PulseBorder == true)
+            var pulseCue = (PulseBorderCue)auraContent.AnimationCues?.FirstOrDefault(cue => cue is PulseBorderCue);
+            if (pulseCue is not null)
             {
-                this.PulseBorderColor(this.PulseStartColor, this.PulseEndColor, TimeSpan.FromMilliseconds(400));
+                this.PulseBorderColor(this.PulseStartColor, this.PulseEndColor, pulseCue.Duration ?? TimeSpan.FromMilliseconds(400));
             }
         }
 
-        private void SetVisualProperties(IStylingCue message)
+        private void SetVisualProperties(IStylingCue auraContent)
         {
             this.Foreground = this.ResolveValue(
                 AuraPresenter.ForegroundProperty,
-                message?.ForegroundBrush,
-                () => this.StylingCueProvider.GetForegroundBrush(message)
+                auraContent?.TextCue?.ForegroundBrush,
+                () => this.StylingCueProvider?.GetForegroundBrush(auraContent)
             );
 
             this.BackgroundBrush = this.ResolveValue(
                 AuraPresenter.BackgroundBrushProperty,
-                message?.BackgroundBrush,
-                () => this.StylingCueProvider.GetBackgroundBrush(message)
+                auraContent?.BorderCue?.BackgroundBrush,
+                () => this.StylingCueProvider?.GetBackgroundBrush(auraContent)
             );
 
             this.ContentBorderBrush = this.ResolveValue(
                 AuraPresenter.ContentBorderBrushProperty,
-                message?.BorderBrush,
-                () => this.StylingCueProvider.GetStatusPanelBorderBrush(message)
+                auraContent?.BorderCue?.BorderBrush,
+                () => this.StylingCueProvider?.GetStatusPanelBorderBrush(auraContent)
             );
 
             this.AttentionStripeBrush = this.ResolveValue(
                 AuraPresenter.AttentionStripeBrushProperty,
-                message?.AttentionStripeBrush,
-                () => this.StylingCueProvider.GetAttentionStripeBrush(message)
+                auraContent?.AttentionStripeCue?.Brush,
+                () => this.StylingCueProvider?.GetAttentionStripeBrush(auraContent)
             );
+
 
             this.AttentionStripeWidth = (double)this.ResolveValue(
                 AuraPresenter.AttentionStripeWidthProperty,
-                message?.AttentionStripeWidth,
-                () => this.StylingCueProvider.GetAttentionStripeWidth(message)
+                auraContent?.AttentionStripeCue?.Width,
+                () => this.StylingCueProvider?.GetAttentionStripeWidth(auraContent)
             );
 
             this.ShowDropShadow = (bool)this.ResolveValue(
                 AuraPresenter.ShowDropShadowProperty,
-                message?.ShowDropShadow,
-                () => this.StylingCueProvider.GetShowDropShadow(message)
+                !auraContent?.ShadowCue?.IsEmpty,
+                () => this.StylingCueProvider?.GetShowDropShadow(auraContent)
             );
 
             this.CornerRadius = (double)this.ResolveValue(
                 AuraPresenter.CornerRadiusProperty,
-                message?.CornerRadius,
-                () => this.StylingCueProvider.GetCornerRadius(message)
+                auraContent?.BorderCue?.CornerRadius,
+                () => this.StylingCueProvider?.GetCornerRadius(auraContent)
             );
 
             this.ContentBorderThickness = (Thickness)this.ResolveValue(
                 AuraPresenter.BorderThicknessProperty,
-                message?.BorderThickness,
-                () => this.StylingCueProvider.GetBorderThickness(message)
+                auraContent?.BorderCue?.BorderThickness,
+                () => this.StylingCueProvider?.GetBorderThickness(auraContent)
             );
 
             this.ShadowColor = (Color)this.ResolveValue(
                 AuraPresenter.ShadowColorProperty,
-                message?.ShadowColor,
-                () => this.StylingCueProvider.GetShadowColor(message)
+                auraContent?.ShadowCue?.ShadowColor,
+                () => this.StylingCueProvider?.GetShadowColor(auraContent)
             );
+
+            // Set the inside corner radius to zero for the attention stripe
+            this.AttentionStripe.CornerRadius = new CornerRadius(this.CornerRadius, 0, 0, this.CornerRadius);
+            this.AttentionStripe.Margin = new Thickness(-this.BorderThickness.Left, 0, 0, 0);
         }
 
-        private void SetTemporalProperties(IStylingCue message)
+        private void SetTemporalProperties(IStylingCue auraContent)
         {
             var displayDurationValue = (TimeSpan?)this.ResolveValue(
                 AuraPresenter.DisplayDurationProperty,
-                message?.DisplayDuration,
-                () => this.StylingCueProvider.GetDisplayDuration(message)
+                auraContent?.DisplayDuration,
+                () => this.StylingCueProvider?.GetDisplayDuration(auraContent)
             );
 
             if (displayDurationValue.HasValue)
@@ -521,7 +530,7 @@ namespace CascadePass.CPAPExporter
             }
         }
 
-        private T ResolveValue<T>(DependencyProperty property, T messageValue, Func<T> styleProviderValue)
+        private T ResolveValue<T>(DependencyProperty property, T auraContentValue, Func<T> styleProviderValue)
         {
             bool hasLocalValue = this.xamlSetProperties.Contains(property);
 
@@ -529,13 +538,13 @@ namespace CascadePass.CPAPExporter
             {
                 StylingCuePrecedence.PreferLocalValues => hasLocalValue
                                         ? (T)GetValue(property)
-                                        : messageValue ?? styleProviderValue(),
+                                        : auraContentValue ?? styleProviderValue(),
 
-                StylingCuePrecedence.PreferMessageValues => messageValue ?? (hasLocalValue ? (T)GetValue(property) : styleProviderValue()),
+                StylingCuePrecedence.PreferMessageValues => auraContentValue ?? (hasLocalValue ? (T)GetValue(property) : styleProviderValue()),
 
                 _ => hasLocalValue
                                         ? (T)GetValue(property)
-                                        : messageValue ?? styleProviderValue(),
+                                        : auraContentValue ?? styleProviderValue(),
             };
         }
 

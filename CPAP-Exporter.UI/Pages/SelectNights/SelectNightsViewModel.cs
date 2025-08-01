@@ -296,13 +296,13 @@ namespace CascadePass.CPAPExporter
 
                 if (selectedReportCount == 0)
                 {
-                    this.StatusContent = new WarningCueElement(
+                    this.StatusContent = new WarningToast(
                         Resources.Validation_NoNightsSelected
                     );
                 }
                 else
                 {
-                    this.StatusContent = new InfoCueElement(
+                    this.StatusContent = new InfoToast(
                         string.Format(
                             Resources.ReportsSelected,
                             selectedReportCount,
@@ -320,7 +320,7 @@ namespace CascadePass.CPAPExporter
         {
             Application.Current.Dispatcher.Invoke(() =>
             {
-                this.StatusContent = new BusyCueElement();
+                this.StatusContent = new BusyToast();
             });
         }
 

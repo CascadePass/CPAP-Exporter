@@ -14,9 +14,9 @@ namespace CascadePass.CPAPExporter
 
         #region Brushes
 
-        public virtual Brush GetForegroundBrush(IStylingCue message)
+        public virtual Brush GetForegroundBrush(IStylingCue auraContent)
         {
-            if (message is null)
+            if (auraContent is null)
             {
                 // Fallback:
                 // The original message does not implement IStatusMessage, maybe it's a string or a control.
@@ -24,7 +24,7 @@ namespace CascadePass.CPAPExporter
                 return Brushes.Black;
             }
 
-            return message.ContentType switch
+            return auraContent.ContentType switch
             {
                 CuedContentType.Info => Brushes.DarkSlateGray,
                 CuedContentType.Warning => Brushes.DarkGoldenrod,
@@ -36,16 +36,16 @@ namespace CascadePass.CPAPExporter
             };
         }
 
-        public virtual Brush GetBackgroundBrush(IStylingCue message)
+        public virtual Brush GetBackgroundBrush(IStylingCue auraContent)
         {
-            if (message is null)
+            if (auraContent is null)
             {
                 // Fallback:
                 // The original message does not implement IStatusMessage, maybe it's a string or a control.
                 return Brushes.Transparent;
             }
 
-            return message.ContentType switch
+            return auraContent.ContentType switch
             {
                 CuedContentType.None => Brushes.Transparent,
                 CuedContentType.Info => new SolidColorBrush(Color.FromRgb(230, 245, 255)),   // Soft blue tint
@@ -57,16 +57,16 @@ namespace CascadePass.CPAPExporter
             };
         }
 
-        public virtual Brush GetStatusPanelBorderBrush(IStylingCue message)
+        public virtual Brush GetStatusPanelBorderBrush(IStylingCue auraContent)
         {
-            if (message is null)
+            if (auraContent is null)
             {
                 // Fallback:
                 // The original message does not implement IStatusMessage, maybe it's a string or a control.
                 return Brushes.Transparent;
             }
 
-            return message.ContentType switch
+            return auraContent.ContentType switch
             {
                 CuedContentType.None => Brushes.Gray,                         // Neutral fallback
                 CuedContentType.Info => new SolidColorBrush(Color.FromRgb(99, 130, 156)),      // Muted steel blue
@@ -78,16 +78,16 @@ namespace CascadePass.CPAPExporter
             };
         }
 
-        public virtual Brush GetAttentionStripeBrush(IStylingCue message)
+        public virtual Brush GetAttentionStripeBrush(IStylingCue auraContent)
         {
-            if (message is null)
+            if (auraContent is null)
             {
                 // Fallback:
                 // The original message does not implement IStatusMessage—may be raw UI content.
                 return Brushes.Transparent;
             }
 
-            return message.ContentType switch
+            return auraContent.ContentType switch
             {
                 CuedContentType.None => Brushes.Transparent,
                 CuedContentType.Info => new SolidColorBrush(Color.FromRgb(96, 153, 186)),     // Cool blue stripe for calm focus
@@ -99,9 +99,9 @@ namespace CascadePass.CPAPExporter
             };
         }
 
-        public virtual Color GetPulseStartColor(IStylingCue message)
+        public virtual Color GetPulseStartColor(IStylingCue auraContent)
         {
-            if (message is null)
+            if (auraContent is null)
             {
                 // Fallback:
                 // The original message does not implement IStatusMessage—may be raw UI content.
@@ -109,7 +109,7 @@ namespace CascadePass.CPAPExporter
                 return Colors.Gray;
             }
 
-            return message.ContentType switch
+            return auraContent.ContentType switch
             {
                 CuedContentType.None => Colors.Gray,
                 CuedContentType.Info => Color.FromRgb(99, 130, 156),        // Matches steel blue border
@@ -121,9 +121,9 @@ namespace CascadePass.CPAPExporter
             };
         }
 
-        public virtual Color GetPulseEndColor(IStylingCue message)
+        public virtual Color GetPulseEndColor(IStylingCue auraContent)
         {
-            if (message is null)
+            if (auraContent is null)
             {
                 // Fallback:
                 // The original message does not implement IStatusMessage—may be raw UI content.
@@ -132,7 +132,7 @@ namespace CascadePass.CPAPExporter
             }
 
 
-            return message.ContentType switch
+            return auraContent.ContentType switch
             {
                 CuedContentType.None => Colors.DarkGray,
                 CuedContentType.Info => Color.FromRgb(135, 170, 200),       // Brighter steel blue
@@ -148,9 +148,9 @@ namespace CascadePass.CPAPExporter
 
         #region Control static appearance
 
-        public virtual double GetAttentionStripeWidth(IStylingCue message)
+        public virtual double GetAttentionStripeWidth(IStylingCue auraContent)
         {
-            if (message is null)
+            if (auraContent is null)
             {
                 // Fallback:
                 // The original message does not implement IStatusMessage, maybe it's a string or a control.
@@ -167,7 +167,7 @@ namespace CascadePass.CPAPExporter
                 dpiScale = dpiInfo.DpiScaleX;
             }
 
-            double baseWidth = message.ContentType switch
+            double baseWidth = auraContent.ContentType switch
             {
                 CuedContentType.None => 0,
                 CuedContentType.Info => 2,
@@ -181,9 +181,9 @@ namespace CascadePass.CPAPExporter
             return Math.Min(baseWidth * dpiScale, this.AttentionStripeMaxWidth);
         }
 
-        public virtual double GetCornerRadius(IStylingCue message)
+        public virtual double GetCornerRadius(IStylingCue auraContent)
         {
-            if (message is null)
+            if (auraContent is null)
             {
                 // Fallback:
                 // The original message does not implement IStatusMessage, maybe it's a string or a control.
@@ -191,7 +191,7 @@ namespace CascadePass.CPAPExporter
                 return 0;
             }
 
-            return message.ContentType switch
+            return auraContent.ContentType switch
             {
                 CuedContentType.None => 0,
                 CuedContentType.Info => 4,
@@ -203,9 +203,9 @@ namespace CascadePass.CPAPExporter
             };
         }
 
-        public virtual Thickness GetBorderThickness(IStylingCue message)
+        public virtual Thickness GetBorderThickness(IStylingCue auraContent)
         {
-            if (message is null)
+            if (auraContent is null)
             {
                 // Fallback:
                 // The original message does not implement IStatusMessage, maybe it's a string or a control.
@@ -213,7 +213,7 @@ namespace CascadePass.CPAPExporter
                 return new Thickness(1);
             }
 
-            return message.ContentType switch
+            return auraContent.ContentType switch
             {
                 CuedContentType.None => new Thickness(1),
                 CuedContentType.Info => new Thickness(1),
@@ -225,9 +225,9 @@ namespace CascadePass.CPAPExporter
             };
         }
 
-        public virtual bool GetShowDropShadow(IStylingCue message)
+        public virtual bool GetShowDropShadow(IStylingCue auraContent)
         {
-            if (message is null)
+            if (auraContent is null)
             {
                 // Fallback:
                 // The original message does not implement IStatusMessage, maybe it's a string or a control.
@@ -235,7 +235,7 @@ namespace CascadePass.CPAPExporter
                 return false;
             }
 
-            return message.ContentType switch
+            return auraContent.ContentType switch
             {
                 CuedContentType.None => false,
                 CuedContentType.Info => false,
@@ -251,9 +251,9 @@ namespace CascadePass.CPAPExporter
 
         #region Toggle animations
 
-        public virtual bool GetFadeIn(IStylingCue message)
+        public virtual bool GetFadeIn(IStylingCue auraContent)
         {
-            if (message is null)
+            if (auraContent is null)
             {
                 // Fallback:
                 // The original message does not implement IStatusMessage, maybe it's a string or a control.
@@ -261,7 +261,7 @@ namespace CascadePass.CPAPExporter
                 return false;
             }
 
-            return message.ContentType switch
+            return auraContent.ContentType switch
             {
                 CuedContentType.None => false,         // Ambient or placeholder
                 CuedContentType.Info => true,          // Calm, informative tone
@@ -273,9 +273,9 @@ namespace CascadePass.CPAPExporter
             };
         }
 
-        public virtual bool GetFadeOut(IStylingCue message)
+        public virtual bool GetFadeOut(IStylingCue auraContent)
         {
-            if (message is null)
+            if (auraContent is null)
             {
                 // Fallback:
                 // The original message does not implement IStatusMessage, maybe it's a string or a control.
@@ -283,7 +283,7 @@ namespace CascadePass.CPAPExporter
                 return false;
             }
 
-            return message.ContentType switch
+            return auraContent.ContentType switch
             {
                 CuedContentType.None => false,
                 CuedContentType.Info => true,
@@ -295,9 +295,9 @@ namespace CascadePass.CPAPExporter
             };
         }
 
-        public virtual bool GetPulseBorder(IStylingCue message)
+        public virtual bool GetPulseBorder(IStylingCue auraContent)
         {
-            if (message is null)
+            if (auraContent is null)
             {
                 // Fallback:
                 // The original message does not implement IStatusMessage, maybe it's a string or a control.
@@ -305,7 +305,7 @@ namespace CascadePass.CPAPExporter
                 return false;
             }
 
-            return message.ContentType switch
+            return auraContent.ContentType switch
             {
                 CuedContentType.None => false,
                 CuedContentType.Info => false,
@@ -319,9 +319,9 @@ namespace CascadePass.CPAPExporter
 
         #endregion
 
-        public TimeSpan? GetDisplayDuration(IStylingCue message)
+        public TimeSpan? GetDisplayDuration(IStylingCue auraContent)
         {
-            if (message is null)
+            if (auraContent is null)
             {
                 // Fallback:
                 // The original message does not implement IStatusMessage, maybe it's a string or a control.
@@ -329,7 +329,7 @@ namespace CascadePass.CPAPExporter
                 return null;
             }
 
-            return message.ContentType switch
+            return auraContent.ContentType switch
             {
                 CuedContentType.None => null,
                 CuedContentType.Info => null,
@@ -343,22 +343,22 @@ namespace CascadePass.CPAPExporter
 
         #region Control shadow properties
 
-        public virtual Color GetShadowColor(IStylingCue message)
+        public virtual Color GetShadowColor(IStylingCue auraContent)
         {
             return Colors.Black;
         }
 
-        public virtual double GetShadowOpacity(IStylingCue message)
+        public virtual double GetShadowOpacity(IStylingCue auraContent)
         {
             return 0.5;
         }
 
-        public virtual double GetShadowBlurRadius(IStylingCue message)
+        public virtual double GetShadowBlurRadius(IStylingCue auraContent)
         {
             return 10.0; // Soft shadow
         }
 
-        public virtual double GetShadowDepth(IStylingCue message)
+        public virtual double GetShadowDepth(IStylingCue auraContent)
         {
             return 5.0; // Subtle depth
         }
