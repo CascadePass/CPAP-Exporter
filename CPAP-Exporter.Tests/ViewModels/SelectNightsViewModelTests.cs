@@ -87,7 +87,7 @@ namespace CascadePass.CPAPExporter.UI.Tests
         {
             var selectNightsViewModel = new SelectNightsViewModel(new());
 
-            selectNightsViewModel.AddReport(null);
+            selectNightsViewModel.AddReport(null, null);
         }
 
         [TestMethod]
@@ -95,7 +95,7 @@ namespace CascadePass.CPAPExporter.UI.Tests
         {
             var selectNightsViewModel = new SelectNightsViewModel(new());
             DailyReport dailyReport = new();
-            var result = selectNightsViewModel.AddReport(dailyReport);
+            var result = selectNightsViewModel.AddReport(dailyReport, null);
 
             Assert.IsNotNull(result);
             Assert.AreSame(dailyReport, result.DailyReport);
@@ -106,7 +106,7 @@ namespace CascadePass.CPAPExporter.UI.Tests
         {
             var selectNightsViewModel = new SelectNightsViewModel(new());
             DailyReport dailyReport = new();
-            var result = selectNightsViewModel.AddReport(dailyReport);
+            var result = selectNightsViewModel.AddReport(dailyReport, null);
 
             Assert.AreEqual(1, selectNightsViewModel.Reports.Count);
             Assert.IsTrue(selectNightsViewModel.Reports.Any(r => r.DailyReport == dailyReport));
@@ -123,7 +123,7 @@ namespace CascadePass.CPAPExporter.UI.Tests
 
             for (int i = 0; i < 10; i++)
             {
-                var nightViewModel = selectNightsViewModel.AddReport(new());
+                var nightViewModel = selectNightsViewModel.AddReport(new(), null);
                 nightViewModel.IsSelected = false;
             }
 
@@ -139,7 +139,7 @@ namespace CascadePass.CPAPExporter.UI.Tests
 
             for (int i = 0; i < 10; i++)
             {
-                var nightViewModel = selectNightsViewModel.AddReport(new());
+                var nightViewModel = selectNightsViewModel.AddReport(new(), null);
                 nightViewModel.IsSelected = true;
             }
 
@@ -155,7 +155,7 @@ namespace CascadePass.CPAPExporter.UI.Tests
 
             for (int i = 0; i < 10; i++)
             {
-                var nightViewModel = selectNightsViewModel.AddReport(new());
+                var nightViewModel = selectNightsViewModel.AddReport(new(), null);
                 nightViewModel.IsSelected = i % 2 == 0;
             }
 
