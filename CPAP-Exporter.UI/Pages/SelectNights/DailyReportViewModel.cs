@@ -1,4 +1,5 @@
 ﻿using cpaplib;
+using System.IO;
 
 namespace CascadePass.CPAPExporter
 {
@@ -7,6 +8,7 @@ namespace CascadePass.CPAPExporter
         private DailyReport dailyReport;
         private bool isSelected;
         private int? sampleCount;
+        public string sourceFolder;
 
         #region Constructors
 
@@ -21,6 +23,13 @@ namespace CascadePass.CPAPExporter
             this.isSelected = initiallySelected;
         }
 
+        public DailyReportViewModel(DailyReport report, bool initiallySelected, string folder)
+        {
+            this.dailyReport = report;
+            this.isSelected = initiallySelected;
+            this.sourceFolder = folder;
+        }
+
         #endregion
 
         public bool IsSelected
@@ -29,7 +38,8 @@ namespace CascadePass.CPAPExporter
             set => this.SetPropertyValue(ref this.isSelected, value, nameof(this.IsSelected));
         }
 
-        public DailyReport DailyReport {
+        public DailyReport DailyReport
+        {
             get => this.dailyReport;
             set => this.SetPropertyValue(ref this.dailyReport, value, [nameof(this.DailyReport), nameof(this.SampleCount)]);
         }
@@ -90,7 +100,7 @@ namespace CascadePass.CPAPExporter
                             fixedIPAP = (double)this.DailyReport.Settings["IPAP"],
                             fixedEPAP = (double)this.DailyReport.Settings["EPAP"];
 
-                        return $"{fixedIPAP-fixedEPAP} PS Over {fixedEPAP}";
+                        return $"{fixedIPAP - fixedEPAP} PS Over {fixedEPAP}";
 
                     default:
                         System.Diagnostics.Debug.WriteLine(string.Empty);
@@ -106,6 +116,25 @@ namespace CascadePass.CPAPExporter
 
                         return null;
                 }
+            }
+        }
+
+        public string SourceFolder
+        {
+            get => this.sourceFolder;
+            set => this.SetPropertyValue(ref this.sourceFolder, value, nameof(this.SourceFolder));
+        }
+
+        public string DisplayFolderName
+        {
+            get
+            {
+                if (string.IsNullOrEmpty(this.sourceFolder))
+                {
+                    return null;
+                }
+
+                return Path.GetFileName(this.sourceFolder);
             }
         }
     }

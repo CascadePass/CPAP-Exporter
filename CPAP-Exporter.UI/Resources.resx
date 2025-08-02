@@ -333,4 +333,10 @@
   <data name="Validation_NoNightsSelected" xml:space="preserve">
     <value>You must select at least one night to export in order to proceed.</value>
   </data>
+  <data name="Day" xml:space="preserve">
+    <value>Day</value>
+  </data>
+  <data name="SourceFolder" xml:space="preserve">
+    <value>Source Folder</value>
+  </data>
 </root>

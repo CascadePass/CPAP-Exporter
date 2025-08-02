@@ -115,6 +115,15 @@ namespace CascadePass.CPAPExporter {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Day.
+        /// </summary>
+        public static string Day {
+            get {
+                return ResourceManager.GetString("Day", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Delete.
         /// </summary>
         public static string Delete {
@@ -651,6 +660,15 @@ namespace CascadePass.CPAPExporter {
         public static string SignalsAvailable {
             get {
                 return ResourceManager.GetString("SignalsAvailable", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Source Folder.
+        /// </summary>
+        public static string SourceFolder {
+            get {
+                return ResourceManager.GetString("SourceFolder", resourceCulture);
             }
         }
         
