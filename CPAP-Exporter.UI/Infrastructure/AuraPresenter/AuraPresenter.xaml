@@ -1,0 +1,139 @@
+﻿<UserControl x:Class="CascadePass.CPAPExporter.AuraPresenter"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:local="clr-namespace:CascadePass.CPAPExporter"
+             BorderBrush="Transparent"
+             mc:Ignorable="d"
+             d:DesignHeight="450" d:DesignWidth="800"
+             x:Name="Root">
+
+    <UserControl.Resources>
+        <DropShadowEffect
+            x:Key="StatusPanelDropShadow"
+            Color="{Binding ShadowColor, ElementName=Root}"
+            BlurRadius="{Binding ShadowBlurRadius, ElementName=Root}"
+            ShadowDepth="{Binding ShadowDepth, ElementName=Root}"
+            Opacity="{Binding ShadowOpacity, ElementName=Root}"
+            />
+
+        <DataTemplate x:Key="CardTemplate">
+            <DockPanel LastChildFill="True">
+                <TextBlock
+                    DockPanel.Dock="Top"
+                    Text="{Binding Content}"
+                    VerticalAlignment="Center"
+                    Foreground="{Binding Foreground, ElementName=Root}"
+                    />
+
+                <ContentPresenter
+                    Content="{Binding Content}"
+                    />
+            </DockPanel>
+        </DataTemplate>
+
+        <DataTemplate x:Key="IconToastTemplate">
+            <DockPanel LastChildFill="True">
+                <Image
+                    DockPanel.Dock="{Binding IconPlacement}"
+                    Source="{Binding IconSource}"
+                    Height="{Binding IconSize}" Width="{Binding IconSize}"
+                    Margin="{Binding IconMargin}"
+                    Stretch="{Binding Stretch}"
+                    VerticalAlignment="Center"
+                    HorizontalAlignment="Center"
+                    Visibility="{Binding IconSource, Converter={StaticResource NullableObjectToVisibilityConverter}}"
+                    />
+
+                <TextBlock
+                    Text="{Binding Content}"
+                    VerticalAlignment="Center"
+                    Foreground="{Binding Foreground, ElementName=Root}"
+                    />
+            </DockPanel>
+        </DataTemplate>
+
+        <DataTemplate x:Key="BusyToastTemplate">
+            <DockPanel LastChildFill="True">
+                <Image
+                    DockPanel.Dock="{Binding IconPlacement}"
+                    Source="{Binding IconSource}"
+                    Height="{Binding IconSize}" Width="{Binding IconSize}"
+                    Margin="{Binding IconMargin}"
+                    Stretch="{Binding Stretch}"
+                    VerticalAlignment="Center"
+                    HorizontalAlignment="Center"
+                    Visibility="{Binding IconSource, Converter={StaticResource NullableObjectToVisibilityConverter}}"
+                    />
+
+                <ContentPresenter
+                    Content="{Binding Content}"
+                    />
+            </DockPanel>
+        </DataTemplate>
+
+        <DataTemplate x:Key="StringTemplate">
+            <TextBlock
+                Text="{Binding Content}"
+                Foreground="{Binding Foreground, ElementName=Root}"
+                />
+        </DataTemplate>
+
+        <DataTemplate x:Key="DefaultTemplate">
+            <ContentPresenter
+                Content="{Binding Content}"
+                />
+        </DataTemplate>
+
+        <local:AuraTemplateSelector
+            x:Key="StatusMessageSelector"
+            StringTemplate="{StaticResource StringTemplate}"
+            CardTemplate="{StaticResource CardTemplate}"
+            BusyToastTemplate="{StaticResource BusyToastTemplate}"
+            IconToastTemplate="{StaticResource IconToastTemplate}"
+            DefaultTemplate="{StaticResource DefaultTemplate}" />
+    </UserControl.Resources>
+
+    <Grid>
+        <Border
+            x:Name="AttentionStripe"
+            Background="{Binding AttentionStripeBrush, ElementName=Root}"
+            CornerRadius="{Binding CornerRadius, ElementName=Root}"
+            Height="{Binding ElementName=StatusPanelBorder, Path=ActualHeight}"
+            Width="{Binding AttentionStripeWidth, ElementName=Root}"
+            VerticalAlignment="Top"
+            HorizontalAlignment="Left"
+            Margin="0"
+            />
+    
+        <Border
+            x:Name="StatusPanelBorder"
+            Visibility="{Binding Content, ElementName=Root, Converter={StaticResource NullableObjectToVisibilityConverter}}"
+            Background="{Binding BackgroundBrush, ElementName=Root}"
+            BorderBrush="{Binding ContentBorderBrush, ElementName=Root}"
+            BorderThickness="{Binding ContentBorderThickness, ElementName=Root}"
+            CornerRadius="{Binding CornerRadius, ElementName=Root}"
+            VerticalAlignment="Top"
+            Padding="0"
+            Margin="0,0,0,4">
+
+            <Border.Style>
+                <Style TargetType="Border">
+                    <Style.Triggers>
+                        <DataTrigger Binding="{Binding ShowDropShadow, ElementName=Root}" Value="True">
+                            <Setter Property="Effect" Value="{StaticResource StatusPanelDropShadow}" />
+                        </DataTrigger>
+                    </Style.Triggers>
+                </Style>
+            </Border.Style>
+
+            <ContentPresenter
+                x:Name="MessageContentPresenter"
+                Grid.Column="1"
+                Content="{Binding Content, ElementName=Root}"
+                ContentTemplateSelector="{StaticResource StatusMessageSelector}"
+                Margin="8" />
+        </Border>
+    </Grid>
+</UserControl>

@@ -8,6 +8,8 @@
         private string title, pageDescription;
         private ExportParameters exportParameters;
         private IValidatable validationProvider;
+        private object statusContent;
+        private DateTime becameVisible;
 
         #endregion
 
@@ -52,7 +54,7 @@
         }
 
         /// <summary>
-        /// Gets or sets a value indicating whether to display the UI in a busy state.
+        /// Gets or sets a value indicating whether the ViewModel is in a busy state.
         /// </summary>
         public bool IsBusy
         {
@@ -78,6 +80,18 @@
         {
             get => this.pageDescription;
             set => this.SetPropertyValue(ref this.pageDescription, value, nameof(this.PageDescription));
+        }
+
+        public DateTime BecameVisible
+        {
+            get => this.becameVisible;
+            set => this.SetPropertyValue(ref this.becameVisible, value, nameof(this.BecameVisible));
+        }
+
+        public object StatusContent
+        {
+            get => this.statusContent;
+            set => this.SetPropertyValue(ref this.statusContent, value, nameof(this.StatusContent));
         }
 
         #endregion

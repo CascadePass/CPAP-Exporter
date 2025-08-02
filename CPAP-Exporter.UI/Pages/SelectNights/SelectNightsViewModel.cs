@@ -2,7 +2,11 @@
 using System.Collections.ObjectModel;
 using System.ComponentModel;
 using System.IO;
+using System.Windows;
+using System.Windows.Controls;
 using System.Windows.Input;
+using System.Windows.Media;
+using System.Windows.Media.Imaging;
 using System.Windows.Threading;
 
 namespace CascadePass.CPAPExporter
@@ -152,6 +156,7 @@ namespace CascadePass.CPAPExporter
             #endregion
 
             this.IsBusy = true;
+            this.ShowBusyStatus();
             this.ExportParameters.SourcePath = folder;
             ApplicationComponentProvider.Status.StatusText = string.Format(Resources.ReadingFolder, folder);
 
@@ -162,6 +167,7 @@ namespace CascadePass.CPAPExporter
             {
                 // This is where the files are loaded from disc
                 reports = loader.LoadFromFolder(folder, null, null, new() { FlagFlowLimits = this.ExportParameters.UserPreferences.GenerateFlowEvents });
+                this.StatusContent = null;
             }
             catch (Exception ex)
             {
@@ -235,7 +241,7 @@ namespace CascadePass.CPAPExporter
         }
 
         /// <summary>
-        /// Opens Windows Explorder the source folder in the file explorer.
+        /// Opens Windows Explorer the source folder in the file explorer.
         /// </summary>
         public void BrowseToSourceFolder()
         {
@@ -268,13 +274,54 @@ namespace CascadePass.CPAPExporter
             return string.Join(',', SelectNightsViewModel.loadedFolders.Keys);
         }
 
-        public void ShowDefaultStatusMessage()
+        internal void ShowDefaultStatusMessage()
         {
-            ApplicationComponentProvider.Status.StatusText = string.Format(
-                Resources.ReportsSelected,
-                this.ExportParameters.Reports.Count(report => report.IsSelected),
-                this.ExportParameters.Reports.Count
-            );
+            if (Application.Current is null)
+            {
+                // Unit tests are running, or I'm in some unnatural context where the application
+                // hasn't been initialized.
+
+                this.StatusContent = string.Format(
+                    Resources.ReportsSelected,
+                    this.ExportParameters.Reports.Count(report => report.IsSelected),
+                    this.ExportParameters.Reports.Count
+                );
+
+                return;
+            }
+
+            Application.Current.Dispatcher.Invoke(() =>
+            {
+                var selectedReportCount = this.ExportParameters.Reports.Count(report => report.IsSelected);
+
+                if (selectedReportCount == 0)
+                {
+                    this.StatusContent = new WarningToast(
+                        Resources.Validation_NoNightsSelected
+                    );
+                }
+                else
+                {
+                    this.StatusContent = new InfoToast(
+                        string.Format(
+                            Resources.ReportsSelected,
+                            selectedReportCount,
+                            this.ExportParameters.Reports.Count
+                        ))
+                    {
+                        Transience = new() { DisplayDuration = TimeSpan.FromSeconds(8), },                        
+                        IconSource = new BitmapImage(new Uri("pack://application:,,,/Images/CPAP-Exporter.VersionEmblem.1.1.0.png")),
+                    };
+                }
+            });
+        }
+
+        internal void ShowBusyStatus()
+        {
+            Application.Current.Dispatcher.Invoke(() =>
+            {
+                this.StatusContent = new BusyToast();
+            });
         }
 
         private void ReportViewModel_PropertyChanged(object sender, PropertyChangedEventArgs e)

@@ -18,7 +18,36 @@
     <SolidColorBrush x:Key="Navigation.MouseOver.Shadow" Color="LawnGreen" />
 
     <SolidColorBrush x:Key="Legibility.Background" Color="#AA1E1E2F" />
+
+    <Color x:Key="StatusPanel.Shadow.Color">#444444</Color>
+    <SolidColorBrush x:Key="StatusPanel.Foreground" Color="Black" />
+    <SolidColorBrush x:Key="StatusPanel.Background" Color="#B0FFF1A3" />
+    <SolidColorBrush x:Key="StatusPanel.ContentBorderBrush" Color="Gold" />
+    <SolidColorBrush x:Key="StatusPanel.AttentionStripeBrush" Color="Gold" />
     
+    <SolidColorBrush x:Key="StatusPanel.InfoMessage.Foreground" Color="Black" />
+    <SolidColorBrush x:Key="StatusPanel.InfoMessage.Background" Color="#AACCC890" />
+    <SolidColorBrush x:Key="StatusPanel.InfoMessage.ContentBorderBrush" Color="#B0FFF1A3" />
+    <SolidColorBrush x:Key="StatusPanel.InfoMessage.AttentionStripeBrush" Color="#B0FFF1A3" />
+
+    <!-- Warning Message Brushes -->
+    <SolidColorBrush x:Key="StatusPanel.WarningMessage.Foreground" Color="#AA000000" />
+    <SolidColorBrush x:Key="StatusPanel.WarningMessage.Background" Color="#AAFF4200" />
+    <SolidColorBrush x:Key="StatusPanel.WarningMessage.ContentBorderBrush" Color="#FFFF4500" />
+    <SolidColorBrush x:Key="StatusPanel.WarningMessage.AttentionStripeBorderBrush" Color="#FFFF4500" />
+
+    <!-- Error Message Brushes -->
+    <SolidColorBrush x:Key="StatusPanel.ErrorMessage.Foreground" Color="#FFCDD2" />
+    <SolidColorBrush x:Key="StatusPanel.ErrorMessage.Background" Color="#FFB71C1C" />
+    <SolidColorBrush x:Key="StatusPanel.ErrorMessage.ContentBorderBrush" Color="#FFD32F2F" />
+    <SolidColorBrush x:Key="StatusPanel.ErrorMessage.AttentionStripeBorderBrush" Color="#FFB71C1C" />
+
+    <!-- Busy Message Brushes -->
+    <SolidColorBrush x:Key="StatusPanel.BusyMessage.Foreground" Color="#BBDEFB" />
+    <SolidColorBrush x:Key="StatusPanel.BusyMessage.Background" Color="#FF0D47A1" />
+    <SolidColorBrush x:Key="StatusPanel.BusyMessage.ContentBorderBrush" Color="#FF1976D2" />
+    <SolidColorBrush x:Key="StatusPanel.BusyMessage.AttentionStripeBorderBrush" Color="#FF64B5F6" />
+
     <SolidColorBrush x:Key="OpenFiles.FlowReductionPanel.Checked.Border" Color="DarkGreen" />
     <SolidColorBrush x:Key="OpenFiles.FlowReductionPanel.Unchecked.Border" Color="Red" />
     <LinearGradientBrush x:Key="OpenFiles.FlowReductionPanel.Background" StartPoint="0,0" EndPoint="0,1">

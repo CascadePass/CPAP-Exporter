@@ -7,7 +7,7 @@
              mc:Ignorable="d" 
              d:DesignHeight="450" d:DesignWidth="800">
 
-    <DockPanel LastChildFill="True" Margin="16, 8, 16, 8">
+    <DockPanel LastChildFill="True" Margin="12,8">
         <Grid DockPanel.Dock="Top">
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="*" />
@@ -17,6 +17,7 @@
             <Grid.RowDefinitions>
                 <RowDefinition Height="Auto" />
                 <RowDefinition Height="*" />
+                <RowDefinition Height="Auto" />
             </Grid.RowDefinitions>
 
             <TextBlock
@@ -34,27 +35,30 @@
                 />
 
             <Button
-                Grid.Column="1" Grid.Row="0" Grid.RowSpan="2"
+                Grid.Column="1" Grid.Row="0" Grid.RowSpan="3"
                 BorderBrush="Transparent" Background="Transparent"
                 Command="{Binding ShowReleaseNotesCommand}"
                 ToolTip="{x:Static local:Resources.Label_CurrentVersion}"
+                VerticalAlignment="Top"
+                HorizontalAlignment="Right"
                 >
                 <Image
                     Source="/Images/CPAP-Exporter.VersionEmblem.1.1.0.png"
-                    Width="64" Height="64"
-                    HorizontalAlignment="Right" />
+                    Width="64" Height="64" />
             </Button>
 
-            <ProgressBar
-                Grid.Column="0" Grid.Row="2"
-                x:Name="BusyProgressBar"
-                IsIndeterminate="True"
-                Height="24"
-                Margin="0,16,0,40"
-                Visibility="{Binding CurrentView.DataContext.IsBusy, Converter={StaticResource BoolToVisibilityConverter}}"
-                />
+            <local:AuraPresenter
+                x:Name="StatusHost"
+                Grid.Column="0" Grid.ColumnSpan="2" Grid.Row="2"
+                Visibility="{Binding CurrentView.DataContext.StatusContent, Converter={StaticResource NullableObjectToVisibilityConverter}}"
+                Content="{Binding CurrentView.DataContext.StatusContent}">
+                <local:AuraPresenter.StylingCueProvider>
+                    <local:CpapExporterStylingCueProvider />
+                </local:AuraPresenter.StylingCueProvider>
+            </local:AuraPresenter>
         </Grid>
 
-        <ContentPresenter Content="{Binding CurrentView}" />
+        <ContentPresenter
+            Content="{Binding CurrentView}" />
     </DockPanel>
 </UserControl>
