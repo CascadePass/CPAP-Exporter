@@ -6,11 +6,11 @@ namespace CascadePass.CPAPExporter
 {
     public class BusyToast : IconToast
     {
-        public BusyToast() : base(null, CuedContentType.Busy) {
+        public BusyToast() : base(null) {
             this.Content = this.ProgressBar = this.CreateProgressBar();
 
             // BusyToast is centered by default, an AttentionStripe ruins this effect.
-            this.AttentionStripeCue = new() {
+            this.AttentionStripe = new() {
                 Brush = Brushes.Transparent,
                 Width = 0
             };

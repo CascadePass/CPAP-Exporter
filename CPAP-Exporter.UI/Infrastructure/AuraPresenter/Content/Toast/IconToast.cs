@@ -16,14 +16,13 @@ namespace CascadePass.CPAPExporter
 
         #region Constructors
 
-        public IconToast() : this(null, CuedContentType.Custom, null) { }
+        public IconToast() : this(null, null) { }
 
-        public IconToast(object displayContent) : this(displayContent, CuedContentType.Custom, null) { }
+        public IconToast(object displayContent) : this(displayContent, null) { }
 
-        public IconToast(object displayContent, CuedContentType cuedContentType) : this(displayContent, cuedContentType, null) { }
 
-        public IconToast(object displayContent, CuedContentType cuedContentType, ImageSource iconSource)
-            : base(displayContent, cuedContentType)
+        public IconToast(object displayContent, ImageSource iconSource)
+            : base(displayContent)
         {
             this.IconSource = iconSource;
             this.Stretch = Stretch.Uniform;

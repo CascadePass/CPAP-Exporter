@@ -1,5 +1,6 @@
 ﻿using System.Windows;
 using System.Windows.Controls;
+using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Animation;
 using System.Windows.Shapes;
@@ -34,6 +35,10 @@ namespace CascadePass.CPAPExporter
         public static readonly DependencyProperty DisplayDurationProperty =
             DependencyProperty.Register(nameof(DisplayDuration), typeof(TimeSpan), typeof(AuraPresenter),
                 new PropertyMetadata(TimeSpan.MaxValue));
+
+        public static readonly DependencyProperty IsHoverPauseEnabledProperty =
+            DependencyProperty.Register(nameof(IsHoverPauseEnabled), typeof(bool), typeof(AuraPresenter),
+                new PropertyMetadata(true));
 
         #region Border
 
@@ -107,10 +112,7 @@ namespace CascadePass.CPAPExporter
                 new PropertyMetadata(new DefaultStylingCueProvider()));
 
         public static readonly DependencyProperty OverrideBehaviorProperty =
-            DependencyProperty.Register(
-                nameof(OverrideBehavior),
-                typeof(StylingCuePrecedence),
-                typeof(AuraPresenter),
+            DependencyProperty.Register(nameof(OverrideBehavior), typeof(StylingCuePrecedence), typeof(AuraPresenter),
                 new PropertyMetadata(StylingCuePrecedence.PreferLocalValues)
             );
 
@@ -150,10 +152,10 @@ namespace CascadePass.CPAPExporter
             ]
         };
 
-        public DateTime? MessageBecameVisible { get; private set; }
+        public DateTime? BecameVisible { get; private set; }
 
-        public TimeSpan TimeVisible => this.MessageBecameVisible.HasValue
-            ? DateTime.Now - this.MessageBecameVisible.Value
+        public TimeSpan TimeVisible => this.BecameVisible.HasValue
+            ? DateTime.Now - this.BecameVisible.Value
             : TimeSpan.Zero;
 
         #region Dependency Properties
@@ -172,6 +174,18 @@ namespace CascadePass.CPAPExporter
             get => (TimeSpan)GetValue(DisplayDurationProperty);
             set => SetValue(DisplayDurationProperty, value);
         }
+
+        /// <summary>
+        /// Gets or sets a value indicating whether the user can prevent
+        /// a <see cref="Toast"/> with <see cref="DisplayDuration"/> set
+        /// from vanishing by hovering the mouse over the <see cref="AuraPresenter"/>.
+        /// </summary>
+        public bool IsHoverPauseEnabled
+        {
+            get => (bool)GetValue(IsHoverPauseEnabledProperty);
+            set => SetValue(IsHoverPauseEnabledProperty, value);
+        }
+
 
         /// <summary>
         /// Gets or sets the brush used to render the border of a message.
@@ -384,12 +398,12 @@ namespace CascadePass.CPAPExporter
 
         public void Close()
         {
-            if (this.Content is not IStylingCue auraContent)
+            if (this.Content is not IAuraContent auraContent)
             {
                 return;
             }
 
-            if (auraContent.AnimationCues?.Any(cue => cue is FadeOutCue) == true || this.StylingCueProvider?.GetFadeOut(auraContent) == true)
+            if (auraContent.Animations?.Any(cue => cue is FadeOutCue) == true || this.StylingCueProvider?.GetFadeOut(auraContent) == true)
             {
                 this.FadeOut();
             }
@@ -407,7 +421,7 @@ namespace CascadePass.CPAPExporter
         {
             this.autoDismissMessageTimer?.Stop();
 
-            if (this.DisplayDuration < TimeSpan.MaxValue)
+            if (this.DisplayDuration.TotalSeconds > 0 && this.DisplayDuration < TimeSpan.MaxValue)
             {
                 this.autoDismissMessageTimer = new DispatcherTimer
                 {
@@ -426,7 +440,12 @@ namespace CascadePass.CPAPExporter
             }
         }
 
-        private void DisplayStatusMessage(IStylingCue auraContent)
+        private void StopAutoCloseTimer()
+        {
+            this.autoDismissMessageTimer?.Stop();
+        }
+
+        private void DisplayStatusMessage(IAuraContent auraContent)
         {
             if (auraContent == null)
             {
@@ -438,72 +457,72 @@ namespace CascadePass.CPAPExporter
             this.SetTemporalProperties(auraContent);
 
             // Handle fade in/out and pulse border
-            if (!auraContent.AnimationCues?.Any(cue => cue is FadeInCue) ?? true)
+            if (!auraContent.Animations?.Any(cue => cue is FadeInCue) ?? true)
             {
                 this.ForceShowMessage();
             }
 
-            var pulseCue = (PulseBorderCue)auraContent.AnimationCues?.FirstOrDefault(cue => cue is PulseBorderCue);
+            var pulseCue = (PulseBorderCue)auraContent.Animations?.FirstOrDefault(cue => cue is PulseBorderCue);
             if (pulseCue is not null)
             {
                 this.PulseBorderColor(this.PulseStartColor, this.PulseEndColor, pulseCue.Duration ?? TimeSpan.FromMilliseconds(400));
             }
         }
 
-        private void SetVisualProperties(IStylingCue auraContent)
+        private void SetVisualProperties(IAuraContent auraContent)
         {
             this.Foreground = this.ResolveValue(
                 AuraPresenter.ForegroundProperty,
-                auraContent?.TextCue?.ForegroundBrush,
+                auraContent?.BodyText?.ForegroundBrush,
                 () => this.StylingCueProvider?.GetForegroundBrush(auraContent)
             );
 
             this.BackgroundBrush = this.ResolveValue(
                 AuraPresenter.BackgroundBrushProperty,
-                auraContent?.BorderCue?.BackgroundBrush,
+                auraContent?.Border?.BackgroundBrush,
                 () => this.StylingCueProvider?.GetBackgroundBrush(auraContent)
             );
 
             this.ContentBorderBrush = this.ResolveValue(
                 AuraPresenter.ContentBorderBrushProperty,
-                auraContent?.BorderCue?.BorderBrush,
-                () => this.StylingCueProvider?.GetStatusPanelBorderBrush(auraContent)
+                auraContent?.Border?.BorderBrush,
+                () => this.StylingCueProvider?.GetBorderBrush(auraContent)
             );
 
             this.AttentionStripeBrush = this.ResolveValue(
                 AuraPresenter.AttentionStripeBrushProperty,
-                auraContent?.AttentionStripeCue?.Brush,
+                auraContent?.AttentionStripe?.Brush,
                 () => this.StylingCueProvider?.GetAttentionStripeBrush(auraContent)
             );
 
 
             this.AttentionStripeWidth = (double)this.ResolveValue(
                 AuraPresenter.AttentionStripeWidthProperty,
-                auraContent?.AttentionStripeCue?.Width,
+                auraContent?.AttentionStripe?.Width,
                 () => this.StylingCueProvider?.GetAttentionStripeWidth(auraContent)
             );
 
             this.ShowDropShadow = (bool)this.ResolveValue(
                 AuraPresenter.ShowDropShadowProperty,
-                !auraContent?.ShadowCue?.IsEmpty,
+                !auraContent?.Shadow?.IsEmpty,
                 () => this.StylingCueProvider?.GetShowDropShadow(auraContent)
             );
 
             this.CornerRadius = (double)this.ResolveValue(
                 AuraPresenter.CornerRadiusProperty,
-                auraContent?.BorderCue?.CornerRadius,
+                auraContent?.Border?.CornerRadius,
                 () => this.StylingCueProvider?.GetCornerRadius(auraContent)
             );
 
             this.ContentBorderThickness = (Thickness)this.ResolveValue(
                 AuraPresenter.BorderThicknessProperty,
-                auraContent?.BorderCue?.BorderThickness,
+                auraContent?.Border?.BorderThickness,
                 () => this.StylingCueProvider?.GetBorderThickness(auraContent)
             );
 
             this.ShadowColor = (Color)this.ResolveValue(
                 AuraPresenter.ShadowColorProperty,
-                auraContent?.ShadowCue?.ShadowColor,
+                auraContent?.Shadow?.ShadowColor,
                 () => this.StylingCueProvider?.GetShadowColor(auraContent)
             );
 
@@ -512,11 +531,11 @@ namespace CascadePass.CPAPExporter
             this.AttentionStripe.Margin = new Thickness(-this.BorderThickness.Left, 0, 0, 0);
         }
 
-        private void SetTemporalProperties(IStylingCue auraContent)
+        private void SetTemporalProperties(IAuraContent auraContent)
         {
             var displayDurationValue = (TimeSpan?)this.ResolveValue(
                 AuraPresenter.DisplayDurationProperty,
-                auraContent?.DisplayDuration,
+                auraContent?.Transience?.DisplayDuration,
                 () => this.StylingCueProvider?.GetDisplayDuration(auraContent)
             );
 
@@ -591,6 +610,32 @@ namespace CascadePass.CPAPExporter
             this.ScaleAttentionStripeForDpi();
         }
 
+        #region Mouse movement
+
+        protected override void OnMouseMove(MouseEventArgs e)
+        {
+            base.OnMouseMove(e);
+
+            if (this.IsHoverPauseEnabled && this.DisplayDuration.TotalSeconds > 0)
+            {
+                this.BecameVisible = DateTime.Now;
+                this.StopAutoCloseTimer();
+            }
+        }
+
+        protected override void OnMouseLeave(MouseEventArgs e)
+        {
+            base.OnMouseLeave(e);
+
+            if (this.IsHoverPauseEnabled && this.DisplayDuration.TotalSeconds > 0)
+            {
+                this.BecameVisible = DateTime.Now;
+                this.StartAutoCloseTimer();
+            }
+        }
+
+        #endregion
+
         private static void OnContentChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
         {
             #region Sanity checks
@@ -609,12 +654,12 @@ namespace CascadePass.CPAPExporter
 
             if (e.NewValue is null)
             {
-                panel.MessageBecameVisible = null;
+                panel.BecameVisible = null;
                 return;
             }
 
-            var oldMessage = e.OldValue as IStylingCue;
-            var newMessage = e.NewValue as IStylingCue;
+            var oldMessage = e.OldValue as IAuraContent;
+            var newMessage = e.NewValue as IAuraContent;
 
             //bool shouldFadeOut = oldMessage?.FadeMessageOut == true || (e.OldValue != null && e.NewValue == null);
             bool shouldFadeIn = e.OldValue == null && e.NewValue != null;
@@ -632,7 +677,7 @@ namespace CascadePass.CPAPExporter
             }
 
             panel.Visibility = Visibility.Visible;
-            panel.MessageBecameVisible = DateTime.Now;
+            panel.BecameVisible = DateTime.Now;
             panel.StartAutoCloseTimer();
 
             //if (shouldFadeOut) panel.FadeOut();

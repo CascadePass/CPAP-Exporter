@@ -5,69 +5,136 @@ namespace CascadePass.CPAPExporter
 {
     public class CpapExporterStylingCueProvider : DefaultStylingCueProvider
     {
-        public override Brush GetStatusPanelBorderBrush(IStylingCue auraContent)
+        private Dictionary<Type, Brush>
+            borderBrushes,
+            backgroundBrushes,
+            foregroundBrushes,
+            attentionStripeBrushes
+            ;
+
+        public CpapExporterStylingCueProvider()
         {
-            return auraContent?.ContentType switch
+            this.CreateDictionaries();
+        }
+
+        internal void CreateDictionaries()
+        {
+            this.borderBrushes = new()
             {
-                CuedContentType.Info => ResourceLocator.GetResource<Brush>("StatusPanel.InfoMessage.ContentBorderBrush"),
-                CuedContentType.Warning => ResourceLocator.GetResource<Brush>("StatusPanel.WarningMessage.ContentBorderBrush"),
-                CuedContentType.Error => ResourceLocator.GetResource<Brush>("StatusPanel.ErrorMessage.ContentBorderBrush"),
-                CuedContentType.Busy => ResourceLocator.GetResource<Brush>("ControlElevationBorderBrush"),
-                CuedContentType.Custom => Brushes.Transparent,
-                _ => base.GetStatusPanelBorderBrush(auraContent), // Fallback to base implementation
+                [typeof(InfoToast)] = ResourceLocator.GetResource<Brush>("StatusPanel.InfoMessage.ContentBorderBrush"),
+                [typeof(WarningToast)] = ResourceLocator.GetResource<Brush>("StatusPanel.WarningMessage.ContentBorderBrush"),
+                [typeof(ErrorToast)] = ResourceLocator.GetResource<Brush>("StatusPanel.ErrorMessage.ContentBorderBrush"),
+                [typeof(BusyToast)] = ResourceLocator.GetResource<Brush>("ControlElevationBorderBrush")
+            };
+
+            this.backgroundBrushes = new()
+            {
+                [typeof(InfoToast)] = ResourceLocator.GetResource<Brush>("StatusPanel.InfoMessage.Background"),
+                [typeof(WarningToast)] = ResourceLocator.GetResource<Brush>("StatusPanel.WarningMessage.Background"),
+                [typeof(ErrorToast)] = ResourceLocator.GetResource<Brush>("StatusPanel.ErrorMessage.Background"),
+                [typeof(BusyToast)] = ResourceLocator.GetResource<Brush>("Legibility.Background")
+            };
+
+            this.foregroundBrushes = new()
+            {
+                [typeof(InfoToast)] = ResourceLocator.GetResource<Brush>("StatusPanel.InfoMessage.Foreground"),
+                [typeof(WarningToast)] = ResourceLocator.GetResource<Brush>("StatusPanel.WarningMessage.Foreground"),
+                [typeof(ErrorToast)] = ResourceLocator.GetResource<Brush>("StatusPanel.ErrorMessage.Foreground"),
+                [typeof(BusyToast)] = Brushes.Transparent
+            };
+
+            this.attentionStripeBrushes = new()
+            {
+                [typeof(InfoToast)] = ResourceLocator.GetResource<Brush>("StatusPanel.InfoMessage.AttentionStripeBrush"),
+                [typeof(WarningToast)] = ResourceLocator.GetResource<Brush>("StatusPanel.WarningMessage.AttentionStripeBrush"),
+                [typeof(ErrorToast)] = ResourceLocator.GetResource<Brush>("StatusPanel.ErrorMessage.AttentionStripeBrush"),
+                [typeof(BusyToast)] = Brushes.Transparent
             };
         }
 
-        public override Brush GetBackgroundBrush(IStylingCue auraContent)
+        public override Brush GetBorderBrush(IAuraContent auraContent)
         {
-            return auraContent?.ContentType switch
+            //if(auraContent is InfoToast)
+            //{
+            //    return ResourceLocator.GetResource<Brush>("StatusPanel.InfoMessage.ContentBorderBrush");
+            //}
+
+            //if (auraContent is WarningToast)
+            //{
+            //    return ResourceLocator.GetResource<Brush>("StatusPanel.WarningMessage.ContentBorderBrush");
+            //}
+
+            //if (auraContent is ErrorToast)
+            //{
+            //    return ResourceLocator.GetResource<Brush>("StatusPanel.ErrorMessage.ContentBorderBrush");
+            //}
+
+            //if (auraContent is BusyToast)
+            //{
+            //    return ResourceLocator.GetResource<Brush>("ControlElevationBorderBrush");
+            //}
+
+            var brush = this.borderBrushes.GetValueOrDefault(auraContent?.GetType());
+
+            if (brush is null)
             {
-                CuedContentType.Info => ResourceLocator.GetResource<Brush>("StatusPanel.InfoMessage.Background"),
-                CuedContentType.Warning => ResourceLocator.GetResource<Brush>("StatusPanel.WarningMessage.Background"),
-                CuedContentType.Error => ResourceLocator.GetResource<Brush>("StatusPanel.ErrorMessage.Background"),
-                CuedContentType.Busy => ResourceLocator.GetResource<Brush>("Legibility.Background"),
-                CuedContentType.Custom => ResourceLocator.GetResource<Brush>("Legibility.Background"),
-                _ => ResourceLocator.GetResource<Brush>("Legibility.Background")
-            };
+                // Fallback to base implementation
+                return base.GetBorderBrush(auraContent);
+            }
+
+            return brush;
         }
 
-        public override Brush GetForegroundBrush(IStylingCue auraContent)
+        public override Brush GetBackgroundBrush(IAuraContent auraContent)
         {
-            return auraContent?.ContentType switch
+            var brush = this.backgroundBrushes.GetValueOrDefault(auraContent?.GetType());
+
+            if (brush is null)
             {
-                CuedContentType.Info => ResourceLocator.GetResource<Brush>("StatusPanel.InfoMessage.Foreground"),
-                CuedContentType.Warning => ResourceLocator.GetResource<Brush>("StatusPanel.WarningMessage.Foreground"),
-                CuedContentType.Error => ResourceLocator.GetResource<Brush>("StatusPanel.ErrorMessage.Foreground"),
-                CuedContentType.Busy => Brushes.Transparent,
-                CuedContentType.Custom => Brushes.Transparent,
-                _ => base.GetStatusPanelBorderBrush(auraContent), // Fallback to base implementation
-            };
+                // Fallback to base implementation
+                return base.GetBackgroundBrush(auraContent);
+            }
+
+            return brush;
         }
 
-        public override Brush GetAttentionStripeBrush(IStylingCue auraContent)
+        public override Brush GetForegroundBrush(IAuraContent auraContent)
         {
-            return auraContent?.ContentType switch
+            var brush = this.foregroundBrushes.GetValueOrDefault(auraContent?.GetType());
+
+            if (brush is null)
             {
-                CuedContentType.Info => ResourceLocator.GetResource<Brush>("StatusPanel.InfoMessage.AttentionStripeBrush"),
-                CuedContentType.Warning => ResourceLocator.GetResource<Brush>("StatusPanel.WarningMessage.AttentionStripeBorderBrush"),
-                CuedContentType.Error => ResourceLocator.GetResource<Brush>("StatusPanel.ErrorMessage.AttentionStripeBrush"),
-                CuedContentType.Busy => Brushes.Transparent,
-                CuedContentType.Custom => Brushes.Transparent,
-                _ => base.GetStatusPanelBorderBrush(auraContent), // Fallback to base implementation
-            };
+                // Fallback to base implementation
+                return base.GetForegroundBrush(auraContent);
+            }
+
+            return brush;
         }
 
-        public override double GetAttentionStripeWidth(IStylingCue auraContent)
+        public override Brush GetAttentionStripeBrush(IAuraContent auraContent)
+        {
+            var brush = this.attentionStripeBrushes.GetValueOrDefault(auraContent?.GetType());
+
+            if (brush is null)
+            {
+                // Fallback to base implementation
+                return base.GetAttentionStripeBrush(auraContent);
+            }
+
+            return brush;
+        }
+
+        public override double GetAttentionStripeWidth(IAuraContent auraContent)
         {
             return 6;
         }
 
-        public override Color GetShadowColor(IStylingCue auraContent)
+        public override Color GetShadowColor(IAuraContent auraContent)
         {
             return (Color)ResourceLocator.GetColorResource("StatusPanel.Shadow.Color");
         }
 
-        public override Thickness GetBorderThickness(IStylingCue auraContent)
+        public override Thickness GetBorderThickness(IAuraContent auraContent)
         {
             return new Thickness(2);
         }

@@ -9,6 +9,7 @@
         private ExportParameters exportParameters;
         private IValidatable validationProvider;
         private object statusContent;
+        private DateTime becameVisible;
 
         #endregion
 
@@ -79,6 +80,12 @@
         {
             get => this.pageDescription;
             set => this.SetPropertyValue(ref this.pageDescription, value, nameof(this.PageDescription));
+        }
+
+        public DateTime BecameVisible
+        {
+            get => this.becameVisible;
+            set => this.SetPropertyValue(ref this.becameVisible, value, nameof(this.BecameVisible));
         }
 
         public object StatusContent

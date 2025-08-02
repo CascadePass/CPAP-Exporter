@@ -4,10 +4,10 @@ namespace CascadePass.CPAPExporter
 {
     public class WarningToast : IconToast
     {
-        public WarningToast() : base(null, CuedContentType.Warning) { }
+        public WarningToast() : base(null) { }
 
-        public WarningToast(object displayContent) : base(displayContent, CuedContentType.Warning) { }
+        public WarningToast(object displayContent) : base(displayContent) { }
 
-        public WarningToast(object displayContent, CuedContentType cuedContentType, ImageSource iconSource) : base(displayContent, cuedContentType, iconSource) { }
+        public WarningToast(object displayContent, ImageSource iconSource) : base(displayContent, iconSource) { }
     }
 }

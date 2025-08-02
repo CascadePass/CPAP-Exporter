@@ -3,362 +3,350 @@ using System.Windows.Media;
 
 namespace CascadePass.CPAPExporter
 {
-    public class DefaultStylingCueProvider : IStylingCueProvider
+    public class DefaultStylingCueProvider : Observable, IStylingCueProvider
     {
+        #region Private Fields
+
+        private Dictionary<Type, Brush>
+            borderBrushes,
+            backgroundBrushes,
+            foregroundBrushes,
+            attentionStripeBrushes
+            ;
+
+        private Dictionary<Type, Color>
+            pulseStartColor,
+            pulseEndColor
+            ;
+
+        private Dictionary<Type, double>
+            attentionStripeWidth,
+            cornerRadius,
+            borderThickness
+            ;
+
+        private Dictionary<Type, bool>
+            displayShadow,
+            animateFadeIn,
+            animateFadeOut,
+            animateBorderPulse
+            ;
+
+        #endregion
+
         public DefaultStylingCueProvider()
         {
             this.AttentionStripeMaxWidth = 16.0;
+            this.CreateDictionaries();
         }
+
+        #region Public Properties
 
         public double AttentionStripeMaxWidth { get; set; }
 
+        public Dictionary<Type, Brush> BorderBrushes
+        {
+            get => this.borderBrushes;
+            set => this.SetPropertyValue(ref this.borderBrushes, value, nameof(this.BorderBrushes));
+        }
+
+        public Dictionary<Type, Brush> BackgroundBrushes
+        {
+            get => this.backgroundBrushes;
+            set => this.SetPropertyValue(ref this.backgroundBrushes, value, nameof(this.BackgroundBrushes));
+        }
+
+        public Dictionary<Type, Brush> ForegroundBrushes
+        {
+            get => this.foregroundBrushes;
+            set => this.SetPropertyValue(ref this.foregroundBrushes, value, nameof(this.ForegroundBrushes));
+        }
+
+        public Dictionary<Type, Brush> AttentionStripeBrushes
+        {
+            get => this.attentionStripeBrushes;
+            set => this.SetPropertyValue(ref this.attentionStripeBrushes, value, nameof(this.AttentionStripeBrushes));
+        }
+
+        #endregion
+
+        internal void CreateDictionaries()
+        {
+            this.borderBrushes = new()
+            {
+                [typeof(InfoToast)] = new SolidColorBrush(Color.FromRgb(99, 130, 156)),      // Muted steel blue
+                [typeof(WarningToast)] = new SolidColorBrush(Color.FromRgb(198, 138, 0)),    // Goldenrod—attention-grabbing, not shouting
+                [typeof(ErrorToast)] = new SolidColorBrush(Color.FromRgb(165, 42, 42)),      // Deep brick red—serious but readable
+                [typeof(BusyToast)] = new SolidColorBrush(Color.FromRgb(99, 130, 156)),      // Muted steel blue
+            };
+
+            this.backgroundBrushes = new()
+            {
+                [typeof(InfoToast)] = new SolidColorBrush(Color.FromRgb(230, 245, 255)),   // Soft blue tint
+                [typeof(WarningToast)] = new SolidColorBrush(Color.FromRgb(255, 248, 220)), // Pale gold
+                [typeof(ErrorToast)] = new SolidColorBrush(Color.FromRgb(255, 235, 238)),   // Gentle red-pink
+                [typeof(BusyToast)] = new SolidColorBrush(Color.FromRgb(230, 245, 255)),   // Soft blue tint
+            };
+
+            this.foregroundBrushes = new()
+            {
+                [typeof(InfoToast)] = Brushes.DarkSlateGray,
+                [typeof(WarningToast)] = Brushes.DarkGoldenrod,
+                [typeof(ErrorToast)] = Brushes.Firebrick,
+                [typeof(BusyToast)] = Brushes.Black
+            };
+
+            this.attentionStripeBrushes = new()
+            {
+                [typeof(InfoToast)] = new SolidColorBrush(Color.FromRgb(96, 153, 186)),     // Cool blue stripe for calm focus
+                [typeof(WarningToast)] = new SolidColorBrush(Color.FromRgb(255, 175, 0)),    // Vivid amber for urgency
+                [typeof(ErrorToast)] = new SolidColorBrush(Color.FromRgb(204, 0, 0)),        // Strong red for critical error
+                [typeof(BusyToast)] = new SolidColorBrush(Color.FromRgb(96, 153, 186)),     // Cool blue stripe for calm focus
+            };
+
+            this.pulseStartColor = new()
+            {
+                [typeof(InfoToast)] = Color.FromRgb(99, 130, 156),        // Matches steel blue border
+                [typeof(WarningToast)] = Color.FromRgb(198, 138, 0),      // Goldenrod
+                [typeof(ErrorToast)] = Color.FromRgb(165, 42, 42),        // Brick red
+                [typeof(BusyToast)] = Color.FromRgb(99, 130, 156),        // Matches steel blue border
+            };
+
+            this.pulseEndColor = new()
+            {
+                [typeof(InfoToast)] = Color.FromRgb(135, 170, 200),       // Brighter steel blue
+                [typeof(WarningToast)] = Color.FromRgb(255, 191, 60),     // Warm amber
+                [typeof(ErrorToast)] = Color.FromRgb(220, 30, 30),        // Vivid red
+                [typeof(BusyToast)] = Color.FromRgb(135, 170, 200),       // Brighter steel blue
+            };
+
+            this.attentionStripeWidth = new()
+            {
+                [typeof(InfoToast)] = 2,
+                [typeof(WarningToast)] = 4,
+                [typeof(ErrorToast)] = 6,
+                [typeof(BusyToast)] = 2,
+            };
+
+            this.cornerRadius = new()
+            {
+                [typeof(InfoToast)] = 4,
+                [typeof(WarningToast)] = 6,
+                [typeof(ErrorToast)] = 8,
+                [typeof(BusyToast)] = 4,
+            };
+
+            this.borderThickness = new()
+            {
+                [typeof(InfoToast)] = 1,
+                [typeof(WarningToast)] = 2,
+                [typeof(ErrorToast)] = 2,
+                [typeof(BusyToast)] = 1,
+            };
+
+            this.displayShadow = new()
+            {
+                [typeof(InfoToast)] = false,
+                [typeof(WarningToast)] = true,
+                [typeof(ErrorToast)] = true,
+                [typeof(BusyToast)] = true,
+            };
+
+            this.animateFadeIn = new()
+            {
+                [typeof(InfoToast)] = true,
+                [typeof(WarningToast)] = true,
+                [typeof(ErrorToast)] = false,
+                [typeof(BusyToast)] = true,
+            };
+
+            this.animateFadeOut = new()
+            {
+                [typeof(InfoToast)] = true,
+                [typeof(WarningToast)] = true,
+                [typeof(ErrorToast)] = false,
+                [typeof(BusyToast)] = true,
+            };
+
+            this.animateBorderPulse = new()
+            {
+                [typeof(InfoToast)] = false,
+                [typeof(WarningToast)] = true,
+                [typeof(ErrorToast)] = true,
+                [typeof(BusyToast)] = true,
+            };
+        }
+
         #region Brushes
 
-        public virtual Brush GetForegroundBrush(IStylingCue auraContent)
+        public virtual Brush GetForegroundBrush(IAuraContent auraContent)
         {
-            if (auraContent is null)
-            {
-                // Fallback:
-                // The original message does not implement IStatusMessage, maybe it's a string or a control.
+            var brush = this.foregroundBrushes.GetValueOrDefault(auraContent?.GetType());
 
+            if (brush is null)
+            {
                 return Brushes.Black;
             }
 
-            return auraContent.ContentType switch
-            {
-                CuedContentType.Info => Brushes.DarkSlateGray,
-                CuedContentType.Warning => Brushes.DarkGoldenrod,
-                CuedContentType.Error => Brushes.Firebrick,
-                CuedContentType.None => Brushes.Black,
-                CuedContentType.Busy => Brushes.Black,
-                CuedContentType.Custom => Brushes.Black,
-                _ => Brushes.Black,
-            };
+            return brush;
         }
 
-        public virtual Brush GetBackgroundBrush(IStylingCue auraContent)
+        public virtual Brush GetBackgroundBrush(IAuraContent auraContent)
         {
-            if (auraContent is null)
+            var brush = this.backgroundBrushes.GetValueOrDefault(auraContent?.GetType());
+
+            if (brush is null)
             {
-                // Fallback:
-                // The original message does not implement IStatusMessage, maybe it's a string or a control.
+                return new SolidColorBrush(Color.FromRgb(230, 245, 255));   // Soft blue tint
+            }
+
+            return brush;
+        }
+
+        public virtual Brush GetBorderBrush(IAuraContent auraContent)
+        {
+            var brush = this.borderBrushes.GetValueOrDefault(auraContent?.GetType());
+
+            if (brush is null)
+            {
+                return Brushes.Gray;
+            }
+
+            return brush;
+        }
+
+        public virtual Brush GetAttentionStripeBrush(IAuraContent auraContent)
+        {
+            var brush = this.attentionStripeBrushes.GetValueOrDefault(auraContent?.GetType());
+
+            if (brush is null)
+            {
                 return Brushes.Transparent;
             }
 
-            return auraContent.ContentType switch
-            {
-                CuedContentType.None => Brushes.Transparent,
-                CuedContentType.Info => new SolidColorBrush(Color.FromRgb(230, 245, 255)),   // Soft blue tint
-                CuedContentType.Warning => new SolidColorBrush(Color.FromRgb(255, 248, 220)), // Pale gold
-                CuedContentType.Error => new SolidColorBrush(Color.FromRgb(255, 235, 238)),   // Gentle red-pink
-                CuedContentType.Busy => new SolidColorBrush(Color.FromRgb(230, 245, 255)),   // Soft blue tint
-                CuedContentType.Custom => new SolidColorBrush(Color.FromRgb(230, 245, 255)),   // Soft blue tint
-                _ => Brushes.Transparent,
-            };
+            return brush;
         }
 
-        public virtual Brush GetStatusPanelBorderBrush(IStylingCue auraContent)
+        public virtual Color GetPulseStartColor(IAuraContent auraContent)
         {
-            if (auraContent is null)
-            {
-                // Fallback:
-                // The original message does not implement IStatusMessage, maybe it's a string or a control.
-                return Brushes.Transparent;
-            }
+            var color = this.pulseStartColor.GetValueOrDefault(auraContent?.GetType());
 
-            return auraContent.ContentType switch
-            {
-                CuedContentType.None => Brushes.Gray,                         // Neutral fallback
-                CuedContentType.Info => new SolidColorBrush(Color.FromRgb(99, 130, 156)),      // Muted steel blue
-                CuedContentType.Warning => new SolidColorBrush(Color.FromRgb(198, 138, 0)),    // Goldenrod—attention-grabbing, not shouting
-                CuedContentType.Error => new SolidColorBrush(Color.FromRgb(165, 42, 42)),      // Deep brick red—serious but readable
-                CuedContentType.Busy => new SolidColorBrush(Color.FromRgb(99, 130, 156)),      // Muted steel blue
-                CuedContentType.Custom => new SolidColorBrush(Color.FromRgb(99, 130, 156)),      // Muted steel blue
-                _ => Brushes.Gray,
-            };
+            //if (color is null)
+            //{
+            //    return Colors.Gray;
+            //}
+
+            return color;
         }
 
-        public virtual Brush GetAttentionStripeBrush(IStylingCue auraContent)
+        public virtual Color GetPulseEndColor(IAuraContent auraContent)
         {
-            if (auraContent is null)
-            {
-                // Fallback:
-                // The original message does not implement IStatusMessage—may be raw UI content.
-                return Brushes.Transparent;
-            }
+            var color = this.pulseEndColor.GetValueOrDefault(auraContent?.GetType());
 
-            return auraContent.ContentType switch
-            {
-                CuedContentType.None => Brushes.Transparent,
-                CuedContentType.Info => new SolidColorBrush(Color.FromRgb(96, 153, 186)),     // Cool blue stripe for calm focus
-                CuedContentType.Warning => new SolidColorBrush(Color.FromRgb(255, 175, 0)),    // Vivid amber for urgency
-                CuedContentType.Error => new SolidColorBrush(Color.FromRgb(204, 0, 0)),        // Strong red for critical error
-                CuedContentType.Busy => new SolidColorBrush(Color.FromRgb(96, 153, 186)),     // Cool blue stripe for calm focus
-                CuedContentType.Custom => new SolidColorBrush(Color.FromRgb(96, 153, 186)),     // Cool blue stripe for calm focus
-                _ => Brushes.Transparent,
-            };
-        }
+            //if (color is null)
+            //{
+            //    return Colors.Gray;
+            //}
 
-        public virtual Color GetPulseStartColor(IStylingCue auraContent)
-        {
-            if (auraContent is null)
-            {
-                // Fallback:
-                // The original message does not implement IStatusMessage—may be raw UI content.
-
-                return Colors.Gray;
-            }
-
-            return auraContent.ContentType switch
-            {
-                CuedContentType.None => Colors.Gray,
-                CuedContentType.Info => Color.FromRgb(99, 130, 156),        // Matches steel blue border
-                CuedContentType.Warning => Color.FromRgb(198, 138, 0),      // Goldenrod
-                CuedContentType.Error => Color.FromRgb(165, 42, 42),        // Brick red
-                CuedContentType.Busy => Color.FromRgb(99, 130, 156),        // Matches steel blue border
-                CuedContentType.Custom => Color.FromRgb(99, 130, 156),        // Matches steel blue border
-                _ => Colors.Gray,
-            };
-        }
-
-        public virtual Color GetPulseEndColor(IStylingCue auraContent)
-        {
-            if (auraContent is null)
-            {
-                // Fallback:
-                // The original message does not implement IStatusMessage—may be raw UI content.
-
-                return Colors.DarkGray;
-            }
-
-
-            return auraContent.ContentType switch
-            {
-                CuedContentType.None => Colors.DarkGray,
-                CuedContentType.Info => Color.FromRgb(135, 170, 200),       // Brighter steel blue
-                CuedContentType.Warning => Color.FromRgb(255, 191, 60),     // Warm amber
-                CuedContentType.Error => Color.FromRgb(220, 30, 30),        // Vivid red
-                CuedContentType.Busy => Color.FromRgb(135, 170, 200),       // Brighter steel blue
-                CuedContentType.Custom => Color.FromRgb(135, 170, 200),       // Brighter steel blue
-                _ => Colors.DarkGray,
-            };
+            return color;
         }
 
         #endregion
 
         #region Control static appearance
 
-        public virtual double GetAttentionStripeWidth(IStylingCue auraContent)
+        public virtual double GetAttentionStripeWidth(IAuraContent auraContent)
         {
-            if (auraContent is null)
-            {
-                // Fallback:
-                // The original message does not implement IStatusMessage, maybe it's a string or a control.
-
-                return 0;
-            }
+            var width = this.attentionStripeWidth.GetValueOrDefault(auraContent?.GetType());
 
             double dpiScale = 1.0;
 
-            // Try to get DPI from the application’s main window
-            if (Application.Current?.MainWindow != null)
-            {
-                var dpiInfo = VisualTreeHelper.GetDpi(Application.Current.MainWindow);
-                dpiScale = dpiInfo.DpiScaleX;
-            }
+            //// Try to get DPI from the application’s main window
+            //if (Application.Current?.MainWindow != null)
+            //{
+            //    var dpiInfo = VisualTreeHelper.GetDpi(Application.Current.MainWindow);
+            //    dpiScale = dpiInfo.DpiScaleX;
+            //}
 
-            double baseWidth = auraContent.ContentType switch
-            {
-                CuedContentType.None => 0,
-                CuedContentType.Info => 2,
-                CuedContentType.Warning => 4,
-                CuedContentType.Error => 6,
-                CuedContentType.Busy => 2,
-                CuedContentType.Custom => 2,
-                _ => 0,
-            };
-
-            return Math.Min(baseWidth * dpiScale, this.AttentionStripeMaxWidth);
+            return Math.Min(width * dpiScale, this.AttentionStripeMaxWidth);
         }
 
-        public virtual double GetCornerRadius(IStylingCue auraContent)
+        public virtual double GetCornerRadius(IAuraContent auraContent)
         {
-            if (auraContent is null)
-            {
-                // Fallback:
-                // The original message does not implement IStatusMessage, maybe it's a string or a control.
+            var radius = this.cornerRadius.GetValueOrDefault(auraContent?.GetType());
 
-                return 0;
-            }
-
-            return auraContent.ContentType switch
-            {
-                CuedContentType.None => 0,
-                CuedContentType.Info => 4,
-                CuedContentType.Warning => 6,
-                CuedContentType.Error => 8,
-                CuedContentType.Busy => 4,
-                CuedContentType.Custom => 4,
-                _ => 0,
-            };
+            return radius;
         }
 
-        public virtual Thickness GetBorderThickness(IStylingCue auraContent)
+        public virtual Thickness GetBorderThickness(IAuraContent auraContent)
         {
-            if (auraContent is null)
-            {
-                // Fallback:
-                // The original message does not implement IStatusMessage, maybe it's a string or a control.
+            var thicknessValue = this.borderThickness.GetValueOrDefault(auraContent?.GetType());
 
-                return new Thickness(1);
-            }
-
-            return auraContent.ContentType switch
-            {
-                CuedContentType.None => new Thickness(1),
-                CuedContentType.Info => new Thickness(1),
-                CuedContentType.Warning => new Thickness(2),
-                CuedContentType.Error => new Thickness(2),
-                CuedContentType.Busy => new Thickness(1),
-                CuedContentType.Custom => new Thickness(1),
-                _ => new Thickness(1),
-            };
+            return new Thickness(thicknessValue);
         }
 
-        public virtual bool GetShowDropShadow(IStylingCue auraContent)
+        public virtual bool GetShowDropShadow(IAuraContent auraContent)
         {
-            if (auraContent is null)
-            {
-                // Fallback:
-                // The original message does not implement IStatusMessage, maybe it's a string or a control.
+            var useShadow = this.displayShadow.GetValueOrDefault(auraContent?.GetType());
 
-                return false;
-            }
-
-            return auraContent.ContentType switch
-            {
-                CuedContentType.None => false,
-                CuedContentType.Info => false,
-                CuedContentType.Warning => true,
-                CuedContentType.Error => true,
-                CuedContentType.Busy => true,
-                CuedContentType.Custom => false,
-                _ => false,
-            };
+            return useShadow;
         }
 
         #endregion
 
         #region Toggle animations
 
-        public virtual bool GetFadeIn(IStylingCue auraContent)
+        public virtual bool GetFadeIn(IAuraContent auraContent)
         {
-            if (auraContent is null)
-            {
-                // Fallback:
-                // The original message does not implement IStatusMessage, maybe it's a string or a control.
+            var useFadeIn = this.animateFadeIn.GetValueOrDefault(auraContent?.GetType());
 
-                return false;
-            }
-
-            return auraContent.ContentType switch
-            {
-                CuedContentType.None => false,         // Ambient or placeholder
-                CuedContentType.Info => true,          // Calm, informative tone
-                CuedContentType.Warning => true,       // Gives it presence without alarm
-                CuedContentType.Error => false,        // Immediate visibility—no delay
-                CuedContentType.Busy => true,          // Calm, informative tone
-                CuedContentType.Custom => true,          // Calm, informative tone
-                _ => false,
-            };
+            return useFadeIn;
         }
 
-        public virtual bool GetFadeOut(IStylingCue auraContent)
+        public virtual bool GetFadeOut(IAuraContent auraContent)
         {
-            if (auraContent is null)
-            {
-                // Fallback:
-                // The original message does not implement IStatusMessage, maybe it's a string or a control.
+            var useFadeOut = this.animateFadeOut.GetValueOrDefault(auraContent?.GetType());
 
-                return false;
-            }
-
-            return auraContent.ContentType switch
-            {
-                CuedContentType.None => false,
-                CuedContentType.Info => true,
-                CuedContentType.Warning => true,
-                CuedContentType.Error => false,
-                CuedContentType.Busy => true,
-                CuedContentType.Custom => true,
-                _ => false,
-            };
+            return useFadeOut;
         }
 
-        public virtual bool GetPulseBorder(IStylingCue auraContent)
+        public virtual bool GetPulseBorder(IAuraContent auraContent)
         {
-            if (auraContent is null)
-            {
-                // Fallback:
-                // The original message does not implement IStatusMessage, maybe it's a string or a control.
+            var useBorderPulse = this.animateBorderPulse.GetValueOrDefault(auraContent?.GetType());
 
-                return false;
-            }
-
-            return auraContent.ContentType switch
-            {
-                CuedContentType.None => false,
-                CuedContentType.Info => false,
-                CuedContentType.Warning => true,    // Subtle urgency
-                CuedContentType.Error => true,      // Strong emphasis
-                CuedContentType.Busy => true,
-                CuedContentType.Custom => false,
-                _ => false,
-            };
+            return useBorderPulse;
         }
 
         #endregion
 
-        public TimeSpan? GetDisplayDuration(IStylingCue auraContent)
+        public TimeSpan? GetDisplayDuration(IAuraContent auraContent)
         {
-            if (auraContent is null)
-            {
-                // Fallback:
-                // The original message does not implement IStatusMessage, maybe it's a string or a control.
+            return null;
+        }
 
-                return null;
-            }
-
-            return auraContent.ContentType switch
-            {
-                CuedContentType.None => null,
-                CuedContentType.Info => null,
-                CuedContentType.Warning => null,
-                CuedContentType.Error => null,
-                CuedContentType.Busy => null,
-                CuedContentType.Custom => null,
-                _ => null,
-            };
+        public bool? GetIsHoverPauseEnabled(IAuraContent auraContent)
+        {
+            return true;
         }
 
         #region Control shadow properties
 
-        public virtual Color GetShadowColor(IStylingCue auraContent)
+        public virtual Color GetShadowColor(IAuraContent auraContent)
         {
             return Colors.Black;
         }
 
-        public virtual double GetShadowOpacity(IStylingCue auraContent)
+        public virtual double GetShadowOpacity(IAuraContent auraContent)
         {
             return 0.5;
         }
 
-        public virtual double GetShadowBlurRadius(IStylingCue auraContent)
+        public virtual double GetShadowBlurRadius(IAuraContent auraContent)
         {
             return 10.0; // Soft shadow
         }
 
-        public virtual double GetShadowDepth(IStylingCue auraContent)
+        public virtual double GetShadowDepth(IAuraContent auraContent)
         {
             return 5.0; // Subtle depth
         }

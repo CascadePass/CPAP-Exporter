@@ -241,7 +241,7 @@ namespace CascadePass.CPAPExporter
         }
 
         /// <summary>
-        /// Opens Windows Explorder the source folder in the file explorer.
+        /// Opens Windows Explorer the source folder in the file explorer.
         /// </summary>
         public void BrowseToSourceFolder()
         {
@@ -309,7 +309,7 @@ namespace CascadePass.CPAPExporter
                             this.ExportParameters.Reports.Count
                         ))
                     {
-                        DisplayDuration = TimeSpan.FromSeconds(8),
+                        Transience = new() { DisplayDuration = TimeSpan.FromSeconds(8), },                        
                         IconSource = new BitmapImage(new Uri("pack://application:,,,/Images/CPAP-Exporter.VersionEmblem.1.1.0.png")),
                     };
                 }
