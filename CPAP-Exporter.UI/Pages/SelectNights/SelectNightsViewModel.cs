@@ -181,12 +181,12 @@ namespace CascadePass.CPAPExporter
                 {
                     Dispatcher.CurrentDispatcher.Invoke(() =>
                     {
-                        this.ConsumeReports(reports);
+                        this.ConsumeReports(reports, folder);
                     });
                 }
                 else
                 {
-                    this.ConsumeReports(reports);
+                    this.ConsumeReports(reports, folder);
                 }
             }
 
@@ -206,7 +206,7 @@ namespace CascadePass.CPAPExporter
             this.ShowDefaultStatusMessage();
         }
 
-        internal void ConsumeReports(List<DailyReport> reports)
+        internal void ConsumeReports(List<DailyReport> reports, string folder)
         {
             ApplicationComponentProvider.Status.ProgressBar = new(0, reports.Count - 1, 0);
 
@@ -215,24 +215,23 @@ namespace CascadePass.CPAPExporter
                 ApplicationComponentProvider.Status.ProgressBar.Current = i;
 
                 var report = reports[i];
-                //bool isDetailReport = report.Sessions.Count > 0 && !report.Sessions.Any(session => session.Signals.Count == 0);
 
                 if (report.HasDetailData)
                 {
-                    this.AddReport(report);
+                    this.AddReport(report, folder);
                 }
             }
 
             ApplicationComponentProvider.Status.ProgressBar = null;
         }
 
-        internal DailyReportViewModel AddReport(DailyReport report)
+        internal DailyReportViewModel AddReport(DailyReport report, string folder)
         {
             ArgumentNullException.ThrowIfNull(report, nameof(report));
 
             ApplicationComponentProvider.Status.StatusText = string.Format(Resources.AddingDate, report.ReportDate);
 
-            DailyReportViewModel reportViewModel = new(report, this.IsAllSelected);
+            DailyReportViewModel reportViewModel = new(report, this.IsAllSelected, folder);
             this.Reports.Add(reportViewModel);
 
             reportViewModel.PropertyChanged += this.ReportViewModel_PropertyChanged;

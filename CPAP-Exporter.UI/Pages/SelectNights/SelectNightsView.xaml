@@ -10,61 +10,57 @@
              mc:Ignorable="d" 
              d:DesignHeight="450" d:DesignWidth="800">
 
-    <DockPanel>
-        <ItemsControl x:Name="SourceFoldersDisplay" Margin="0,0,0,10" DockPanel.Dock="Top" ItemsSource="{Binding SourceFolders}">
-            <ItemsControl.ItemTemplate>
-                <DataTemplate>
-                    <TextBlock>
-                        <Run Text="{Binding Value, Mode=OneWay}" FontWeight="Bold" />
-                        <Run Text="{x:Static local:Resources.NightsFoundIn}" />
-                        <Hyperlink Command="{Binding ElementName=SelectNightsViewControl, Path=DataContext.OpenSourceFolderCommand}">
-                            <Run Text="{Binding Key, Mode=OneWay}" />
-                        </Hyperlink>
-                    </TextBlock>
-                </DataTemplate>
-            </ItemsControl.ItemTemplate>
-        </ItemsControl>
+    <DataGrid
+        x:Name="SelectNightDataGrid"
+        ItemsSource="{Binding Reports}"
+        SelectedItem="{Binding SelectedReport}"
+        HeadersVisibility="Column"
+        AutoGenerateColumns="False"
+        CanUserAddRows="False" CanUserDeleteRows="False"
+        Background="{DynamicResource Legibility.Background}"
+        EnableRowVirtualization="True" EnableColumnVirtualization="True"
+        VerticalScrollBarVisibility="Auto"
+        HorizontalScrollBarVisibility="Auto"
+        Padding="4"
+        >
+        <DataGrid.Columns>
+            <DataGridCheckBoxColumn Binding="{Binding IsSelected, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}">
+                <DataGridCheckBoxColumn.Header>
+                    <CheckBox
+                        x:Name="SelectAllCheckBox"
+                        IsChecked="{Binding IsAllSelected, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
+                        Checked="SelectAllCheckBox_Checked"
+                        Unchecked="SelectAllCheckBox_Checked"
+                        />
+                </DataGridCheckBoxColumn.Header>
+            </DataGridCheckBoxColumn>
+            <DataGridTextColumn Header="{x:Static local:Resources.Day}" Binding="{Binding DailyReport.RecordingStartTime, StringFormat={}{0:dddd}}" />
+            <DataGridTextColumn Header="{x:Static local:Resources.Date}" Binding="{Binding DailyReport.RecordingStartTime}" />
+            <DataGridTextColumn Header="{x:Static local:Resources.Mode}" Binding="{Binding TherapyMode}" />
+            <DataGridTextColumn Header="{x:Static local:Resources.Sessions}" Binding="{Binding DailyReport.Sessions.Count}" />
+            <DataGridTextColumn Header="{x:Static local:Resources.Events}" Binding="{Binding DailyReport.Events.Count}" />
+            <DataGridTextColumn Header="{x:Static local:Resources.AHI}" Binding="{Binding DailyReport.EventSummary.AHI, StringFormat=0.0}" />
+            <DataGridTextColumn Header="{x:Static local:Resources.Usage}" Binding="{Binding DailyReport.TotalSleepTime}" />
+            <DataGridTextColumn Header="{x:Static local:Resources.Leak}" Binding="{Binding DailyReport.StatsSummary.LeakMedian, StringFormat=0.0}" />
+            <DataGridTextColumn Header="{x:Static local:Resources.Leak}" Binding="{Binding DailyReport.StatsSummary.Leak95, StringFormat=0.0}" />
+            <DataGridTextColumn Header="{x:Static local:Resources.Pressure}" Binding="{Binding DailyReport.StatsSummary.PressureMedian, StringFormat=0.0}" />
+            <DataGridTextColumn Header="{x:Static local:Resources.Pressure}" Binding="{Binding DailyReport.StatsSummary.Pressure95, StringFormat=0.0}" />
+            <DataGridTextColumn Header="{x:Static local:Resources.Pressure}" Binding="{Binding DailyReport.StatsSummary.PressureMax, StringFormat=0.0}" />
+            <DataGridTextColumn Header="{x:Static local:Resources.MV}" Binding="{Binding DailyReport.StatsSummary.MinuteVentilationMedian, StringFormat=0.0}" />
+            <DataGridTextColumn Header="{x:Static local:Resources.TV}" Binding="{Binding DailyReport.StatsSummary.TidalVolumeMedian}" />
+            <DataGridTextColumn Header="{x:Static local:Resources.Rows}" Binding="{Binding SampleCount, StringFormat=N0}" />
 
-        <DataGrid
-            x:Name="SelectNightDataGrid"
-            ItemsSource="{Binding Reports}"
-            SelectedItem="{Binding SelectedReport}"
-            HeadersVisibility="Column"
-            AutoGenerateColumns="False"
-            CanUserAddRows="False" CanUserDeleteRows="False"
-            Background="{DynamicResource Legibility.Background}"
-            EnableRowVirtualization="True" EnableColumnVirtualization="True"
-            VerticalScrollBarVisibility="Auto"
-            HorizontalScrollBarVisibility="Auto"
-            Padding="4"
-            >
-            <DataGrid.Columns>
-                <DataGridCheckBoxColumn Binding="{Binding IsSelected, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}">
-                    <DataGridCheckBoxColumn.Header>
-                        <CheckBox
-                            x:Name="SelectAllCheckBox"
-                            IsChecked="{Binding IsAllSelected, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
-                            Checked="SelectAllCheckBox_Checked"
-                            Unchecked="SelectAllCheckBox_Checked"
-                            />
-                    </DataGridCheckBoxColumn.Header>
-                </DataGridCheckBoxColumn>
-                <DataGridTextColumn Header="{x:Static local:Resources.Date}" Binding="{Binding DailyReport.RecordingStartTime}" />
-                <DataGridTextColumn Header="{x:Static local:Resources.Mode}" Binding="{Binding TherapyMode}" />
-                <DataGridTextColumn Header="{x:Static local:Resources.Sessions}" Binding="{Binding DailyReport.Sessions.Count}" />
-                <DataGridTextColumn Header="{x:Static local:Resources.Events}" Binding="{Binding DailyReport.Events.Count}" />
-                <DataGridTextColumn Header="{x:Static local:Resources.AHI}" Binding="{Binding DailyReport.EventSummary.AHI, StringFormat=0.0}" />
-                <DataGridTextColumn Header="{x:Static local:Resources.Usage}" Binding="{Binding DailyReport.TotalSleepTime}" />
-                <DataGridTextColumn Header="{x:Static local:Resources.Leak}" Binding="{Binding DailyReport.StatsSummary.LeakMedian, StringFormat=0.0}" />
-                <DataGridTextColumn Header="{x:Static local:Resources.Leak}" Binding="{Binding DailyReport.StatsSummary.Leak95, StringFormat=0.0}" />
-                <DataGridTextColumn Header="{x:Static local:Resources.Pressure}" Binding="{Binding DailyReport.StatsSummary.PressureMedian, StringFormat=0.0}" />
-                <DataGridTextColumn Header="{x:Static local:Resources.Pressure}" Binding="{Binding DailyReport.StatsSummary.Pressure95, StringFormat=0.0}" />
-                <DataGridTextColumn Header="{x:Static local:Resources.Pressure}" Binding="{Binding DailyReport.StatsSummary.PressureMax, StringFormat=0.0}" />
-                <DataGridTextColumn Header="{x:Static local:Resources.MV}" Binding="{Binding DailyReport.StatsSummary.MinuteVentilationMedian, StringFormat=0.0}" />
-                <DataGridTextColumn Header="{x:Static local:Resources.TV}" Binding="{Binding DailyReport.StatsSummary.TidalVolumeMedian}" />
-                <DataGridTextColumn Header="{x:Static local:Resources.Rows}" Binding="{Binding SampleCount, StringFormat=N0}" />
-            </DataGrid.Columns>
-        </DataGrid>
-    </DockPanel>
-
+            <DataGridTemplateColumn Header="{x:Static local:Resources.SourceFolder}" SortMemberPath="DisplayFolderName">
+                <DataGridTemplateColumn.CellTemplate>
+                    <DataTemplate>
+                        <TextBlock>
+                            <Hyperlink Command="{Binding ElementName=SelectNightsViewControl, Path=DataContext.OpenSourceFolderCommand}">
+                                <Run Text="{Binding DisplayFolderName, Mode=OneWay}" />
+                            </Hyperlink>
+                        </TextBlock>
+                    </DataTemplate>
+                </DataGridTemplateColumn.CellTemplate>
+            </DataGridTemplateColumn>
+        </DataGrid.Columns>
+    </DataGrid>
 </UserControl>
