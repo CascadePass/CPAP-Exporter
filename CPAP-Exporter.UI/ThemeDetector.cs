@@ -1,9 +1,4 @@
 ﻿using Microsoft.Win32;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows;
 
 namespace CascadePass.CPAPExporter
@@ -92,42 +87,6 @@ namespace CascadePass.CPAPExporter
         }
 
         #endregion
-    }
-
-    public class CpapExporterThemeDetector : ThemeDetector
-    {
-        public CpapExporterThemeDetector() : base()
-        {
-        }
-
-        public CpapExporterThemeDetector(IRegistryProvider registryProviderToUse) : base(registryProviderToUse)
-        {
-        }
-
-        public override bool ApplyTheme()
-        {
-            // Implement the logic to apply the theme based on the current system settings.
-
-            Application.Current.Resources.MergedDictionaries.Clear();
-
-            var currentTheme = this.GetThemeType();
-            if (currentTheme == ThemeType.Dark)
-            {
-                Application.Current.Resources.MergedDictionaries.Add(new() { Source = new Uri("/Themes/Dark.xaml", UriKind.Relative) });
-            }
-            else if (currentTheme == ThemeType.Light)
-            {
-                Application.Current.Resources.MergedDictionaries.Add(new() { Source = new Uri("/Themes/Light.xaml", UriKind.Relative) });
-            }
-
-            Application.Current.Resources.MergedDictionaries.Add(new() { Source = new Uri("/Fonts.xaml", UriKind.Relative) });
-            Application.Current.Resources.MergedDictionaries.Add(new() { Source = new Uri("/Styles.xaml", UriKind.Relative) });
-
-            Application.Current.Resources.MergedDictionaries.Add(new() { Source = new Uri("pack://application:,,,/PresentationFramework.Fluent;component/Themes/Fluent.xaml", UriKind.Absolute) });
-            //base.ThemeChanged?.Invoke(this, EventArgs.Empty);
-
-            return true;
-        }
     }
 
     /// <summary>
