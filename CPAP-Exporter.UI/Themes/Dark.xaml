@@ -2,7 +2,10 @@
                     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
 
     <SolidColorBrush x:Key="Window.Background" Color="Black" />
+    
     <SolidColorBrush x:Key="Text.Foreground" Color="#E0E0E0" />
+    <SolidColorBrush x:Key="Text.Disabled.Foreground" Color="#A6A6A6" />
+
     <SolidColorBrush x:Key="PageDescription.Foreground" Color="#3FA7A7" />
 
     <LinearGradientBrush x:Key="PageTitle.Foreground" StartPoint="0,0" EndPoint="1,1">
@@ -14,7 +17,7 @@
 
     <SolidColorBrush x:Key="Navigation.Drawer.Background" Color="#111111" />
     <SolidColorBrush x:Key="Navigation.SelectedIndicator.Foreground" Color="Green" />
-    <SolidColorBrush x:Key="Navigation.MouseOver.Background" Color="LightGreen" />
+    <SolidColorBrush x:Key="Navigation.MouseOver.Background" Color="DarkGreen" />
     <SolidColorBrush x:Key="Navigation.MouseOver.Shadow" Color="LawnGreen" />
 
     <SolidColorBrush x:Key="Legibility.Background" Color="#AA1E1E2F" />
@@ -60,4 +63,8 @@
     <SolidColorBrush x:Key="OpenFiles.OpenButton.Pressed.Border" Color="DodgerBlue" />
 
     <ImageBrush x:Key="SavedFiles.Background" ImageSource="/Images/SavedFiles.Background.Dark.png" Stretch="Fill" />
+    <BitmapImage x:Key="Settings.Icon" UriSource="pack://application:,,,/Images/Settings.Icon.Dark.png" />
+    <BitmapImage x:Key="Settings.Icon.Selected" UriSource="pack://application:,,,/Images/Settings.Icon.Selected.png" />
+    <BitmapImage x:Key="Menu.Icon" UriSource="pack://application:,,,/Images/Menu.Icon.Dark.png" />
+    <BitmapImage x:Key="Menu.Icon.Selected" UriSource="pack://application:,,,/Images/Menu.Icon.Selected.png" />
 </ResourceDictionary>

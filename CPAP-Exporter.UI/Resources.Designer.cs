@@ -385,11 +385,38 @@ namespace CascadePass.CPAPExporter {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Expand or close the navigation drawer.
+        /// </summary>
+        public static string Nav_ExpandDrawer_TT {
+            get {
+                return ResourceManager.GetString("Nav_ExpandDrawer_TT", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Export.
+        /// </summary>
+        public static string Nav_Export {
+            get {
+                return ResourceManager.GetString("Nav_Export", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Write your data to disc.
         /// </summary>
         public static string Nav_Export_TT {
             get {
                 return ResourceManager.GetString("Nav_Export_TT", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Export Settings.
+        /// </summary>
+        public static string Nav_ExportSettings_TT {
+            get {
+                return ResourceManager.GetString("Nav_ExportSettings_TT", resourceCulture);
             }
         }
         
@@ -403,6 +430,15 @@ namespace CascadePass.CPAPExporter {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Open PAP.
+        /// </summary>
+        public static string Nav_Open {
+            get {
+                return ResourceManager.GetString("Nav_Open", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Select PAP files to open and export.
         /// </summary>
         public static string Nav_Open_TT {
@@ -412,11 +448,29 @@ namespace CascadePass.CPAPExporter {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Select Nights.
+        /// </summary>
+        public static string Nav_SelectDays {
+            get {
+                return ResourceManager.GetString("Nav_SelectDays", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Choose which night(s) to export.
         /// </summary>
         public static string Nav_SelectDays_TT {
             get {
                 return ResourceManager.GetString("Nav_SelectDays_TT", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Select Signals.
+        /// </summary>
+        public static string Nav_SelectSignals {
+            get {
+                return ResourceManager.GetString("Nav_SelectSignals", resourceCulture);
             }
         }
         

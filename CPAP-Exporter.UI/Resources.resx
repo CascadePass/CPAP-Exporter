@@ -339,4 +339,22 @@
   <data name="SourceFolder" xml:space="preserve">
     <value>Source Folder</value>
   </data>
+  <data name="Nav_Open" xml:space="preserve">
+    <value>Open PAP</value>
+  </data>
+  <data name="Nav_Export" xml:space="preserve">
+    <value>Export</value>
+  </data>
+  <data name="Nav_SelectDays" xml:space="preserve">
+    <value>Select Nights</value>
+  </data>
+  <data name="Nav_SelectSignals" xml:space="preserve">
+    <value>Select Signals</value>
+  </data>
+  <data name="Nav_ExpandDrawer_TT" xml:space="preserve">
+    <value>Expand or close the navigation drawer</value>
+  </data>
+  <data name="Nav_ExportSettings_TT" xml:space="preserve">
+    <value>Export Settings</value>
+  </data>
 </root>

@@ -1,8 +1,9 @@
 ﻿using System.ComponentModel;
-using System.Windows.Controls;
 using System.Windows;
+using System.Windows.Controls;
 using System.Windows.Data;
 using System.Windows.Media;
+using System.Windows.Media.Animation;
 
 namespace CascadePass.CPAPExporter
 {
@@ -20,7 +21,29 @@ namespace CascadePass.CPAPExporter
 
         private void Observable_PropertyChanged(object sender, PropertyChangedEventArgs e)
         {
-            NavigationBar.UpdateButtonStyles(this);
+            if (e.PropertyName == "ShowNavigationButtonLabels")
+            {
+                this.AnimateDrawer();
+            }
+
+            //No longer needed?
+            //NavigationBar.UpdateButtonStyles(this);
+        }
+
+        private void AnimateDrawer()
+        {
+            if (this.DataContext is not NavigationViewModel navigationViewModel)
+            {
+                return;
+            }
+
+            double targetWidth = navigationViewModel.NavigationTrayWidth;
+
+            DrawerPanel.BeginAnimation(Border.WidthProperty, new DoubleAnimation
+            {
+                To = targetWidth,
+                Duration = TimeSpan.FromMilliseconds(300)
+            });
         }
 
         private static void UpdateButtonStyles(DependencyObject parent)
