@@ -1,6 +1,8 @@
-﻿using System;
-using System.Diagnostics;
+﻿using System.Diagnostics;
+using System.Linq;
 using System.Windows;
+using System.Windows.Media;
+using System.Windows.Media.Imaging;
 
 namespace CascadePass.CPAPExporter
 {
@@ -12,7 +14,10 @@ namespace CascadePass.CPAPExporter
         private FrameworkElement currentView;
         private NavigationStep currentPage;
         private ExportParameters exportParameters;
-        private DelegateCommand openFilesCommand, selectNightsCommand, selectSignalsCommand, showExportSettingsCommand, exportCommand, viewReleaseNotes;
+        private DelegateCommand
+            openFilesCommand, selectNightsCommand, selectSignalsCommand, showExportSettingsCommand, exportCommand, viewReleaseNotes,
+            toggleNavigationDrawerExpansionCommand, settingsCommand
+        ;
 
         #endregion
 
@@ -24,6 +29,9 @@ namespace CascadePass.CPAPExporter
         public NavigationViewModel()
         {
             this.ExportParameters = new();
+
+            // Use configured value to start
+            this.ShowNavigationButtonLabels = this.ExportParameters.UserPreferences.IsNavigationDrawerExpanded;
         }
 
         #endregion
@@ -59,6 +67,11 @@ namespace CascadePass.CPAPExporter
                     {
                         this.Subscribe(value.DataContext as ViewModel);
                     }
+
+                    if (value?.DataContext is PageViewModel newPage)
+                    {
+                        newPage.BecomeVisible();
+                    }
                 }
             }
         }
@@ -89,8 +102,9 @@ namespace CascadePass.CPAPExporter
                         nameof(this.OpenButtonImageUri),
                         nameof(this.SelectNightButtonImageUri),
                         nameof(this.SelectSignalsButtonImageUri),
-                        nameof(this.SettingsButtonImageUri),
+                        nameof(this.ExportSettingsButtonImageUri),
                         nameof(this.ExportButtonImageUri),
+                        nameof(this.SettingsIcon),
                     ]
                 );
             }
@@ -110,11 +124,30 @@ namespace CascadePass.CPAPExporter
             set => this.SetPropertyValue(ref this.exportParameters, value, nameof(this.ExportParameters));
         }
 
+        /// <summary>
+        /// Gets or sets a value indicating whether the navigation tray is open.
+        /// </summary>
         public bool ShowNavigationButtonLabels
         {
             get => this.showNavButtonLabels;
-            set => this.SetPropertyValue(ref this.showNavButtonLabels, value, nameof(this.ShowNavigationButtonLabels));
+            set
+            {
+                var changed = this.SetPropertyValue(ref this.showNavButtonLabels, value, [
+                    nameof(this.ShowNavigationButtonLabels),
+                    nameof(this.MenuIcon),
+                    nameof(this.NavigationTrayWidth),
+                    nameof(this.SettingsIcon),
+                    ]
+                );
+
+                if (changed)
+                {
+                    this.ExportParameters.UserPreferences.IsNavigationDrawerExpanded = value;
+                }
+            }
         }
+
+        public double NavigationTrayWidth => this.ShowNavigationButtonLabels ? 160 : 64;
 
         #region Button Styles
 
@@ -132,15 +165,19 @@ namespace CascadePass.CPAPExporter
 
         #region Button Icons
 
-        public string OpenButtonImageUri => this.currentPage == NavigationStep.OpenFiles ? "/Images/Navigation.OpenFiles.Selected.png" : "/Images/Navigation.OpenFiles.Normal.png";
+        public string OpenButtonImageUri => this.IsStepAllowed(NavigationStep.OpenFiles) ? "/Images/Navigation.OpenFiles.Selected.png" : "/Images/Navigation.OpenFiles.Normal.png";
 
-        public string SelectNightButtonImageUri => this.currentPage == NavigationStep.SelectDays ? "/Images/Navigation.SelectNights.Selected.png" : "/Images/Navigation.SelectNights.Normal.png";
+        public string SelectNightButtonImageUri => this.IsStepAllowed(NavigationStep.SelectDays) ? "/Images/Navigation.SelectNights.Selected.png" : "/Images/Navigation.SelectNights.Normal.png";
 
-        public string SelectSignalsButtonImageUri => this.currentPage == NavigationStep.SelectSignals ? "/Images/Navigation.SelectSignals.Selected.png" : "/Images/Navigation.SelectSignals.Normal.png";
+        public string SelectSignalsButtonImageUri => this.IsStepAllowed(NavigationStep.SelectSignals) ? "/Images/Navigation.SelectSignals.Selected.png" : "/Images/Navigation.SelectSignals.Normal.png";
 
-        public string SettingsButtonImageUri => this.currentPage == NavigationStep.Settings ? "/Images/Navigation.ExportSettings.Selected.png" : "/Images/Navigation.ExportSettings.Normal.png";
+        public string ExportSettingsButtonImageUri => this.IsStepAllowed(NavigationStep.Settings) ? "/Images/Navigation.ExportSettings.Selected.png" : "/Images/Navigation.ExportSettings.Normal.png";
 
-        public string ExportButtonImageUri => this.currentPage == NavigationStep.Export ? "/Images/Navigation.Save.Selected.png" : "/Images/Navigation.Save.Normal.png";
+        public string ExportButtonImageUri => this.IsStepAllowed(NavigationStep.Export) ? "/Images/Navigation.Save.Selected.png" : "/Images/Navigation.Save.Normal.png";
+
+        public BitmapImage MenuIcon => this.ShowNavigationButtonLabels ? Application.Current?.FindResource("Menu.Icon.Selected") as BitmapImage : Application.Current?.FindResource("Menu.Icon") as BitmapImage;
+
+        public BitmapImage SettingsIcon => this.CurrentStep == NavigationStep.Settings ? Application.Current?.FindResource("Settings.Icon.Selected") as BitmapImage : Application.Current?.FindResource("Settings.Icon") as BitmapImage;
 
         #endregion
 
@@ -157,6 +194,8 @@ namespace CascadePass.CPAPExporter
         public DelegateCommand ExportCommand => this.exportCommand ??= new DelegateCommand(this.Export);
 
         public DelegateCommand ShowReleaseNotesCommand => this.viewReleaseNotes ??= new DelegateCommand(this.ShowReleaseNotes);
+
+        public DelegateCommand ToggleNavDrawerExpansionCommand => this.toggleNavigationDrawerExpansionCommand ??= new DelegateCommand(this.ToggleNavigationDrawerExpansion);
 
         #endregion
 
@@ -280,6 +319,11 @@ namespace CascadePass.CPAPExporter
             }
         }
 
+        public void ToggleNavigationDrawerExpansion()
+        {
+            this.ShowNavigationButtonLabels = !this.ShowNavigationButtonLabels;
+        }
+
         #region Helper methods
 
         private Style GetButtonStyle(NavigationStep step) => (Style)Application.Current.FindResource(this.GetButtonStyleName(step));
@@ -298,6 +342,33 @@ namespace CascadePass.CPAPExporter
             }
 
             return "NavigationButtonStyle";
+        }
+
+        public bool IsStepAllowed(NavigationStep step)
+        {
+            if (this.currentPage == step)
+            {
+                return true;
+            }
+
+            int validationOffset = ApplicationComponentProvider.PageViewModelProvider.GetViewModel(this.currentView)?.IsValid ?? false ? 1 : 0;
+            if (this.AchievedStep + validationOffset < step)
+            {
+                return false;
+            }
+
+            return true;
+        }
+
+        internal void UpdateButtonImages()
+        {
+            this.OnPropertyChanged(nameof(this.OpenButtonImageUri));
+            this.OnPropertyChanged(nameof(this.SelectNightButtonImageUri));
+            this.OnPropertyChanged(nameof(this.SelectSignalsButtonImageUri));
+            this.OnPropertyChanged(nameof(this.ExportSettingsButtonImageUri));
+            this.OnPropertyChanged(nameof(this.ExportButtonImageUri));
+            this.OnPropertyChanged(nameof(this.MenuIcon));
+            this.OnPropertyChanged(nameof(this.SettingsIcon));
         }
 
         public void Subscribe(ViewModel viewModel)
