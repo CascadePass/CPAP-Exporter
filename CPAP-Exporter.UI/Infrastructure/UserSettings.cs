@@ -46,6 +46,7 @@ namespace CascadePass.CPAPExporter
 
         public bool IsFlowReductionDescriptionExpanded { get; set; }
 
+        public bool IsNavigationDrawerExpanded { get; set; }
 
         /// <summary>
         /// Gets the fully qualified name of the settings file.

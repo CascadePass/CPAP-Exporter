@@ -12,55 +12,79 @@
         <local:NavigationViewModel />
     </UserControl.DataContext>
 
-    <StackPanel>
-        <Button
-            Style="{Binding OpenButtonStyle}"
-            Command="{Binding OpenFilesCommand}"
-            ToolTip="{x:Static local:Resources.Nav_Open_TT}">
-            <StackPanel Orientation="Horizontal">
-                <Image Source="{Binding OpenButtonImageUri}" Style="{StaticResource NavigationButtonImage}" />
-                <TextBlock Text="{x:Static local:Resources.Nav_Open_TT}" Visibility="{Binding ShowNavigationButtonLabels, Converter={StaticResource BoolToVisibilityConverter}}" />
-            </StackPanel>
-        </Button>
+    <Border x:Name="DrawerPanel" Width="{Binding NavigationTrayWidth}" Margin="0" Padding="0">
+        <DockPanel LastChildFill="True">
+            <Button
+                DockPanel.Dock="Bottom"
+                Style="{DynamicResource NavigationButtonStyle}"
+                Command="{Binding ShowExportSettingsCommand}"
+                ToolTip="{x:Static local:Resources.Nav_ExpandDrawer_TT}">
+                <StackPanel Orientation="Horizontal" Width="{Binding NavigationTrayWidth}">
+                    <Image Source="{Binding SettingsIcon}" Style="{StaticResource NavigationButtonImage}" />
+                    <TextBlock Text="{x:Static local:Resources.Nav_Settings_TT}" Style="{StaticResource NavigationButtonText}" />
+                </StackPanel>
+            </Button>
 
-        <Button
-            Style="{Binding SelectNightButtonStyle}"
-            Command="{Binding SelectNightsCommand}"
-            ToolTip="{x:Static local:Resources.Nav_SelectDays_TT}">
-            <StackPanel Orientation="Horizontal">
-                <Image Source="{Binding SelectNightButtonImageUri}" Style="{StaticResource NavigationButtonImage}" />
-                <TextBlock Text="{x:Static local:Resources.Nav_SelectDays_TT}" Visibility="{Binding ShowNavigationButtonLabels, Converter={StaticResource BoolToVisibilityConverter}}" />
-            </StackPanel>
-        </Button>
+            <StackPanel Margin="0">
+                <Button
+                    Style="{DynamicResource NavigationButtonStyle}"
+                    Command="{Binding ToggleNavDrawerExpansionCommand}"
+                    ToolTip="{x:Static local:Resources.Nav_ExpandDrawer_TT}">
+                    <StackPanel Orientation="Horizontal">
+                        <Image Source="{Binding MenuIcon}" Style="{StaticResource NavigationButtonImage}" />
+                    </StackPanel>
+                </Button>
 
-        <Button
-            Style="{Binding SelectSignalsButtonStyle}"
-            Command="{Binding SelectSignalsCommand}"
-            ToolTip="{x:Static local:Resources.Nav_SelectSignals_TT}">
-            <StackPanel Orientation="Horizontal">
-                <Image Source="{Binding SelectSignalsButtonImageUri}" Style="{StaticResource NavigationButtonImage}" />
-                <TextBlock Text="{x:Static local:Resources.Nav_SelectSignals_TT}" Visibility="{Binding ShowNavigationButtonLabels, Converter={StaticResource BoolToVisibilityConverter}}" />
-            </StackPanel>
-        </Button>
+                <Button
+                    Style="{Binding OpenButtonStyle}"
+                    Command="{Binding OpenFilesCommand}"
+                    ToolTip="{x:Static local:Resources.Nav_Open_TT}">
+                    <StackPanel Orientation="Horizontal" Width="{Binding NavigationTrayWidth}">
+                        <Image Source="{Binding OpenButtonImageUri}" Style="{StaticResource NavigationButtonImage}" />
+                        <TextBlock Text="{x:Static local:Resources.Nav_Open}" Style="{StaticResource NavigationButtonText}" />
+                    </StackPanel>
+                </Button>
 
-        <Button
-            Style="{Binding SettingsButtonStyle}"
-            Command="{Binding ShowExportSettingsCommand}"
-            ToolTip="{x:Static local:Resources.Nav_Settings_TT}">
-            <StackPanel Orientation="Horizontal">
-                <Image Source="{Binding SettingsButtonImageUri}" Style="{StaticResource NavigationButtonImage}" />
-                <TextBlock Text="{x:Static local:Resources.Nav_Settings_TT}" Visibility="{Binding ShowNavigationButtonLabels, Converter={StaticResource BoolToVisibilityConverter}}" />
-            </StackPanel>
-        </Button>
+                <Button
+                    Style="{Binding SelectNightButtonStyle}"
+                    Command="{Binding SelectNightsCommand}"
+                    ToolTip="{x:Static local:Resources.Nav_SelectDays_TT}">
+                    <StackPanel Orientation="Horizontal" Width="{Binding NavigationTrayWidth}">
+                        <Image Source="{Binding SelectNightButtonImageUri}" Style="{StaticResource NavigationButtonImage}" />
+                        <TextBlock Text="{x:Static local:Resources.Nav_SelectDays}" Style="{StaticResource NavigationButtonText}" />
+                    </StackPanel>
+                </Button>
 
-        <Button
-            Style="{Binding ExportButtonStyle}"
-            Command="{Binding ExportCommand}"
-            ToolTip="{x:Static local:Resources.Nav_Export_TT}">
-            <StackPanel Orientation="Horizontal">
-                <Image Source="{Binding ExportButtonImageUri}" Style="{StaticResource NavigationButtonImage}" />
-                <TextBlock Text="{x:Static local:Resources.Nav_Export_TT}" Visibility="{Binding ShowNavigationButtonLabels, Converter={StaticResource BoolToVisibilityConverter}}" />
+                <Button
+                    Style="{Binding SelectSignalsButtonStyle}"
+                    Command="{Binding SelectSignalsCommand}"
+                    ToolTip="{x:Static local:Resources.Nav_SelectSignals_TT}">
+                    <StackPanel Orientation="Horizontal" Width="{Binding NavigationTrayWidth}">
+                        <Image Source="{Binding SelectSignalsButtonImageUri}" Style="{StaticResource NavigationButtonImage}" />
+                        <TextBlock Text="{x:Static local:Resources.Nav_SelectSignals}" Style="{StaticResource NavigationButtonText}" />
+                    </StackPanel>
+                </Button>
+
+                <Button
+                    Style="{Binding SettingsButtonStyle}"
+                    Command="{Binding ShowExportSettingsCommand}"
+                    ToolTip="{x:Static local:Resources.Nav_Settings_TT}">
+                    <StackPanel Orientation="Horizontal" Width="{Binding NavigationTrayWidth}">
+                        <Image Source="{Binding ExportSettingsButtonImageUri}" Style="{StaticResource NavigationButtonImage}" />
+                        <TextBlock Text="{x:Static local:Resources.Nav_ExportSettings_TT}" Style="{StaticResource NavigationButtonText}" />
+                    </StackPanel>
+                </Button>
+
+                <Button
+                    Style="{Binding ExportButtonStyle}"
+                    Command="{Binding ExportCommand}"
+                    ToolTip="{x:Static local:Resources.Nav_Export_TT}">
+                    <StackPanel Orientation="Horizontal" Width="{Binding NavigationTrayWidth}">
+                        <Image Source="{Binding ExportButtonImageUri}" Style="{StaticResource NavigationButtonImage}" />
+                        <TextBlock Text="{x:Static local:Resources.Nav_Export}" Style="{StaticResource NavigationButtonText}" />
+                    </StackPanel>
+                </Button>
             </StackPanel>
-        </Button>
-    </StackPanel>
+        </DockPanel>
+    </Border>
 </UserControl>

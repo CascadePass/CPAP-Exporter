@@ -25,6 +25,9 @@
     <None Remove="Images\HelpTableOfContents.png" />
     <None Remove="Images\KeyVertical.png" />
     <None Remove="Images\mask.png" />
+    <None Remove="Images\Menu.Icon.Dark.png" />
+    <None Remove="Images\Menu.Icon.Light.png" />
+    <None Remove="Images\Menu.Icon.Selected.png" />
     <None Remove="Images\MonthCalendar.png" />
     <None Remove="Images\Navigation.ExportSettings.Dark.png" />
     <None Remove="Images\Navigation.ExportSettings.Light.png" />
@@ -54,6 +57,9 @@
     <None Remove="Images\SavedFiles.Background.Light.png" />
     <None Remove="Images\SavedFiles.EventsFilePanel.Background.png" />
     <None Remove="Images\SavedFiles.RawFilePanel.Background.png" />
+    <None Remove="Images\Settings.Icon.Dark.png" />
+    <None Remove="Images\Settings.Icon.Light.png" />
+    <None Remove="Images\Settings.Icon.Selected.png" />
     <None Remove="Images\TraceTransferInto.png" />
   </ItemGroup>
 
@@ -77,6 +83,9 @@
     <Resource Include="Images\HelpTableOfContents.png" />
     <Resource Include="Images\KeyVertical.png" />
     <Resource Include="Images\mask.png" />
+    <Resource Include="Images\Menu.Icon.Dark.png" />
+    <Resource Include="Images\Menu.Icon.Light.png" />
+    <Resource Include="Images\Menu.Icon.Selected.png" />
     <Resource Include="Images\Navigation.ExportSettings.Normal.png" />
     <Resource Include="Images\Navigation.ExportSettings.Selected.png" />
     <Resource Include="Images\Navigation.OpenFiles.Normal.png" />
@@ -96,6 +105,9 @@
     <Resource Include="Images\SavedFiles.Background.Light.png" />
     <Resource Include="Images\SavedFiles.EventsFilePanel.Background.png" />
     <Resource Include="Images\SavedFiles.RawFilePanel.Background.png" />
+    <Resource Include="Images\Settings.Icon.Dark.png" />
+    <Resource Include="Images\Settings.Icon.Light.png" />
+    <Resource Include="Images\Settings.Icon.Selected.png" />
     <Resource Include="Images\TraceTransferInto.png" />
   </ItemGroup>
 

@@ -10,6 +10,7 @@
         private IValidatable validationProvider;
         private object statusContent;
         private DateTime becameVisible;
+        private double reservedNotificationHeight;
 
         #endregion
 
@@ -88,6 +89,12 @@
             set => this.SetPropertyValue(ref this.becameVisible, value, nameof(this.BecameVisible));
         }
 
+        public double ReservedNotificationHeight
+        {
+            get => this.reservedNotificationHeight;
+            set => this.SetPropertyValue(ref this.reservedNotificationHeight, value, nameof(this.ReservedNotificationHeight));
+        }
+
         public object StatusContent
         {
             get => this.statusContent;
@@ -101,6 +108,11 @@
         public virtual bool Validate()
         {
             return true;
+        }
+
+        public virtual void BecomeVisible()
+        {
+            this.BecameVisible = DateTime.Now;
         }
 
         #region Events
