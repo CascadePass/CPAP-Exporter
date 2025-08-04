@@ -11,6 +11,13 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <Compile Remove="Pages\About\**" />
+    <EmbeddedResource Remove="Pages\About\**" />
+    <None Remove="Pages\About\**" />
+    <Page Remove="Pages\About\**" />
+  </ItemGroup>
+
+  <ItemGroup>
     <None Remove="Images\AboutBox.png" />
     <None Remove="Images\BrowseButtonBackground.png" />
     <None Remove="Images\catpap.png" />
@@ -57,6 +64,10 @@
     <None Remove="Images\SavedFiles.Background.Light.png" />
     <None Remove="Images\SavedFiles.EventsFilePanel.Background.png" />
     <None Remove="Images\SavedFiles.RawFilePanel.Background.png" />
+    <None Remove="Images\Settings.Acknowledgements.Dark.png" />
+    <None Remove="Images\Settings.Acknowledgements.Light.png" />
+    <None Remove="Images\Settings.FontSize.Dark.png" />
+    <None Remove="Images\Settings.FontSize.Light.png" />
     <None Remove="Images\Settings.Icon.Dark.png" />
     <None Remove="Images\Settings.Icon.Light.png" />
     <None Remove="Images\Settings.Icon.Selected.png" />
@@ -105,6 +116,10 @@
     <Resource Include="Images\SavedFiles.Background.Light.png" />
     <Resource Include="Images\SavedFiles.EventsFilePanel.Background.png" />
     <Resource Include="Images\SavedFiles.RawFilePanel.Background.png" />
+    <Resource Include="Images\Settings.Acknowledgements.Dark.png" />
+    <Resource Include="Images\Settings.Acknowledgements.Light.png" />
+    <Resource Include="Images\Settings.FontSize.Dark.png" />
+    <Resource Include="Images\Settings.FontSize.Light.png" />
     <Resource Include="Images\Settings.Icon.Dark.png" />
     <Resource Include="Images\Settings.Icon.Light.png" />
     <Resource Include="Images\Settings.Icon.Selected.png" />
@@ -124,10 +139,6 @@
       <Generator>ResXFileCodeGenerator</Generator>
       <LastGenOutput>Resources.Designer.cs</LastGenOutput>
     </EmbeddedResource>
-  </ItemGroup>
-
-  <ItemGroup>
-    <Folder Include="Pages\About\" />
   </ItemGroup>
 
 </Project>

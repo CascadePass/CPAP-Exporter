@@ -56,7 +56,7 @@ namespace CascadePass.CPAPExporter
             set
             {
                 var old = this.currentView;
-                if (this.SetPropertyValue(ref this.currentView, value, nameof(this.CurrentView)))
+                if (this.SetPropertyValue(ref this.currentView, value, [nameof(this.CurrentView), nameof(this.SettingsIcon)]))
                 {
                     if (old?.DataContext is ViewModel oldViewModel)
                     {
@@ -177,7 +177,7 @@ namespace CascadePass.CPAPExporter
 
         public BitmapImage MenuIcon => this.ShowNavigationButtonLabels ? Application.Current?.FindResource("Menu.Icon.Selected") as BitmapImage : Application.Current?.FindResource("Menu.Icon") as BitmapImage;
 
-        public BitmapImage SettingsIcon => this.CurrentStep == NavigationStep.Settings ? Application.Current?.FindResource("Settings.Icon.Selected") as BitmapImage : Application.Current?.FindResource("Settings.Icon") as BitmapImage;
+        public BitmapImage SettingsIcon => this.CurrentView is SettingsView ? Application.Current?.FindResource("Settings.Icon.Selected") as BitmapImage : Application.Current?.FindResource("Settings.Icon") as BitmapImage;
 
         #endregion
 
@@ -196,6 +196,8 @@ namespace CascadePass.CPAPExporter
         public DelegateCommand ShowReleaseNotesCommand => this.viewReleaseNotes ??= new DelegateCommand(this.ShowReleaseNotes);
 
         public DelegateCommand ToggleNavDrawerExpansionCommand => this.toggleNavigationDrawerExpansionCommand ??= new DelegateCommand(this.ToggleNavigationDrawerExpansion);
+
+        public DelegateCommand ShowSettingsCommand => this.settingsCommand ??= new DelegateCommand(this.ShowSettings);
 
         #endregion
 
@@ -317,6 +319,17 @@ namespace CascadePass.CPAPExporter
                 Debug.WriteLine($"Error opening release notes: {ex.Message}");
                 Debugger.Break();
             }
+        }
+
+        public void ShowSettings()
+        {
+            if (this.CurrentView is not SettingsView settingsView)
+            {
+                //var viewModel = new SettingsViewModel(this.ExportParameters.UserPreferences);
+                settingsView = new SettingsView() /*{ DataContext = viewModel }*/;
+            }
+
+            this.CurrentView = settingsView;
         }
 
         public void ToggleNavigationDrawerExpansion()

@@ -357,4 +357,22 @@
   <data name="Nav_ExportSettings_TT" xml:space="preserve">
     <value>Export Settings</value>
   </data>
+  <data name="PageTitle_Settings" xml:space="preserve">
+    <value>CPAP-Exporter Settings</value>
+  </data>
+  <data name="PageDesc_Settings" xml:space="preserve">
+    <value />
+  </data>
+  <data name="SectionHeader_Acknowledgements" xml:space="preserve">
+    <value>Acknowledgements</value>
+  </data>
+  <data name="SectionHeader_TextSize" xml:space="preserve">
+    <value>Text Size</value>
+  </data>
+  <data name="SectionSubtitle_TextSize" xml:space="preserve">
+    <value>Adjust the size of text in CPAP-Exporter</value>
+  </data>
+  <data name="SectionSubtitle_Acknowledgements" xml:space="preserve">
+    <value>Open source projects CPAP-Exporter relies on</value>
+  </data>
 </root>
