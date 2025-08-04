@@ -206,11 +206,9 @@ namespace CascadePass.CPAPExporter
 
         internal void ConsumeReports(List<DailyReport> reports, string folder)
         {
-            ApplicationComponentProvider.Status.ProgressBar = new(0, reports.Count - 1, 0);
-
             for (int i = 0; i < reports.Count; i++)
             {
-                ApplicationComponentProvider.Status.ProgressBar.Current = i;
+                // Update progress bar
 
                 var report = reports[i];
 
@@ -219,15 +217,11 @@ namespace CascadePass.CPAPExporter
                     this.AddReport(report, folder);
                 }
             }
-
-            ApplicationComponentProvider.Status.ProgressBar = null;
         }
 
         internal DailyReportViewModel AddReport(DailyReport report, string folder)
         {
             ArgumentNullException.ThrowIfNull(report, nameof(report));
-
-            ApplicationComponentProvider.Status.StatusText = string.Format(Resources.AddingDate, report.ReportDate);
 
             DailyReportViewModel reportViewModel = new(report, this.IsAllSelected, folder);
             this.Reports.Add(reportViewModel);

@@ -84,7 +84,10 @@ namespace CascadePass.CPAPExporter
 
         public void PerformExport(string folder)
         {
-            ApplicationComponentProvider.Status.StatusText = Resources.Working;
+            Application.Current.Dispatcher.Invoke(() =>
+            {
+                this.StatusContent = new BusyToast();
+            });
 
             try
             {
@@ -125,7 +128,7 @@ namespace CascadePass.CPAPExporter
             }
             catch (Exception ex)
             {
-                ApplicationComponentProvider.Status.StatusText = ex.Message;
+                Application.Current.Dispatcher.Invoke(() => { this.StatusContent = new ErrorToast(ex.Message); });
 
                 if (Debugger.IsAttached)
                 {
@@ -133,8 +136,7 @@ namespace CascadePass.CPAPExporter
                 }
             }
 
-            ApplicationComponentProvider.Status.ProgressBar = null;
-            ApplicationComponentProvider.Status.StatusText = string.Empty;
+            Application.Current.Dispatcher.Invoke(() => { this.StatusContent = null; });
         }
 
         #region Button click implementations
@@ -186,14 +188,13 @@ namespace CascadePass.CPAPExporter
         {
             if (this.Dispatcher?.CheckAccess() ?? true)
             {
-                ApplicationComponentProvider.Status.ProgressBar = new(0, e.ExpectedRows, e.CurrentRowIndex);
-                ApplicationComponentProvider.Status.StatusText = string.Format(Resources.RowsWritten, e.CurrentRowIndex.ToString("#,##0"));
+                // Update progress bar
             }
             else
             {
                 this.Dispatcher.Invoke(() =>
                 {
-                    ApplicationComponentProvider.Status.ProgressBar = new(0, e.ExpectedRows, e.CurrentRowIndex);
+                    // Update progress bar
                 });
             }
         }

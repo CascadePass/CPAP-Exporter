@@ -139,11 +139,15 @@ namespace CascadePass.CPAPExporter
                 this.IsDeleted = true;
                 this.OnFileDeleted(this, EventArgs.Empty);
 
-                ApplicationComponentProvider.Status.StatusText = string.Format(Resources.FileWasDeleted, this.Filename);
+                //ApplicationComponentProvider.Status.StatusText = string.Format(Resources.FileWasDeleted, this.Filename);
             }
             catch (Exception ex)
             {
-                ApplicationComponentProvider.Status.StatusText = ex.Message;
+                //ApplicationComponentProvider.Status.StatusText = ex.Message;
+                var window = Application.Current?.MainWindow;
+                var viewModel = window?.DataContext as PageViewModel;
+
+                Application.Current.Dispatcher.Invoke(() => { viewModel.StatusContent = new ErrorToast(ex.Message); });
             }
         }
 

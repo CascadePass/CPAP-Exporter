@@ -86,7 +86,7 @@ namespace CascadePass.CPAPExporter
                 catch (Exception ex)
                 {
 #if DEBUG
-                    ApplicationComponentProvider.Status.StatusText = ex.Message;
+                    this.StatusContent = new ErrorToast(ex.Message);
 #endif
                 }
             }
@@ -133,7 +133,7 @@ namespace CascadePass.CPAPExporter
                 }
             }
 
-            ApplicationComponentProvider.Status.StatusText = string.Format(Resources.SignalsAvailable, this.ExportParameters.Signals.Count);
+            this.StatusContent = new InfoToast(string.Format(Resources.SignalsAvailable, this.Signals.Count));
         }
 
         protected override void OnPropertyChanged(string propertyName)
