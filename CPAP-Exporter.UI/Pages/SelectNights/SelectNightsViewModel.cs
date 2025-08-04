@@ -3,9 +3,7 @@ using System.Collections.ObjectModel;
 using System.ComponentModel;
 using System.IO;
 using System.Windows;
-using System.Windows.Controls;
 using System.Windows.Input;
-using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Threading;
 
@@ -33,6 +31,7 @@ namespace CascadePass.CPAPExporter
         /// </summary>
         public SelectNightsViewModel() : base(Resources.PageTitle_SelectNights, Resources.PageDesc_SelectNights)
         {
+            this.ReservedNotificationHeight = 50;
         }
 
         public SelectNightsViewModel(ExportParameters exportParameters) : this()
@@ -158,7 +157,6 @@ namespace CascadePass.CPAPExporter
             this.IsBusy = true;
             this.ShowBusyStatus();
             this.ExportParameters.SourcePath = folder;
-            ApplicationComponentProvider.Status.StatusText = string.Format(Resources.ReadingFolder, folder);
 
             // Prepare to load reports
             List<DailyReport> reports = null;
@@ -171,7 +169,7 @@ namespace CascadePass.CPAPExporter
             }
             catch (Exception ex)
             {
-                ApplicationComponentProvider.Status.StatusText += ex.ToString();
+                Application.Current.Dispatcher.Invoke(() => { this.StatusContent = new ErrorToast(ex.Message); });
             }
 
             // And now it's time to process them.
@@ -259,8 +257,6 @@ namespace CascadePass.CPAPExporter
                 this.ShowDefaultStatusMessage();
                 return;
             }
-
-            ApplicationComponentProvider.Status.StatusText = Resources.Working;
 
             Task.Run(() =>
             {
