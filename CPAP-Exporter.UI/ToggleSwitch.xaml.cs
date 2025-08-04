@@ -230,6 +230,11 @@ namespace CascadePass.CPAPExporter
 
         private void AnimateKnob(bool isChecked)
         {
+            if (this.knob is null)
+            {
+                return;
+            }
+
             double margin = this.knob.Margin.Left + this.knob.Margin.Right;
             double travelDistance = this.track.ActualWidth - this.knob.ActualWidth - margin;
 
