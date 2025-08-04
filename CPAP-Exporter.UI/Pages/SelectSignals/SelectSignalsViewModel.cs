@@ -13,6 +13,7 @@ namespace CascadePass.CPAPExporter
 
         public SelectSignalsViewModel() : base(Resources.PageTitle_SelectSignals, Resources.PageDesc_SelectSignals)
         {
+            this.ReservedNotificationHeight = 50;
         }
 
         public SelectSignalsViewModel(ExportParameters exportParameters) : this()
