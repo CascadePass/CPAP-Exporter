@@ -1,4 +1,5 @@
 ﻿using System.Collections.ObjectModel;
+using System.Windows;
 
 namespace CascadePass.CPAPExporter
 {
@@ -10,6 +11,24 @@ namespace CascadePass.CPAPExporter
         }
 
         public ObservableCollection<Acknowledgement> Acknowledgements { get; private set; }
+
+        public double FontSize
+        {
+            get => this.ExportParameters.UserPreferences.FontSize;
+            set
+            {
+                if (this.ExportParameters.UserPreferences.FontSize != value)
+                {
+                    if (Application.Current?.MainWindow is not null)
+                    {
+                        Application.Current.MainWindow.FontSize = value;
+                    }
+
+                    this.ExportParameters.UserPreferences.FontSize = value;
+                    this.OnPropertyChanged(nameof(this.FontSize));
+                }
+            }
+        }
 
         private void CreateAcknowledgements()
         {

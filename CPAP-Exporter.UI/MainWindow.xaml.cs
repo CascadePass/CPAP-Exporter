@@ -1,6 +1,5 @@
 ﻿using System.ComponentModel;
 using System.Windows;
-using System.Windows.Data;
 
 namespace CascadePass.CPAPExporter
 {
@@ -20,9 +19,12 @@ namespace CascadePass.CPAPExporter
 
             this.PageViewer.DataContext = navigationViewModel;
 
-            navigationViewModel.PropertyChanged += NavigationViewModel_PropertyChanged;
-
             this.SetWindowSizeAndLocation();
+
+            if(this.userSettings.FontSize > 0 && this.userSettings.FontSize < 49)
+            {
+                this.FontSize = this.userSettings.FontSize;
+            }
         }
 
         private void SetWindowSizeAndLocation()
@@ -50,19 +52,6 @@ namespace CascadePass.CPAPExporter
 
             this.GetWindowSizeAndLocation();
             this.userSettings.Save();
-        }
-
-        private void NavigationViewModel_PropertyChanged(object sender, PropertyChangedEventArgs e)
-        {
-            //if (string.Equals(e.PropertyName, nameof(NavigationViewModel.CurrentView)))
-            //{
-            //}
-
-            //if (string.Equals(e.PropertyName, nameof(PageViewModel.IsBusy)))
-            //{
-            //    var bannerStripBinding = BindingOperations.GetBindingExpression(this.BannerStrip, VisibilityProperty);
-            //    bannerStripBinding?.UpdateTarget();
-            //}
         }
     }
 }

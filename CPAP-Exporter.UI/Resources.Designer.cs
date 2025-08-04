@@ -763,6 +763,15 @@ namespace CascadePass.CPAPExporter {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Adjust the text size to what feels most comfortable for you. This setting affects how large the words appear throughout the app, and your preference will be remembered each time you return..
+        /// </summary>
+        public static string Settings_FontSize {
+            get {
+                return ResourceManager.GetString("Settings_FontSize", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to {0} signals available to export.
         /// </summary>
         public static string SignalsAvailable {
