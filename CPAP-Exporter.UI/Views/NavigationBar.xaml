@@ -17,7 +17,7 @@
             <Button
                 DockPanel.Dock="Bottom"
                 Style="{DynamicResource NavigationButtonStyle}"
-                Command="{Binding ShowExportSettingsCommand}"
+                Command="{Binding ShowSettingsCommand}"
                 ToolTip="{x:Static local:Resources.Nav_ExpandDrawer_TT}">
                 <StackPanel Orientation="Horizontal" Width="{Binding NavigationTrayWidth}">
                     <Image Source="{Binding SettingsIcon}" Style="{StaticResource NavigationButtonImage}" />

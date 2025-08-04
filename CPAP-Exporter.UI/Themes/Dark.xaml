@@ -67,4 +67,6 @@
     <BitmapImage x:Key="Settings.Icon.Selected" UriSource="pack://application:,,,/Images/Settings.Icon.Selected.png" />
     <BitmapImage x:Key="Menu.Icon" UriSource="pack://application:,,,/Images/Menu.Icon.Dark.png" />
     <BitmapImage x:Key="Menu.Icon.Selected" UriSource="pack://application:,,,/Images/Menu.Icon.Selected.png" />
+    <BitmapImage x:Key="Settings.FontSize.Icon" UriSource="pack://application:,,,/Images/Settings.FontSize.Dark.png" />
+    <BitmapImage x:Key="Settings.Acknowledgements.Icon" UriSource="pack://application:,,,/Images/Settings.Acknowledgements.Dark.png" />
 </ResourceDictionary>

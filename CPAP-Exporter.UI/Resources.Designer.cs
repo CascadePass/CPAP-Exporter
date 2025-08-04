@@ -574,6 +574,15 @@ namespace CascadePass.CPAPExporter {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to .
+        /// </summary>
+        public static string PageDesc_Settings {
+            get {
+                return ResourceManager.GetString("PageDesc_Settings", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to SHA-256 Hashes.
         /// </summary>
         public static string PageTitle_Hashes {
@@ -624,6 +633,15 @@ namespace CascadePass.CPAPExporter {
         public static string PageTitle_SelectSignals {
             get {
                 return ResourceManager.GetString("PageTitle_SelectSignals", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to CPAP-Exporter Settings.
+        /// </summary>
+        public static string PageTitle_Settings {
+            get {
+                return ResourceManager.GetString("PageTitle_Settings", resourceCulture);
             }
         }
         
@@ -696,6 +714,42 @@ namespace CascadePass.CPAPExporter {
         public static string RowsWritten {
             get {
                 return ResourceManager.GetString("RowsWritten", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Acknowledgements.
+        /// </summary>
+        public static string SectionHeader_Acknowledgements {
+            get {
+                return ResourceManager.GetString("SectionHeader_Acknowledgements", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Text Size.
+        /// </summary>
+        public static string SectionHeader_TextSize {
+            get {
+                return ResourceManager.GetString("SectionHeader_TextSize", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Open source projects CPAP-Exporter relies on.
+        /// </summary>
+        public static string SectionSubtitle_Acknowledgements {
+            get {
+                return ResourceManager.GetString("SectionSubtitle_Acknowledgements", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Adjust the size of text in CPAP-Exporter.
+        /// </summary>
+        public static string SectionSubtitle_TextSize {
+            get {
+                return ResourceManager.GetString("SectionSubtitle_TextSize", resourceCulture);
             }
         }
         
