@@ -325,8 +325,10 @@ namespace CascadePass.CPAPExporter
         {
             if (this.CurrentView is not SettingsView settingsView)
             {
-                //var viewModel = new SettingsViewModel(this.ExportParameters.UserPreferences);
-                settingsView = new SettingsView() /*{ DataContext = viewModel }*/;
+                settingsView = new SettingsView();
+                var viewModel = (SettingsViewModel)settingsView.DataContext;
+
+                viewModel.ExportParameters = this.ExportParameters;
             }
 
             this.CurrentView = settingsView;

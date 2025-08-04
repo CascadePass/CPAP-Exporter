@@ -375,4 +375,7 @@
   <data name="SectionSubtitle_Acknowledgements" xml:space="preserve">
     <value>Open source projects CPAP-Exporter relies on</value>
   </data>
+  <data name="Settings_FontSize" xml:space="preserve">
+    <value>Adjust the text size to what feels most comfortable for you. This setting affects how large the words appear throughout the app, and your preference will be remembered each time you return.</value>
+  </data>
 </root>

@@ -40,10 +40,17 @@
                     Margin="4,0,0,0" />
             </Grid>
         </Expander.Header>
-        <StackPanel>
-            <TextBlock Text="{x:Static local:Resources.Label_FlowReductionExplaination}" TextWrapping="Wrap" />
+        <StackPanel Background="{DynamicResource Legibility.Background}">
+            <TextBlock
+                Text="{x:Static local:Resources.Settings_FontSize}"
+                Margin="8"
+                TextWrapping="Wrap" />
 
-            <Slider />
+            <Slider
+                Minimum="6"
+                Maximum="48"
+                Margin="8"
+                Value="{Binding FontSize}" />
         </StackPanel>
     </Expander>
 </UserControl>
