@@ -143,7 +143,7 @@ namespace CascadePass.CPAPExporter
             }
             catch (Exception ex)
             {
-                //ApplicationComponentProvider.Status.StatusText = ex.Message;
+                //TODO: Create an Owner property linking back to the SavedFilesVM.
                 var window = Application.Current?.MainWindow;
                 var viewModel = window?.DataContext as PageViewModel;
 

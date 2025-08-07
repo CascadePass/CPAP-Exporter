@@ -181,6 +181,9 @@ namespace CascadePass.CPAPExporter
 
                 fileViewModel.PropertyChanged -= this.FileViewModel_PropertyChanged;
                 fileViewModel.FileDeleted -= this.FileViewModel_FileDeleted;
+
+                var fileTypeLabel = fileViewModel.FileType.ToString().Replace("Export", "");
+                this.StatusContent = new InfoToast(string.Format(Resources.FileWasDeleted, fileTypeLabel, fileViewModel.Filename));
             }
         }
 
@@ -202,12 +205,5 @@ namespace CascadePass.CPAPExporter
         #endregion
 
         #endregion
-    }
-
-    public enum SavedFileType
-    {
-        None,
-        FullExport,
-        EventsExport,
     }
 }

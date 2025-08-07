@@ -178,7 +178,7 @@ namespace CascadePass.CPAPExporter {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to {0} was deleted.
+        ///   Looks up a localized string similar to {0} file {1} was deleted..
         /// </summary>
         public static string FileWasDeleted {
             get {
