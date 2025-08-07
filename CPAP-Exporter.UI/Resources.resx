@@ -250,7 +250,7 @@
     <value>Delimiter</value>
   </data>
   <data name="FileWasDeleted" xml:space="preserve">
-    <value>{0} was deleted</value>
+    <value>{0} file {1} was deleted.</value>
   </data>
   <data name="ReadingFolder" xml:space="preserve">
     <value>Reading folder {0}</value>

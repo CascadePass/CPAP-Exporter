@@ -237,16 +237,12 @@ namespace CascadePass.CPAPExporter
 
             this.CurrentView = new SelectSignalsView { DataContext = viewModel };
             this.CurrentStep = NavigationStep.SelectSignals;
-
-            ApplicationComponentProvider.Status.StatusText = string.Format(Resources.SignalsAvailable, viewModel.Signals.Count);
         }
 
         public void ShowExportSettings()
         {
             this.CurrentView = new OptionsView() { DataContext = new ExportOptionsPageViewModel(this.ExportParameters) };
             this.CurrentStep = NavigationStep.Settings;
-
-            ApplicationComponentProvider.Status.StatusText = Resources.ReadyToExport;
         }
 
         public void Export()

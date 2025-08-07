@@ -1,7 +1,9 @@
 ﻿using System.IO;
 using System.Windows;
+using System.Windows.Controls;
 using System.Windows.Input;
 using System.Windows.Media;
+using System.Windows.Media.Imaging;
 
 namespace CascadePass.CPAPExporter
 {
@@ -159,8 +161,6 @@ namespace CascadePass.CPAPExporter
                 this.ExportParameters.Reports.Clear();
             }
 
-            ApplicationComponentProvider.Status.StatusText = string.Format(Resources.ReadingFolder, folder);
-
             this.OnAdvancePage();
         }
 
@@ -174,13 +174,15 @@ namespace CascadePass.CPAPExporter
 
             if (!Directory.Exists(folder))
             {
-                ApplicationComponentProvider.Status.StatusText = string.Format(Resources.FolderDoesNotExist, folder);
+                this.StatusContent = new WarningToast(string.Format(Resources.FolderDoesNotExist, folder));
+                //ApplicationComponentProvider.Status.StatusText = string.Format(Resources.FolderDoesNotExist, folder);
                 return false;
             }
 
             if (!ApplicationComponentProvider.CpapSourceValidator.IsCpapFolderStructure(folder))
             {
-                ApplicationComponentProvider.Status.StatusText = string.Format(Resources.FolderIsNotPAP, folder);
+                //ApplicationComponentProvider.Status.StatusText = string.Format(Resources.FolderIsNotPAP, folder);
+                this.StatusContent = new WarningToast(string.Format(Resources.FolderIsNotPAP, folder));
                 return false;
             }
 
@@ -202,7 +204,8 @@ namespace CascadePass.CPAPExporter
 
                 if (dir.Parent is null)
                 {
-                    ApplicationComponentProvider.Status.StatusText = string.Format(Resources.NoPapData, folder);
+                    //ApplicationComponentProvider.Status.StatusText = string.Format(Resources.NoPapData, folder);
+                    this.StatusContent = new WarningToast(string.Format(Resources.NoPapData, folder));
                     return null;
                 }
 
